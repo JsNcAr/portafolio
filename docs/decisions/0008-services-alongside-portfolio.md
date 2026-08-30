@@ -52,7 +52,21 @@ more: a client buying working software cares whether it works, not which tools b
 the interface. Same fact, different weight for a different reader. See
 [ADR 0006](0006-honest-frontend-positioning.md), which this does not override.
 
-**On teaching claims.** The only teaching role on the CV is an art-history TA post
-from 2020. The page therefore stands on the physics degree and the public
-numerical-methods repositories, and claims no maths-teaching history it cannot
-evidence.
+**On teaching claims.** An earlier draft of this ADR said the page should claim no
+teaching history, on the grounds that the CV's only teaching entry is a 2020
+art-history TA post. **That was wrong.** Jason has tutored privately alongside his
+degree for most of his time at university; it simply never appeared on a CV aimed at
+backend roles. The page says so, because it is true and it is the strongest thing
+about the offer. It still does not claim institutional teaching, and it still points
+at the public numerical-methods repositories as something a prospective student can
+actually inspect.
+
+The lesson worth keeping: absence from the CV is not absence of experience. Ask
+before writing a limitation into the copy.
+
+**On websites as their own section.** Company sites are the easiest of these services
+to sell and the only one with live work a client can go and look at — gsalud.co and
+apollyon.lat, both designed, built and hosted by Jason. They also have a two-part
+price, a build and a monthly, which no other service has. A card in the grid could
+carry neither, so the offer gets its own section with the examples as the substance
+rather than a footnote.

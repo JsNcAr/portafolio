@@ -87,10 +87,17 @@ export const ui = {
     'svc.how.3': 'Handover',
     'svc.how.3.note': 'Documented, on infrastructure you own',
 
+    'svc.sites': 'Websites',
+    'svc.sites.lead': 'A site for your business, and someone to keep it online.',
+    'svc.sites.build': 'Design and build',
+    'svc.sites.hosting': 'Hosting and upkeep',
+    'svc.sites.examples': 'Built and hosted by me',
+    'svc.sites.visit': 'Visit',
+
     'svc.classes': 'Classes',
     'svc.classes.lead': 'Programming, mathematics and physics.',
     'svc.classes.intro':
-      'Remote, in Spanish or English. I read physics at Universidad de los Andes, and the numerical methods coursework behind these subjects is public on my GitHub, so you can see how I work through a problem before booking anything.',
+      'I have taught privately alongside my degree for most of my time at university, so this is not a sideline I picked up recently. Remote, in Spanish or English. I read physics at Universidad de los Andes, and the numerical methods coursework behind these subjects is public on my GitHub, so you can see how I work through a problem before booking anything.',
     'svc.classes.subjects': 'Subjects',
     'svc.classes.formats': 'Formats',
     'svc.classes.who': 'Who I teach',
@@ -255,10 +262,17 @@ export const ui = {
     'svc.how.3': 'Entrega',
     'svc.how.3.note': 'Documentada, en infraestructura tuya',
 
+    'svc.sites': 'Sitios web',
+    'svc.sites.lead': 'Un sitio para tu negocio, y alguien que lo mantenga en línea.',
+    'svc.sites.build': 'Diseño y construcción',
+    'svc.sites.hosting': 'Hosting y mantenimiento',
+    'svc.sites.examples': 'Construidos y hospedados por mí',
+    'svc.sites.visit': 'Visitar',
+
     'svc.classes': 'Clases',
     'svc.classes.lead': 'Programación, matemáticas y física.',
     'svc.classes.intro':
-      'Remotas, en español o en inglés. Estudié física en la Universidad de los Andes, y los trabajos de métodos numéricos detrás de estas materias están públicos en mi GitHub, así que puedes ver cómo resuelvo un problema antes de reservar nada.',
+      'He dado clases particulares en paralelo a mi carrera durante la mayor parte de mi tiempo en la universidad, así que no es algo que empecé hace poco. Remotas, en español o en inglés. Estudié física en la Universidad de los Andes, y los trabajos de métodos numéricos detrás de estas materias están públicos en mi GitHub, así que puedes ver cómo resuelvo un problema antes de reservar nada.',
     'svc.classes.subjects': 'Materias',
     'svc.classes.formats': 'Formatos',
     'svc.classes.who': 'A quién le enseño',

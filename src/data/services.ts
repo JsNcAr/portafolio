@@ -7,18 +7,27 @@ export type ServiceGroup = 'engineering' | 'teaching';
 /** Who the client would actually be contracting with. */
 export type Delivery = 'apollyon' | 'direct' | 'either';
 
+export type PriceUnit = 'project' | 'month' | 'hour' | 'hour-per-student';
+
 /**
- * Structured rather than a pre-formatted string, so the figures can be rendered
- * with tabular numerals and locale-correct grouping, and so changing a number
- * never means editing prose.
+ * Structured rather than a pre-formatted string, so figures render with tabular
+ * numerals and locale-correct grouping, and changing a number never means
+ * editing prose.
  */
 export interface Price {
   from: number;
   /** Omit for an open-ended "from X". */
   to?: number;
   currency: 'COP' | 'USD';
-  unit: 'project' | 'month' | 'hour' | 'hour-per-student';
+  unit: PriceUnit;
 }
+
+/**
+ * Priced per locale, not converted. The Spanish page quotes COP for a Colombian
+ * client and the English page quotes USD for an international one; those are two
+ * pricing decisions, and a live exchange rate would misrepresent both.
+ */
+export type PriceByLocale = Record<Locale, Price>;
 
 export interface Service {
   id: string;
@@ -28,8 +37,8 @@ export interface Service {
   /** Proper nouns; never translated. */
   stack: string[];
   delivery: Delivery;
-  /** null until real figures are supplied -- the price line then does not render. */
-  price: Price | null;
+  /** null when no rate is set -- the price line then does not render at all. */
+  price: PriceByLocale | null;
   /** The one service that leads. Rendered larger, on the accent ground. */
   lead?: boolean;
 }
@@ -103,12 +112,57 @@ export const services: Service[] = [
   },
 ];
 
+/**
+ * Websites are their own section rather than another card: the offer has two
+ * prices (a build and a monthly), and it is the only service with live work a
+ * prospective client can go and look at.
+ */
+export interface SiteExample {
+  name: string;
+  url: string;
+  note: Bilingual;
+}
+
+export const websites = {
+  blurb: {
+    en: 'A site for your business, designed, built and then actually kept online. Fast, accessible, works on a phone, and findable — a static build behind a reverse proxy with automatic TLS, on infrastructure I run. The design is scoped and assembled with AI tooling; the build, the hosting and the uptime are mine.',
+    es: 'Un sitio para tu negocio, diseñado, construido y después realmente mantenido en línea. Rápido, accesible, funciona en el teléfono y se encuentra en buscadores — un build estático detrás de un proxy inverso con TLS automático, en infraestructura que yo opero. El diseño se define y se arma con herramientas de IA; la construcción, el hosting y el tiempo en línea son míos.',
+  } as Bilingual,
+  stack: ['Static build', 'Caddy', 'TLS', 'Debian'],
+  build: {
+    en: { from: 250000, currency: 'COP', unit: 'project' },
+    es: { from: 250000, currency: 'COP', unit: 'project' },
+  } as PriceByLocale,
+  hosting: {
+    en: { from: 25000, currency: 'COP', unit: 'month' },
+    es: { from: 25000, currency: 'COP', unit: 'month' },
+  } as PriceByLocale,
+  examples: [
+    {
+      name: 'gsalud.co',
+      url: 'https://gsalud.co',
+      note: {
+        en: 'A dental and facial aesthetics clinic in Bogotá. Designed, built and hosted by me.',
+        es: 'Una clínica de odontología y estética facial en Bogotá. Diseñada, construida y hospedada por mí.',
+      },
+    },
+    {
+      name: 'apollyon.lat',
+      url: 'https://apollyon.lat',
+      note: {
+        en: 'The company site for Apollyon S.A.S, bilingual, on the same hosting.',
+        es: 'El sitio de empresa de Apollyon S.A.S, bilingüe, sobre el mismo hosting.',
+      },
+    },
+  ] as SiteExample[],
+};
+
 /** Teaching is a different kind of offer and gets its own treatment on the page. */
 export interface ClassFormat {
   id: string;
   title: Bilingual;
   note: Bilingual;
-  price: Price | null;
+  price: PriceByLocale | null;
 }
 
 export interface Audience {
@@ -128,7 +182,10 @@ export const classSubjects: Bilingual[] = [
 export const classFormats: ClassFormat[] = [
   {
     id: 'one-to-one',
-    price: null,
+    price: {
+      en: { from: 15, currency: 'USD', unit: 'hour' },
+      es: { from: 40000, currency: 'COP', unit: 'hour' },
+    },
     title: { en: 'One to one', es: 'Uno a uno' },
     note: {
       en: 'Remote, by video call. The session goes wherever you are actually stuck.',

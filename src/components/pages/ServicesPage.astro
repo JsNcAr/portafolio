@@ -2,12 +2,13 @@
 import Base from '@layouts/Base.astro';
 import PageHeader from '@components/PageHeader.astro';
 import ServiceCard from '@components/ServiceCard.astro';
+import TechPill from '@components/TechPill.astro';
 import Icon from '@components/Icon.astro';
 import Flow from '@components/diagrams/Flow.astro';
 import { formatPrice } from '@lib/price';
 import type { Locale } from '@i18n/ui';
 import { useTranslations, localePath } from '@i18n/utils';
-import { services, classSubjects, classFormats, classAudiences } from '@data/services';
+import { services, websites, classSubjects, classFormats, classAudiences } from '@data/services';
 
 interface Props {
   locale: Locale;
@@ -19,6 +20,9 @@ const t = useTranslations(locale);
 const engineering = services.filter((s) => s.group === 'engineering');
 const lead = engineering.find((s) => s.lead)!;
 const rest = engineering.filter((s) => !s.lead);
+
+const build = formatPrice(websites.build, locale);
+const hosting = formatPrice(websites.hosting, locale);
 
 const steps = [
   { label: t('svc.how.1'), note: t('svc.how.1.note') },
@@ -45,6 +49,57 @@ const steps = [
   <section class="shell block" aria-labelledby="how">
     <h2 class="overline" id="how">{t('svc.how')}</h2>
     <Flow steps={steps} caption={t('svc.how.caption')} />
+  </section>
+
+  <section class="sites" aria-labelledby="sites">
+    <div class="shell">
+      <h2 class="overline" id="sites">{t('svc.sites')}</h2>
+      <p class="sites-lead">{t('svc.sites.lead')}</p>
+      <p class="sites-blurb">{websites.blurb[locale]}</p>
+
+      <ul class="pills">
+        {websites.stack.map((item) => <TechPill label={item} />)}
+      </ul>
+
+      <div class="two-prices">
+        {build && (
+          <div class="tier">
+            <p class="tier-name">{t('svc.sites.build')}</p>
+            <p class="tier-price">
+              <span class="from">{t('svc.from')}</span>
+              <span class="amount">{build.amount}</span>
+              <span class="unit">{build.unit}</span>
+            </p>
+          </div>
+        )}
+        {hosting && (
+          <div class="tier">
+            <p class="tier-name">{t('svc.sites.hosting')}</p>
+            <p class="tier-price">
+              <span class="from">{t('svc.from')}</span>
+              <span class="amount">{hosting.amount}</span>
+              <span class="unit">{hosting.unit}</span>
+            </p>
+          </div>
+        )}
+      </div>
+
+      <div class="examples">
+        <p class="overline">{t('svc.sites.examples')}</p>
+        <ul>
+          {websites.examples.map((site) => (
+            <li>
+              <a href={site.url} rel="noopener" target="_blank">
+                <span class="stretch"></span>
+                <span class="site-name">{site.name}</span>
+                <Icon name="arrow-up-right" size={14} />
+              </a>
+              <p class="site-note">{site.note[locale]}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   </section>
 
   <section class="classes" aria-labelledby="classes">
@@ -165,6 +220,162 @@ const steps = [
     .grid > :global(.service:nth-child(3)) {
       grid-column: span 2;
     }
+  }
+
+  /* Websites are the one offer with live work to point at, so the examples are
+     the section rather than a footnote. */
+  .sites {
+    padding-block: var(--space-56);
+    border-block-start: var(--stroke-hairline) solid var(--color-border-default);
+  }
+
+  .sites-lead {
+    margin-block-start: var(--space-12);
+    font-size: var(--text-3xl);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    max-inline-size: 22ch;
+    text-wrap: balance;
+  }
+
+  .sites-blurb {
+    margin-block-start: var(--space-16);
+    max-inline-size: var(--measure-prose);
+    color: var(--color-text-secondary);
+    font-size: var(--text-lg);
+  }
+
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    list-style: none;
+    padding: 0;
+    margin: var(--space-20) 0 0;
+    min-inline-size: 0;
+  }
+
+  .two-prices {
+    display: grid;
+    gap: var(--space-16);
+    margin-block-start: var(--space-32);
+  }
+
+  @media (min-width: 44rem) {
+    .two-prices {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-24);
+    }
+  }
+
+  .tier {
+    padding: var(--space-20);
+    background: var(--color-surface-accent);
+    border: var(--stroke-hairline) solid var(--color-border-accent);
+    border-radius: var(--radius-md);
+    min-inline-size: 0;
+  }
+
+  .tier-name {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-overline);
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+  }
+
+  .tier-price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-6);
+    margin-block-start: var(--space-8);
+    font-variant-numeric: tabular-nums;
+    min-inline-size: 0;
+  }
+
+  .tier-price .amount {
+    font-size: var(--text-2xl);
+  }
+
+  .examples {
+    margin-block-start: var(--space-40);
+    padding-block-start: var(--space-24);
+    border-block-start: var(--stroke-hairline) solid var(--color-border-default);
+  }
+
+  .examples ul {
+    display: grid;
+    gap: var(--space-16);
+    list-style: none;
+    padding: 0;
+    margin: var(--space-16) 0 0;
+  }
+
+  @media (min-width: 44rem) {
+    .examples ul {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-20);
+    }
+  }
+
+  .examples li {
+    position: relative;
+    padding: var(--space-20);
+    background: var(--color-surface-card);
+    border: var(--stroke-hairline) solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    min-inline-size: 0;
+    transition:
+      border-color var(--duration-fast) var(--ease-out),
+      box-shadow var(--duration-fast) var(--ease-out);
+  }
+
+  .examples li:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Stretched link: the ring belongs on the card, not on the text. */
+  .examples li:has(a:focus-visible) {
+    box-shadow: var(--shadow-focus-ring);
+  }
+
+  .stretch {
+    position: absolute;
+    inset: 0;
+  }
+
+  .examples a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-6);
+    min-block-size: var(--space-28);
+    text-decoration: none;
+  }
+
+  .examples a:focus-visible {
+    outline: none;
+  }
+
+  .examples li:hover .site-name {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .site-name {
+    font-family: var(--font-mono);
+    font-size: var(--text-base);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-primary);
+    overflow-wrap: anywhere;
+  }
+
+  .site-note {
+    margin-block-start: var(--space-6);
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
   }
 
   /* Teaching is a different kind of offer, so it gets a different treatment and
