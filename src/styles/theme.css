@@ -6,6 +6,7 @@
   --color-surface-raised: #faf8f2;
   --color-surface-sunken: #e4e1d8;
   --color-surface-inverse: #1c1b16;
+  --color-surface-accent: #eef0ea;
   --color-text-primary: #1c1b16;
   --color-text-secondary: #48463e;
   --color-text-tertiary: #5e5b53;
@@ -167,6 +168,7 @@
   --color-surface-raised: #48463e;
   --color-surface-sunken: #1c1b16;
   --color-surface-inverse: #f2f0e8;
+  --color-surface-accent: #3a3c36;
   --color-text-primary: #f2f0e8;
   --color-text-secondary: #cfccc1;
   --color-text-tertiary: #afaca1;
@@ -236,6 +238,7 @@
     --color-surface-raised: #48463e;
     --color-surface-sunken: #1c1b16;
     --color-surface-inverse: #f2f0e8;
+    --color-surface-accent: #3a3c36;
     --color-text-primary: #f2f0e8;
     --color-text-secondary: #cfccc1;
     --color-text-tertiary: #afaca1;

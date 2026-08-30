@@ -8,6 +8,7 @@ summary: >-
 order: 1
 ---
 
+import Pull from '@components/Pull.astro';
 import Flow from '@components/diagrams/Flow.astro';
 import Layers from '@components/diagrams/Layers.astro';
 
@@ -109,9 +110,9 @@ automatic TLS for the production API.
 
 Docker for reproducibility, systemd because it is already the thing that starts
 processes on a Debian box and keeps them started — adding an orchestrator to a
-small fleet buys complexity rather than reliability. Caddy because certificate
-renewal should be something nobody thinks about; a certificate that expires at
-three in the morning is an outage that was entirely avoidable.
+small fleet buys complexity rather than reliability. Caddy because certificate renewal should be something nobody thinks about.
+
+<Pull>A certificate that expires at three in the morning is an outage that was entirely avoidable.</Pull>
 
 ## Shipping it
 

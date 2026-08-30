@@ -127,8 +127,12 @@ const { href, org, title, period, summary, stack, cta, lead = false } = Astro.pr
   }
 
   /* The lead case gets size and a heavier rule; the rest stay quiet. */
+  /* The lead case leads on surface too, not only on size: a wash of the accent
+     mixed into the card colour, defined once in the token source. */
   .lead {
     padding: var(--space-32);
+    background: var(--color-surface-accent);
+    border-color: var(--color-border-accent);
     border-block-start: var(--stroke-rule) solid var(--color-action-primary);
   }
 

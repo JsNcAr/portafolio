@@ -232,6 +232,17 @@
         "$type": "color",
         "$value": "#0b2012"
       }
+    },
+    "wash": {
+      "$description": "Accent washes: the teal mixed into a card surface, for the one item that leads. The dark mix is held at 6% because 10% lifted the surface enough to drop text.tertiary to 4.45:1.",
+      "accent-light": {
+        "$type": "color",
+        "$value": "#eef0ea"
+      },
+      "accent-dark": {
+        "$type": "color",
+        "$value": "#3a3c36"
+      }
     }
   },
   "semantic": {
@@ -256,6 +267,10 @@
       "inverse": {
         "$type": "color",
         "$value": "{primitive.graphite.950}"
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{primitive.wash.accent-light}"
       }
     },
     "text": {
@@ -439,6 +454,10 @@
       "inverse": {
         "$type": "color",
         "$value": "{primitive.graphite.100}"
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{primitive.wash.accent-dark}"
       }
     },
     "text": {

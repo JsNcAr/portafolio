@@ -34,6 +34,11 @@ export const ui = {
     'home.intro.c':
       'Physics at Universidad de los Andes behind the mathematical work: Kalman filtering, sensor fusion, and data pipelines that have to be right rather than merely finished.',
 
+    'motif.alt':
+      'A noisy position signal and the same signal after Kalman filtering: the raw trace swings wildly while the filtered line moves smoothly.',
+    'motif.raw': 'raw samples',
+    'motif.filtered': 'Kalman filtered',
+
     'home.selected': 'Selected work',
     'home.selected.note': 'Three systems I owned end to end.',
     'home.more': 'Read the case study',
@@ -149,6 +154,11 @@ export const ui = {
       'Dos años de responsabilidad en producción: del diseño del esquema hasta el proxy inverso y el TLS, sin nadie más abajo a quien pasarle la parte difícil.',
     'home.intro.c':
       'Física en la Universidad de los Andes detrás del trabajo matemático: filtros de Kalman, fusión de sensores y pipelines de datos que tienen que estar correctos, no solamente terminados.',
+
+    'motif.alt':
+      'Una señal de posición ruidosa y la misma señal tras un filtro de Kalman: la traza cruda oscila con violencia mientras la línea filtrada se mueve con suavidad.',
+    'motif.raw': 'muestras crudas',
+    'motif.filtered': 'filtrado de Kalman',
 
     'home.selected': 'Trabajo seleccionado',
     'home.selected.note': 'Tres sistemas de los que fui responsable de principio a fin.',

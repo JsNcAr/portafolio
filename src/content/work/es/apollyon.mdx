@@ -9,6 +9,7 @@ summary: >-
 order: 1
 ---
 
+import Pull from '@components/Pull.astro';
 import Flow from '@components/diagrams/Flow.astro';
 import Layers from '@components/diagrams/Layers.astro';
 
@@ -117,9 +118,10 @@ enrutamiento y del TLS automático para la API de producción.
 
 Docker por reproducibilidad; systemd porque ya es lo que arranca procesos en una
 máquina Debian y los mantiene arrancados — agregar un orquestador a una flota
-pequeña compra complejidad, no confiabilidad. Caddy porque la renovación de
-certificados debería ser algo en lo que nadie piensa: un certificado que expira a
-las tres de la mañana es una caída perfectamente evitable.
+pequeña compra complejidad, no confiabilidad. Caddy porque la renovación de certificados debería ser algo en lo que nadie
+piensa.
+
+<Pull>Un certificado que expira a las tres de la mañana es una caída perfectamente evitable.</Pull>
 
 ## Cómo se entrega
 

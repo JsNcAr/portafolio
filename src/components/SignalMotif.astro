@@ -1,0 +1,99 @@
+---
+import type { Locale } from '@i18n/ui';
+import { useTranslations } from '@i18n/utils';
+import { signal, polyline } from '@lib/signal';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const { measured, filtered } = signal();
+const all = [...measured, ...filtered];
+const bounds = { min: Math.min(...all), max: Math.max(...all) };
+
+const W = 640;
+const H = 132;
+const PAD = 8;
+const noisy = polyline(measured, bounds, W, H, PAD);
+const clean = polyline(filtered, bounds, W, H, PAD);
+---
+
+<figure class="motif">
+  <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" role="img" aria-label={t('motif.alt')}>
+    <polyline class="noisy" points={noisy} />
+    <polyline class="clean" points={clean} />
+  </svg>
+  <figcaption>
+    <span class="swatch noisy-key" aria-hidden="true"></span>{t('motif.raw')}
+    <span class="sep" aria-hidden="true">&middot;</span>
+    <span class="swatch clean-key" aria-hidden="true"></span>{t('motif.filtered')}
+  </figcaption>
+</figure>
+
+<style>
+  .motif {
+    margin: 0;
+    min-inline-size: 0;
+  }
+
+  svg {
+    inline-size: 100%;
+    block-size: 8rem;
+    display: block;
+  }
+
+  @media (min-width: 48rem) {
+    svg {
+      block-size: 11rem;
+    }
+  }
+
+  .noisy {
+    fill: none;
+    stroke: var(--color-border-strong);
+    stroke-width: 1;
+    opacity: 0.5;
+  }
+
+  .clean {
+    fill: none;
+    stroke: var(--color-action-primary);
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+
+  figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-6);
+    margin-block-start: var(--space-12);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-tertiary);
+  }
+
+  /* The legend is a swatch plus words, never colour alone. */
+  .swatch {
+    inline-size: var(--space-12);
+    block-size: 2px;
+    border-radius: var(--radius-full);
+  }
+
+  .noisy-key {
+    background: var(--color-border-strong);
+  }
+
+  .clean-key {
+    background: var(--color-action-primary);
+    block-size: 3px;
+  }
+
+  .sep {
+    margin-inline: var(--space-4);
+  }
+</style>

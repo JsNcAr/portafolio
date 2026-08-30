@@ -1,0 +1,29 @@
+---
+/**
+ * A lifted line. The sentence is REMOVED from the paragraph it came from rather
+ * than duplicated beside it: a print pull quote can repeat body text because the
+ * eye skips it, but a screen reader would simply read it twice.
+ */
+---
+
+<p class="pull"><slot /></p>
+
+<style>
+  .pull {
+    margin-block: var(--space-32);
+    padding-inline-start: var(--space-20);
+    border-inline-start: var(--stroke-rule) solid var(--color-action-primary);
+    font-size: var(--text-xl);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text-primary);
+    max-inline-size: 44ch;
+    text-wrap: pretty;
+  }
+
+  @media (min-width: 48rem) {
+    .pull {
+      font-size: var(--text-2xl);
+    }
+  }
+</style>

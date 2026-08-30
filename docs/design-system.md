@@ -102,6 +102,38 @@ quiet; accenting three of five means accenting none.
 A diagram is allowed to be wider than the 65ch prose measure, because that
 measure exists for running text.
 
+## The signal motif
+
+`src/components/SignalMotif.astro` draws the home page's one piece of imagery:
+a noisy position signal and the same signal through a Kalman filter.
+
+`src/lib/signal.ts` **is the estimator** — a random walk, sampled with Gaussian
+noise, run through a real one-dimensional Kalman filter. The drawn curve is its
+output, not a hand-drawn squiggle. That matters: the motif is the same shape of
+problem as the BLE positioning work in the Apollyon case study, so it is about
+the subject rather than decorating it.
+
+A fixed seed keeps it deterministic, so a rebuild never shows up as a diff.
+
+It sits in the flow beneath the hero text, never behind it. Side by side was
+tried and rejected: a 72px display line and a wide trace cannot share 1024px
+without the heading breaking to three lines. The legend is a swatch **plus**
+words, never colour alone.
+
+## Icons
+
+Interface icons are inline lucide via `Icon.astro`, in `currentColor`.
+
+**Technology logos were tried and rejected.** Stripped to one colour at 14px,
+most stop being recognisable — a logo works through colour and silhouette
+together, and monochrome gives you one of them. Python, Docker, PostgreSQL,
+Debian and GitLab survive; SQLAlchemy, Pydantic, Selenium, Caddy and Hetzner
+become smudges. Putting a mark on every one of thirty-odd pills also made the
+section heavier without making it clearer.
+
+Decorative icons beside headings and labels are a clear tell of generated UI.
+Don't.
+
 ## Motion
 
 Two pieces, both essentially free:
