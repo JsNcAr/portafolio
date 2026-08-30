@@ -1,0 +1,26 @@
+{
+  "name": "Jason Nicolás Arias Gómez",
+  "short_name": "Jason Arias",
+  "description": "Python backend engineer. FastAPI, PostgreSQL, Docker, Linux.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#f2f0e8",
+  "theme_color": "#005152",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

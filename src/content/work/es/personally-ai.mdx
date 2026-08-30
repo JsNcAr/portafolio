@@ -1,0 +1,97 @@
+---
+role: personally-ai
+title: De ingeniero solo a líder de ingeniería
+summary: >-
+  Estandarizar la superficie de API y autenticación en el trabajo de clientes de un
+  estudio de automatización, automatizar reportes y generación de leads a volumen, y
+  hacer crecer el equipo de ingeniería de una persona a cinco sin dejar de programar.
+order: 2
+---
+
+## El encargo
+
+Personally AI es un estudio de automatización: el trabajo son proyectos de clientes,
+cada uno con su propia forma, y todos tienen que salir. Entré como desarrollador
+Python construyendo extracción de documentos, y volví después como líder de
+ingeniería, haciendo crecer el equipo de una operación individual a cinco personas
+sin dejar de estar metido en el código.
+
+El trabajo de estudio tiene un modo de falla que el trabajo de producto no tiene.
+Cada proyecto empieza de cero, así que cada proyecto reinventa la autenticación, el
+manejo de errores y el despliegue — un poco distinto cada vez, y cada variante se
+convierte en algo que alguien tiene que mantener. Casi todo lo que sigue es una
+respuesta a eso.
+
+## Estandarizar la superficie
+
+Diseñé y entregué APIs REST seguras con FastAPI, Pydantic y SQLAlchemy, y
+estandaricé la autenticación por JWT y llaves de API en los endpoints de cara al
+cliente.
+
+La estandarización es lo importante. Cuando la autenticación es una sola
+implementación revisada en lugar de cinco improvisadas, un arreglo de seguridad
+llega a todas partes de una vez, un ingeniero nuevo la aprende una sola vez, y la
+integración de un cliente se comporta como se comportó la del cliente anterior.
+Pydantic hace más trabajo del que aparenta: validar en el borde significa que la
+entrada mal formada se rechaza en un solo lugar con una sola forma de mensaje, en
+lugar de aparecer como una falla confusa tres capas más abajo.
+
+## Reportes que antes se hacían a mano
+
+Una agencia de marketing con más de sesenta cuentas de clientes necesitaba reportes
+que una persona estaba armando manualmente. Los reemplacé con extracción vía
+Selenium desde Meta Business Suite, y limpieza y análisis con Pandas — reduciendo el
+esfuerzo de reporteo cerca de un ochenta por ciento.
+
+La automatización de navegador es la herramienta de último recurso, y era la
+correcta: los datos estaban disponibles a través de una interfaz hecha para
+personas, no a través de una API que alguien pudiera llamar. Esa decisión tiene un
+costo, y vale la pena ser honesto al respecto. Un scraper está acoplado a una
+interfaz que su dueño puede cambiar sin avisar, así que tiene que fallar de forma
+ruidosa en lugar de devolver nada en silencio.
+
+Sesenta cuentas también es un problema distinto de una. Un proceso que funciona para
+una sola cuenta y toma treinta segundos se convierte en un trabajo serial de media
+hora que falla en la cuenta cuarenta y uno y te deja sin saber cuáles de las
+cuarenta anteriores se completaron. El trabajo consiste tanto en hacer la ejecución
+reanudable y sus fallas legibles como en la extracción misma.
+
+## Generación de leads a volumen
+
+Construí un servicio de CRM y generación de leads que procesa miles de leads por
+ejecución mediante la API de Apollo, con consultas optimizadas y gestión de tareas
+en segundo plano para cargas de alto volumen.
+
+Miles de registros por ejecución descarta hacer el trabajo dentro de una petición.
+Quien dispara una ejecución debería recibir una confirmación inmediata y una forma
+de consultar el avance, no una conexión abierta hasta que un timeout la mate. Mover
+el trabajo a tareas en segundo plano es lo que lo hace posible — y cambia el diseño,
+porque el trabajo ahora necesita su propio estado, su propio comportamiento de
+reintento, y una manera de reportar lo que hizo.
+
+La optimización de consultas es la mitad poco vistosa. Con unos cientos de registros
+casi cualquier forma de consulta funciona. Con unos miles, un índice faltante
+convierte una ejecución de segundos en uno de minutos, y la única manera de saber
+cuál es mirando.
+
+## La infraestructura debajo
+
+Operé infraestructura híbrida — Hetzner Cloud junto con Debian on-premise — con
+Docker y daemons de Linux, y revisé la arquitectura de un chatbot de puntuación de
+leads con LLM integrado con HubSpot.
+
+Lo híbrido es una respuesta pragmática, no ideológica. Nube donde la elasticidad y
+el tiempo de actividad de otro valen lo que cuestan; hardware propio donde la carga
+es estable y predecible, que es la mayor parte. Mantener ambos sobre Docker permite
+que un servicio se mueva entre ellos sin reescribirse.
+
+## Hacer crecer el equipo
+
+Pasar de un ingeniero a cinco cambia cuál es el trabajo. El cuello de botella deja
+de ser cuánto puedes escribir y pasa a ser cuánto pueden entregar personas que no
+tomaron las decisiones originales. La autenticación estandarizada y los patrones de
+API de más arriba fueron la palanca: son lo que permite que alguien nuevo sea útil
+en días en lugar de semanas, porque la forma de la respuesta ya está establecida.
+
+Seguí metido en el código todo el tiempo. Revisar una arquitectura que ya no
+escribes es una buena manera de equivocarte con mucha seguridad.

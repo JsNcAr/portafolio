@@ -1,0 +1,59 @@
+# Static hosting for the portfolio. Matches the /opt/<project>/dist + file_server
+# convention already used on this server.
+#
+#   Import it from the main Caddyfile:      import /opt/jasonarias/deploy/Caddyfile
+#   or paste this block in directly.
+#
+# TLS is automatic: point the A/AAAA records at this host first, or Caddy's ACME
+# challenge fails and the site never comes up.
+
+jasonarias.dev, www.jasonarias.dev {
+	root * /opt/jasonarias/dist
+	encode zstd gzip
+
+	# Astro is configured with trailingSlash: 'never' and build.format: 'directory',
+	# so /work is a directory holding index.html. try_files resolves that, and
+	# strips a trailing slash if someone types one.
+	# Canonical URLs carry no trailing slash (Astro trailingSlash: 'never'), so
+	# /work/ redirects to /work instead of answering as a duplicate URL.
+	# The regexp matcher needs an explicit NAME -- captures are {re.<name>.N},
+	# and an unnamed one expands to nothing and loops the redirect.
+	@trail path_regexp trail ^(.+)/$
+	redir @trail {re.trail.1} 308
+
+	try_files {path} {path}/index.html {path}.html
+
+	# Content-addressed filenames (/_astro/name.HASH.css) can be cached forever.
+	@immutable path /_astro/*
+	header @immutable Cache-Control "public, max-age=31536000, immutable"
+
+	# HTML must revalidate, or a deploy is invisible to anyone who has visited.
+	@html path *.html /
+	header @html Cache-Control "public, max-age=0, must-revalidate"
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		# The site loads no third-party anything. Fonts and CSS are self-hosted.
+		Content-Security-Policy "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+		-Server
+	}
+
+	handle_errors {
+		# Spanish visitors get the Spanish 404; everyone else the English one.
+		# build.format is 'directory', so every page except the root 404 is
+		# <route>/index.html. Astro emits the root one as /404.html exactly.
+		@es path /es/*
+		rewrite @es /es/404/index.html
+		rewrite * /404.html
+
+		file_server
+	}
+
+	file_server
+	log {
+		output file /var/log/caddy/jasonarias.access.log
+		format console
+	}
+}

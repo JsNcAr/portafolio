@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import CaseStudyPage from '@components/pages/CaseStudyPage.astro';
+
+const LOCALE = 'en' as const;
+
+export async function getStaticPaths() {
+  const locale = 'en';
+  const entries = (await getCollection('work'))
+    .filter((entry) => entry.id.startsWith(`${locale}/`))
+    .sort((a, b) => a.data.order - b.data.order);
+
+  return entries.map((entry, index) => {
+    const at = (i: number) => {
+      const e = entries[i];
+      return e ? { slug: e.data.role, title: e.data.title } : undefined;
+    };
+    return {
+      params: { slug: entry.data.role },
+      props: { entry, prev: at(index - 1), next: at(index + 1) },
+    };
+  });
+}
+
+const { entry, prev, next } = Astro.props;
+---
+
+<CaseStudyPage locale={LOCALE} entry={entry} prev={prev} next={next} />

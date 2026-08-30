@@ -1,0 +1,108 @@
+---
+import Icon from './Icon.astro';
+import type { Locale } from '@i18n/ui';
+import { useTranslations } from '@i18n/utils';
+import { contact } from '@data/cv';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const year = new Date().getFullYear();
+
+const social = [
+  { href: contact.github, label: 'GitHub', icon: 'github' as const },
+  { href: contact.linkedin, label: 'LinkedIn', icon: 'linkedin' as const },
+  { href: `mailto:${contact.email}`, label: contact.email, icon: 'mail' as const },
+];
+---
+
+<footer class="site-footer">
+  <div class="shell inner">
+    <div class="says">
+      <p class="overline">{t('footer.contact')}</p>
+      <ul class="links">
+        {social.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              rel={item.href.startsWith('mailto:') ? undefined : 'me noopener'}
+              target={item.href.startsWith('mailto:') ? undefined : '_blank'}
+            >
+              <Icon name={item.icon} size={16} />
+              <span>{item.label}</span>
+              {!item.href.startsWith('mailto:') && (
+                <Icon name="arrow-up-right" size={14} />
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="colophon">
+      <p>{t('footer.built')}</p>
+      <p class="rights">&copy; {year} Jason Nicolás Arias Gómez. {t('footer.rights')}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-block-start: var(--space-96);
+    border-block-start: var(--stroke-hairline) solid var(--color-border-default);
+    background: var(--color-surface-sunken);
+  }
+
+  .inner {
+    display: grid;
+    gap: var(--space-32);
+    padding-block: var(--space-48);
+  }
+
+  @media (min-width: 48rem) {
+    .inner {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+      gap: var(--space-48);
+    }
+  }
+
+  .links {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-12) 0 0;
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-8);
+    min-block-size: var(--space-28);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: var(--text-sm);
+  }
+
+  .links a:hover {
+    color: var(--color-text-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .colophon {
+    display: grid;
+    gap: var(--space-12);
+    align-content: start;
+    max-inline-size: var(--measure-prose);
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+  }
+
+  .rights {
+    color: var(--color-text-tertiary);
+  }
+</style>

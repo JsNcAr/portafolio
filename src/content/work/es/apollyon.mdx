@@ -1,0 +1,111 @@
+---
+role: apollyon
+title: Responsable de una plataforma de principio a fin
+summary: >-
+  Único responsable del backend y la infraestructura de una plataforma de rastreo
+  de proximidad con enfoque offline-first: la API, la autenticación, los servidores
+  donde corre, y las matemáticas de fusión de sensores que hacen utilizable el
+  posicionamiento.
+order: 1
+---
+
+## El encargo
+
+Apollyon construye una plataforma de rastreo de proximidad y comunicación que tiene
+que seguir funcionando cuando no hay conectividad. Esa restricción determina todo
+lo demás: los dispositivos no pueden dar por hecha una red, las posiciones tienen
+que calcularse en el terreno en lugar de consultarse, y el backend tiene que
+aceptar una ráfaga de telemetría acumulada cada vez que un dispositivo se
+reconecta, en lugar de un flujo ordenado en tiempo real.
+
+Soy el único responsable del backend y de la infraestructura sobre la que corre. No
+hay un equipo de plataforma a quien pasarle la parte difícil, así que la misma
+persona diseña el esquema, escribe la API, aprovisiona los servidores, configura el
+proxy inverso y responde cuando producción deja de contestar.
+
+## La API
+
+El servicio es una API REST completamente asíncrona en Python — FastAPI sobre
+SQLModel y PostgreSQL — con el esquema, las migraciones y los contratos de error
+diseñados desde cero.
+
+Que sea asíncrona no es un adorno. La carga es casi enteramente de entrada y salida:
+muchos dispositivos manteniendo conexiones, escribiendo telemetría, esperando a la
+base de datos. Un grupo de procesos síncronos se pasa la vida bloqueado en sockets,
+y la solución siempre es más procesos. Un bucle de eventos asíncrono sostiene esas
+conexiones de forma barata, que es la diferencia entre un servidor modesto y una
+flota de ellos.
+
+Diseñar los **contratos de error** junto con el esquema importó más de lo que
+parece. Un cliente con un enlace intermitente necesita distinguir entre "tu
+petición estaba mal formada y nunca va a funcionar" y "vuelve a intentarlo cuando
+tengas señal". Meter esa distinción en la forma de la respuesta desde el principio
+permite que el firmware del dispositivo implemente los reintentos correctamente en
+lugar de adivinar a partir de códigos de estado.
+
+## Autenticación por capas
+
+Todos los endpoints de usuarios y dispositivos están detrás de un esquema en capas:
+OAuth2, JWT firmados y llaves de API, con contraseñas protegidas por bcrypt a doce
+rondas.
+
+Tres mecanismos en lugar de uno, porque las personas y los dispositivos no son el
+mismo tipo de actor. Una persona inicia sesión de forma interactiva, recibe un token
+de vida corta, y se le puede volver a pedir credenciales cuando expira. Un
+dispositivo en campo no tiene a quién preguntarle. Necesita una credencial de larga
+duración, emitida una vez, con alcance limitado y revocable individualmente — de
+modo que perder una unidad signifique revocar una llave, y no rotar un secreto en
+toda la flota.
+
+El costo de bcrypt es un número deliberado, no un valor por defecto. Doce rondas es
+lo bastante lento como para encarecer un ataque de fuerza bruta fuera de línea y lo
+bastante rápido como para que la latencia del inicio de sesión siga siendo
+aceptable. Es el tipo de parámetro que conviene elegir y dejar por escrito, porque
+el valor correcto se mueve a medida que el hardware mejora.
+
+## Convertir ruido de radio en posición
+
+La plataforma deriva el posicionamiento espacial de una malla de Bluetooth Low
+Energy, con filtros de Kalman extendidos y suavizado de RSSI.
+
+La intensidad de señal recibida es una tentadora medida de distancia, y una muy
+mala. Decae de forma logarítmica con la distancia, así que el mismo error de
+medición equivale a centímetros cerca de la baliza y a metros más lejos. Rebota en
+las paredes, y un cuerpo humano entre el transmisor y el receptor puede costar una
+fracción grande de la señal. Leída de forma ingenua, un dispositivo quieto parece
+teletransportarse.
+
+Un filtro de Kalman es justamente el instrumento adecuado para este tipo de
+problema: mantiene una creencia sobre dónde está algo y cómo se mueve, e incorpora
+cada nueva medición según cuánta confianza merece. La variante **extendida** se
+hace cargo de que la relación entre intensidad de señal y distancia no es lineal.
+El resultado es una posición que se mueve como se mueve un objeto real, en lugar de
+una que sigue al ruido.
+
+Esta es la parte del trabajo donde el pregrado en física deja de ser un antecedente
+y pasa a ser la razón por la que la funcionalidad sirve.
+
+## Cómo corre
+
+Cada servicio está en contenedores con Docker y supervisado por systemd en
+servidores Debian propios de la empresa, con Caddy en el borde encargándose del
+enrutamiento y del TLS automático para la API de producción.
+
+Docker por reproducibilidad; systemd porque ya es lo que arranca procesos en una
+máquina Debian y los mantiene arrancados — agregar un orquestador a una flota
+pequeña compra complejidad, no confiabilidad. Caddy porque la renovación de
+certificados debería ser algo en lo que nadie piensa: un certificado que expira a
+las tres de la mañana es una caída perfectamente evitable.
+
+## Cómo se entrega
+
+Desplegué una instancia autoalojada de GitLab con pipelines de CI/CD que llevan las
+actualizaciones del backend a producción al hacer merge, además de reglas de ramas
+y documentación interna en GitLab Pages.
+
+Autoalojada porque el código vive en infraestructura que la empresa posee, y ese era
+el punto. Desplegar al hacer merge porque un despliegue que requiere a una persona
+es un despliegue que se acumula, y los despliegues acumulados son la forma en que
+los cambios pequeños se convierten en entregas grandes y difíciles de diagnosticar.
+La documentación queda al lado de los pipelines en vez de en otra herramienta, así
+que está frente a quien esté mirando el código.

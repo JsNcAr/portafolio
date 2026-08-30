@@ -1,0 +1,130 @@
+---
+import Base from '@layouts/Base.astro';
+import Icon from '@components/Icon.astro';
+import type { Locale } from '@i18n/ui';
+import { useTranslations, localePath } from '@i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const destinations = [
+  { href: '/work', label: t('nav.work') },
+  { href: '/open-source', label: t('nav.opensource') },
+  { href: '/about', label: t('nav.about') },
+  { href: '/contact', label: t('nav.contact') },
+];
+---
+
+<Base locale={locale} path="/404" noindex title={t('notfound.title')} description={t('notfound.body')}>
+  <section class="notfound">
+    <div class="shell inner">
+      <p class="overline">{t('notfound.code')}</p>
+      <h1>{t('notfound.title')}</h1>
+      <p class="body">{t('notfound.body')}</p>
+
+      <p class="home">
+        <a class="btn" href={localePath(locale, '/')}>
+          {t('notfound.home')}
+          <Icon name="arrow-right" size={16} />
+        </a>
+      </p>
+
+      <ul class="elsewhere">
+        {destinations.map((d) => (
+          <li>
+            <a href={localePath(locale, d.href)}>{d.label}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* An empty state owns the viewport it is in rather than floating under the
+     header with a screen of nothing below it. */
+  .notfound {
+    display: flex;
+    align-items: center;
+    min-block-size: 68svb;
+    padding-block: var(--space-64);
+  }
+
+  .inner {
+    inline-size: 100%;
+  }
+
+  h1 {
+    font-size: var(--text-4xl);
+    letter-spacing: var(--tracking-tighter);
+    margin-block: var(--space-12) var(--space-16);
+    max-inline-size: 18ch;
+  }
+
+  @media (min-width: 48rem) {
+    h1 {
+      font-size: var(--text-5xl);
+    }
+  }
+
+  .body {
+    color: var(--color-text-secondary);
+    max-inline-size: var(--measure-prose);
+    font-size: var(--text-lg);
+  }
+
+  .home {
+    margin-block-start: var(--space-28);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-8);
+    min-block-size: var(--space-44);
+    padding: var(--space-10) var(--space-20);
+    border-radius: var(--radius-md);
+    background: var(--color-action-primary);
+    color: var(--color-text-on-action);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    text-decoration: none;
+    border: var(--stroke-thin) solid transparent;
+    transition: background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .btn:hover {
+    background: var(--color-action-primary-hover);
+  }
+
+  .btn:active {
+    background: var(--color-action-primary-active);
+  }
+
+  .elsewhere {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8) var(--space-20);
+    list-style: none;
+    padding: var(--space-20) 0 0;
+    margin-block-start: var(--space-32);
+    border-block-start: var(--stroke-hairline) solid var(--color-border-default);
+  }
+
+  .elsewhere a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--space-28);
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+  }
+
+  .elsewhere a:hover {
+    color: var(--color-text-primary);
+  }
+</style>

@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.astro/
+.gate-site/
+
+# Screenshots from `npm run shot`, which land next to the file being shot.
+*.png
+!public/*.png

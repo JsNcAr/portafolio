@@ -1,0 +1,64 @@
+---
+role: atonga
+title: A conversational commerce backend
+summary: >-
+  Co-designing the backend for a multichannel e-commerce platform where the same
+  storefront has to be operated through a web app and through chat, with an LLM
+  assistant on both sides of the transaction.
+order: 3
+---
+
+## The brief
+
+Atonga is an AI-driven multichannel e-commerce platform for small entrepreneurs —
+sellers who need a storefront but not a full commerce operation behind it. I
+co-designed the backend architecture and served as Co-CTO.
+
+The defining requirement is in the word multichannel. The same storefront is
+operated from a web application and through a chat client, and both are
+first-class. That is a harder constraint than it sounds, and it is the constraint
+that decided the architecture.
+
+## One domain, several transports
+
+The backend is Python and FastAPI over PostgreSQL, serving real-time requests from
+web and chat clients.
+
+The temptation with two front ends is to build two backends — a web API and a chat
+integration, each with its own idea of what a product and an order are. It works
+until the two disagree, and then a seller sees one inventory count in the app and a
+different one in a conversation, and stops trusting the platform entirely.
+
+So the domain lives in one place and the channels are transports over it. Adding a
+channel becomes a translation problem rather than a re-implementation, and any rule
+about what constitutes a valid order is enforced once.
+
+Real-time matters for the same reason. A seller updating stock in the web app and a
+buyer asking about that product in chat are looking at the same underlying fact
+seconds apart, and the platform is only credible if they agree.
+
+## The assistant
+
+I integrated an LLM-powered assistant that lets sellers manage their storefronts
+and buyers find products conversationally.
+
+Two quite different jobs behind one interface. On the seller side the assistant
+takes actions with consequences — changing a price, adjusting inventory — which
+means its capabilities have to be bounded explicitly, and it must not be able to do
+anything the seller could not do themselves through the API. On the buyer side it
+is search over a catalogue, where the failure mode is not damage but disappointment:
+confidently recommending something that is out of stock.
+
+Both cases point the same way. The assistant is a channel into the domain, subject
+to the same validation and the same permissions as any other. It is not a privileged
+path around them.
+
+## Standards and how the team worked
+
+I set the engineering standards and remote workflows for the team, coordinating
+delivery through Jira and Slack.
+
+For a small distributed team, the standards that pay for themselves are the ones
+that remove ambiguity from routine decisions — where code goes, what a review is
+for, what "done" means. The goal is not process for its own sake but reducing the
+number of things that have to be negotiated in a message thread across time zones.

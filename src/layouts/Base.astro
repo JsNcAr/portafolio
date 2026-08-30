@@ -1,0 +1,130 @@
+---
+import '@fontsource-variable/ibm-plex-sans';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '@styles/theme.css';
+import '@styles/base.css';
+
+import SiteHeader from '@components/SiteHeader.astro';
+import SiteFooter from '@components/SiteFooter.astro';
+import { HTML_LANG, type Locale } from '@i18n/ui';
+import { useTranslations, localePath, alternates } from '@i18n/utils';
+import { contact, roles, education } from '@data/cv';
+
+interface Props {
+  locale: Locale;
+  /** Canonical, English-rooted path for this page: '/', '/work', '/work/apollyon'. */
+  path: string;
+  title: string;
+  description: string;
+  /** Error pages: no canonical, no hreflang, no indexing. */
+  noindex?: boolean;
+}
+
+const { locale, path, title, description, noindex = false } = Astro.props;
+const t = useTranslations(locale);
+const canonical = new URL(localePath(locale, path), Astro.site);
+const alts = alternates(path);
+const fullTitle = path === '/' ? `${t('site.name')} — ${t('site.role')}` : `${title} — ${t('site.name')}`;
+const ogImage = new URL(`/og-${locale}.png`, Astro.site);
+
+// Structured data lets a search result show the role and employer rather than
+// guessing them out of the page text. Every field is already public on the site.
+const currentRole = roles.find((role) => role.end === null);
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Jason Nicolás Arias Gómez',
+  alternateName: 'Jason Arias',
+  jobTitle: t('site.role'),
+  email: `mailto:${contact.email}`,
+  url: canonical.origin,
+  image: ogImage.href,
+  sameAs: [contact.github, contact.linkedin],
+  address: { '@type': 'PostalAddress', addressLocality: 'Bogotá', addressCountry: 'CO' },
+  worksFor: currentRole ? { '@type': 'Organization', name: currentRole.org } : undefined,
+  alumniOf: { '@type': 'CollegeOrUniversity', name: education.org },
+  knowsLanguage: ['es', 'en'],
+  knowsAbout: ['Python', 'FastAPI', 'PostgreSQL', 'Docker', 'Linux', 'DevOps', 'REST APIs'],
+};
+---
+
+<!doctype html>
+<html lang={HTML_LANG[locale]}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {noindex ? (
+      <meta name="robots" content="noindex, follow" />
+    ) : (
+      <Fragment>
+        <link rel="canonical" href={canonical} />
+        {alts.map(({ locale: l, href }) => (
+          <link rel="alternate" hreflang={HTML_LANG[l]} href={new URL(href, Astro.site)} />
+        ))}
+        <link rel="alternate" hreflang="x-default" href={new URL(localePath('en', path), Astro.site)} />
+      </Fragment>
+    )}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={HTML_LANG[locale].replace('-', '_')} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${t('site.name')} — ${t('site.role')}`} />
+    <meta property="og:site_name" content={t('site.name')} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {!noindex && (
+      <script
+        type="application/ld+json"
+        is:inline
+        set:html={JSON.stringify(personSchema)}
+      />
+    )}
+
+    <!-- Applies the stored theme before first paint, so a dark-mode reader never
+         sees a flash of the light palette. Inline and tiny by necessity. -->
+    <script is:inline>
+      (() => {
+        try {
+          const saved = localStorage.getItem('theme');
+          if (saved === 'dark' || saved === 'light') {
+            document.documentElement.setAttribute('data-theme', saved);
+          }
+        } catch {
+          /* Private mode or blocked storage: the OS preference still applies. */
+        }
+      })();
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">{t('nav.skip')}</a>
+    <SiteHeader locale={locale} path={path} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <SiteFooter locale={locale} />
+  </body>
+</html>
+
+<style>
+  main {
+    flex: 1 1 auto;
+    /* A focus target must not draw its own ring; the skip link moves focus here. */
+    outline: none;
+  }
+</style>

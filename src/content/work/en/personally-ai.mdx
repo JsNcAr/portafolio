@@ -1,0 +1,90 @@
+---
+role: personally-ai
+title: From solo engineer to head of engineering
+summary: >-
+  Standardising the API and authentication surface across an automation studio's
+  client work, automating reporting and lead generation at volume, and growing
+  the engineering team from one person to five without stepping away from the code.
+order: 2
+---
+
+## The brief
+
+Personally AI is an automation studio: the work is client projects, each with its
+own shape, all needing to ship. I joined as a Python developer building document
+extraction, and later returned as Head of Engineering, growing the team from a solo
+operation to five people while remaining hands-on.
+
+Studio work has a failure mode that product work does not. Every project is a fresh
+start, so every project reinvents authentication, error handling and deployment —
+slightly differently each time, and each variant becomes something somebody has to
+maintain. Most of what follows is a response to that.
+
+## Standardising the surface
+
+I designed and shipped secure REST APIs with FastAPI, Pydantic and SQLAlchemy, and
+standardised JWT and API-key authentication across client-facing endpoints.
+
+The standardisation is the substance. Once authentication is one reviewed
+implementation instead of five improvised ones, a security fix lands everywhere at
+once, a new engineer learns it once, and a client integration behaves the way the
+previous client integration behaved. Pydantic does more work here than it appears
+to: validating at the boundary means malformed input is rejected in one place with
+one message shape, rather than surfacing as a confusing failure three layers down.
+
+## Reporting that used to be done by hand
+
+A marketing agency running more than sixty client accounts needed reporting that a
+person was assembling manually. I replaced it with Selenium extraction from Meta
+Business Suite, then cleaning and analysis in Pandas — cutting the reporting effort
+by around eighty percent.
+
+Browser automation is the tool of last resort, and it was the right one: the data
+was reachable through an interface built for humans, not through an API anyone
+could call. That choice has a cost, and being honest about it matters. A scraper is
+coupled to a user interface that its owner can change without warning, so it needs
+to fail loudly rather than quietly returning nothing.
+
+Sixty accounts is also a different problem from one. A process that works for a
+single account and takes thirty seconds becomes a half-hour serial job that fails
+on account forty-one and leaves you unsure which of the previous forty completed.
+The work is as much about making the run resumable and its failures legible as it
+is about the extraction itself.
+
+## Lead generation at volume
+
+I built a CRM and lead-generation service that processes thousands of leads per run
+through the Apollo API, using optimised queries and background task management for
+high-volume workloads.
+
+Thousands of records per run rules out doing the work inside a request. A user who
+triggers a run should get an immediate acknowledgement and a way to check progress,
+not a connection held open until a timeout kills it. Moving the work to background
+tasks is what makes that possible — and it changes the design, because the job now
+needs its own state, its own retry behaviour, and a way to report what it did.
+
+The query optimisation is the unglamorous half. At a few hundred records almost any
+query shape works. At a few thousand, one missing index turns a run from seconds
+into minutes, and the only way to know which one is to look.
+
+## The infrastructure underneath
+
+I ran hybrid infrastructure — Hetzner Cloud alongside on-premise Debian — with
+Docker and Linux daemons, and reviewed the architecture for an LLM lead-scoring
+chatbot integrated with HubSpot.
+
+Hybrid is a pragmatic answer rather than an ideological one. Cloud where elasticity
+and someone else's uptime are worth paying for; owned hardware where the workload is
+steady and predictable, which is most of it. Keeping both on Docker means a service
+can move between them without being rewritten.
+
+## Growing the team
+
+Going from one engineer to five changes what the job is. The bottleneck stops being
+how much you can write and becomes how much can be shipped by people who did not
+make the original decisions. The standardised authentication and API patterns above
+were the leverage: they are what let a new engineer be useful in days rather than
+weeks, because the shape of the answer is already established.
+
+I stayed hands-on throughout. Reviewing an architecture you no longer write is a
+good way to be confidently wrong about it.

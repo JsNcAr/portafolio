@@ -1,0 +1,102 @@
+---
+role: apollyon
+title: Owning a platform end to end
+summary: >-
+  Sole backend and infrastructure owner for an offline-first proximity tracking
+  platform: the API, the authentication, the servers it runs on, and the
+  sensor-fusion maths that makes the positioning usable.
+order: 1
+---
+
+## The brief
+
+Apollyon builds a proximity tracking and communication platform that has to keep
+working when there is no connectivity. That constraint shapes everything: devices
+cannot assume a network, positions have to be derived on the ground rather than
+looked up, and the backend has to accept a burst of buffered telemetry whenever a
+device reconnects rather than a tidy real-time stream.
+
+I am the sole owner of the backend and of the infrastructure it runs on. There is
+no platform team to hand the hard part to, so the same person designs the schema,
+writes the API, provisions the servers, configures the reverse proxy and answers
+when production stops responding.
+
+## The API
+
+The service is a fully asynchronous REST API in Python — FastAPI over SQLModel and
+PostgreSQL — with the schema, the migrations and the error contracts designed from
+scratch.
+
+Asynchronous is not decoration here. The workload is almost entirely I/O bound:
+many devices holding connections, writing telemetry, waiting on the database. A
+synchronous worker pool spends its life blocked on sockets, and the fix is always
+more processes. An async event loop holds those connections cheaply, which is the
+difference between one modest server and a fleet of them.
+
+Designing the **error contracts** alongside the schema mattered more than it
+sounds. A client on an intermittent link needs to distinguish "your request was
+malformed and will never succeed" from "try again when you have signal." Getting
+that distinction into the response shape from the beginning means the device
+firmware can implement retry logic correctly instead of guessing from status codes.
+
+## Authentication in layers
+
+Every user and device endpoint sits behind a layered scheme: OAuth2, signed JWTs,
+and API keys, with passwords hashed by bcrypt at twelve rounds.
+
+Three mechanisms rather than one, because humans and devices are not the same
+principal. A person logs in interactively, gets a short-lived token, and can be
+prompted again when it expires. A device in the field has no one to prompt. It
+needs a long-lived credential that is issued once, scoped narrowly, and revocable
+individually — so that losing one unit means revoking one key, not rotating a
+secret across the whole fleet.
+
+The bcrypt cost is a deliberate number rather than a default. Twelve rounds is
+slow enough to make offline cracking expensive and fast enough that login latency
+stays acceptable. It is the kind of parameter that should be chosen and written
+down, because the right value moves as hardware gets faster.
+
+## Turning radio noise into position
+
+The platform derives spatial positioning from a Bluetooth Low Energy mesh, using
+Extended Kalman Filters and RSSI smoothing.
+
+Received signal strength is a tempting distance proxy and a terrible one. It falls
+off logarithmically with distance, so the same measurement error means a
+centimetre near the beacon and metres further away. It reflects off walls, and a
+human body between transmitter and receiver can cost a large fraction of the
+signal. Read naively, a stationary device appears to teleport.
+
+A Kalman filter is the right instrument for exactly this shape of problem: it
+maintains a belief about where something is and how it is moving, and folds each
+new measurement in according to how much that measurement deserves to be trusted.
+The **extended** variant handles the fact that the relationship between signal
+strength and distance is not linear. The result is a position that moves the way
+an object actually moves, instead of one that follows the noise.
+
+This is the part of the work where a physics degree stops being background and
+starts being the reason the feature works at all.
+
+## Running it
+
+Every service is containerised with Docker and supervised by systemd on
+company-owned Debian servers, with Caddy at the edge handling routing and
+automatic TLS for the production API.
+
+Docker for reproducibility, systemd because it is already the thing that starts
+processes on a Debian box and keeps them started — adding an orchestrator to a
+small fleet buys complexity rather than reliability. Caddy because certificate
+renewal should be something nobody thinks about; a certificate that expires at
+three in the morning is an outage that was entirely avoidable.
+
+## Shipping it
+
+I deployed a self-hosted GitLab instance with CI/CD pipelines that push backend
+updates to production on merge, plus branching rules and internal documentation on
+GitLab Pages.
+
+Self-hosted because the code lives on infrastructure the company owns, and that
+was the point. Deploying on merge because a deploy that takes a human is a deploy
+that gets batched, and batched deploys are how small changes turn into large,
+hard-to-diagnose releases. The documentation sits next to the pipelines rather
+than in a separate tool, so it is in front of whoever is looking at the code.

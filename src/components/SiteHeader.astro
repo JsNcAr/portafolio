@@ -1,0 +1,139 @@
+---
+import LangSwitch from './LangSwitch.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import type { Locale } from '@i18n/ui';
+import { useTranslations, localePath } from '@i18n/utils';
+
+interface Props {
+  locale: Locale;
+  path: string;
+}
+
+const { locale, path } = Astro.props;
+const t = useTranslations(locale);
+
+const links = [
+  { href: '/work', label: t('nav.work') },
+  { href: '/open-source', label: t('nav.opensource') },
+  { href: '/about', label: t('nav.about') },
+  { href: '/contact', label: t('nav.contact') },
+];
+
+const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`);
+---
+
+<header class="site-header">
+  <div class="shell bar">
+    <a class="wordmark" href={localePath(locale, '/')} aria-current={path === '/' ? 'page' : undefined}>
+      {t('site.name')}
+    </a>
+
+    <nav aria-label={t('nav.label')}>
+      <ul>
+        {links.map((link) => (
+          <li>
+            <a
+              href={localePath(locale, link.href)}
+              aria-current={isCurrent(link.href) ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="tools">
+      <ThemeToggle />
+      <LangSwitch locale={locale} path={path} />
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--z-sticky);
+    /* Opaque on purpose. A translucent bar makes the text contrast depend on
+       whatever scrolls under it, which is unmeasurable and occasionally wrong. */
+    background: var(--color-surface-page);
+    border-block-end: var(--stroke-hairline) solid var(--color-border-default);
+  }
+
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-12) var(--space-24);
+    padding-block: var(--space-12);
+  }
+
+  .wordmark {
+    font-weight: var(--weight-semibold);
+    font-size: var(--text-lg);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    /* Keeps the wordmark and the nav apart on wide screens, together when wrapped. */
+    margin-inline-end: auto;
+  }
+
+  nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4) var(--space-20);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  nav a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--space-36);
+    padding-block: var(--space-4);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    border-block-end: var(--stroke-thin) solid transparent;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  nav a:hover {
+    color: var(--color-text-primary);
+    border-block-end-color: var(--color-border-strong);
+  }
+
+  /* Current page is marked by weight and a rule, never by colour alone. */
+  nav a[aria-current='page'] {
+    color: var(--color-text-primary);
+    font-weight: var(--weight-semibold);
+    border-block-end-color: var(--color-action-primary);
+  }
+
+  .tools {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  /* Below 30rem the four nav items and both tools cannot share a row. Let the
+     nav take a full row of its own rather than compressing the tools. */
+  @media (max-width: 30rem) {
+    .bar {
+      gap: var(--space-8) var(--space-12);
+    }
+
+    nav {
+      order: 3;
+      flex-basis: 100%;
+    }
+
+    nav ul {
+      gap: var(--space-4) var(--space-16);
+    }
+  }
+</style>

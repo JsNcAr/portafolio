@@ -1,0 +1,66 @@
+---
+role: atonga
+title: Un backend de comercio conversacional
+summary: >-
+  Codiseñar el backend de una plataforma de comercio electrónico multicanal donde la
+  misma tienda tiene que operarse desde una aplicación web y desde un chat, con un
+  asistente con LLM en ambos lados de la transacción.
+order: 3
+---
+
+## El encargo
+
+Atonga es una plataforma de comercio electrónico multicanal impulsada por IA para
+pequeños emprendedores — vendedores que necesitan una tienda pero no toda una
+operación de comercio detrás. Codiseñé la arquitectura del backend y fui Co-CTO.
+
+El requisito que define todo está en la palabra multicanal. La misma tienda se opera
+desde una aplicación web y desde un cliente de chat, y ambos son de primera clase.
+Esa restricción es más dura de lo que suena, y es la que decidió la arquitectura.
+
+## Un dominio, varios transportes
+
+El backend es Python y FastAPI sobre PostgreSQL, atendiendo peticiones en tiempo
+real desde clientes web y de chat.
+
+La tentación con dos frentes es construir dos backends — una API web y una
+integración de chat, cada una con su propia idea de qué es un producto y qué es un
+pedido. Funciona hasta que las dos no coinciden, y entonces un vendedor ve un
+inventario en la aplicación y otro distinto en una conversación, y deja de confiar
+en la plataforma por completo.
+
+Así que el dominio vive en un solo lugar y los canales son transportes sobre él.
+Agregar un canal pasa a ser un problema de traducción y no de reimplementación, y
+cualquier regla sobre qué constituye un pedido válido se aplica una sola vez.
+
+El tiempo real importa por la misma razón. Un vendedor actualizando existencias en
+la aplicación web y un comprador preguntando por ese producto en el chat están
+mirando el mismo hecho con segundos de diferencia, y la plataforma solo es creíble
+si coinciden.
+
+## El asistente
+
+Integré un asistente con LLM que permite a los vendedores gestionar sus tiendas y a
+los compradores encontrar productos conversando.
+
+Son dos trabajos bastante distintos detrás de una sola interfaz. Del lado del
+vendedor el asistente ejecuta acciones con consecuencias — cambiar un precio,
+ajustar inventario — lo que obliga a acotar sus capacidades de forma explícita, y a
+que no pueda hacer nada que el vendedor no pudiera hacer por su cuenta a través de
+la API. Del lado del comprador es búsqueda sobre un catálogo, donde el modo de falla
+no es el daño sino la decepción: recomendar con seguridad algo que está agotado.
+
+Ambos casos apuntan en la misma dirección. El asistente es un canal hacia el
+dominio, sujeto a la misma validación y a los mismos permisos que cualquier otro. No
+es un camino privilegiado que los rodea.
+
+## Estándares y forma de trabajo
+
+Definí los estándares de ingeniería y los flujos de trabajo remoto del equipo,
+coordinando la entrega con Jira y Slack.
+
+Para un equipo pequeño y distribuido, los estándares que se pagan solos son los que
+le quitan ambigüedad a las decisiones rutinarias: dónde va el código, para qué sirve
+una revisión, qué significa "terminado". El objetivo no es proceso por el proceso
+mismo, sino reducir la cantidad de cosas que hay que negociar en un hilo de mensajes
+entre husos horarios.

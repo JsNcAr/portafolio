@@ -1,0 +1,274 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+import Base from '@layouts/Base.astro';
+import TechPill from '@components/TechPill.astro';
+import Icon from '@components/Icon.astro';
+import type { Locale } from '@i18n/ui';
+import { useTranslations, localePath } from '@i18n/utils';
+import { period } from '@lib/format';
+import { roles } from '@data/cv';
+
+interface Props {
+  locale: Locale;
+  entry: CollectionEntry<'work'>;
+  prev?: { slug: string; title: string };
+  next?: { slug: string; title: string };
+}
+
+const { locale, entry, prev, next } = Astro.props;
+const t = useTranslations(locale);
+const { Content } = await render(entry);
+
+// Dates, stack and job title come from cv.ts, not from frontmatter, so the case
+// study and the work page can never disagree about them.
+const role = roles.find((r) => r.id === entry.data.role)!;
+const slug = entry.data.role;
+---
+
+<Base
+  locale={locale}
+  path={`/work/${slug}`}
+  title={entry.data.title}
+  description={entry.data.summary}
+>
+  <article>
+    <header class="head">
+      <div class="shell">
+        <p class="crumb">
+          <a href={localePath(locale, '/work')}>
+            <Icon name="arrow-right" size={14} class="flip" />
+            {t('cs.back')}
+          </a>
+        </p>
+        <p class="overline org">{role.org}</p>
+        <h1>{entry.data.title}</h1>
+        <p class="summary">{entry.data.summary}</p>
+
+        <dl class="facts">
+          <div><dt>{t('cs.role')}</dt><dd>{role.title}</dd></div>
+          <div><dt>{t('cs.period')}</dt><dd>{period(role.start, role.end, locale, t('work.present'))}</dd></div>
+        </dl>
+
+        <ul class="pills">
+          {role.stack.map((item) => <TechPill label={item} />)}
+        </ul>
+      </div>
+    </header>
+
+    <div class="shell">
+      <div class="body">
+        <Content />
+      </div>
+
+      <p class="note">{t('cs.note')}</p>
+
+      <nav class="pager" aria-label={t('cs.back')}>
+        {prev ? (
+          <a class="pag" href={localePath(locale, `/work/${prev.slug}`)} rel="prev">
+            <span class="dir"><Icon name="arrow-right" size={14} class="flip" />{t('cs.prev')}</span>
+            <span class="ttl">{prev.title}</span>
+          </a>
+        ) : (
+          <span></span>
+        )}
+        {next && (
+          <a class="pag end" href={localePath(locale, `/work/${next.slug}`)} rel="next">
+            <span class="dir">{t('cs.next')}<Icon name="arrow-right" size={14} /></span>
+            <span class="ttl">{next.title}</span>
+          </a>
+        )}
+      </nav>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .head {
+    padding-block: var(--space-32) var(--space-40);
+    border-block-end: var(--stroke-hairline) solid var(--color-border-default);
+  }
+
+  .crumb a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-6);
+    min-block-size: var(--space-36);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    text-decoration: none;
+  }
+
+  .crumb a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .flip {
+    transform: scaleX(-1);
+  }
+
+  .org {
+    margin-block-start: var(--space-16);
+    color: var(--color-text-accent);
+  }
+
+  h1 {
+    font-size: var(--text-4xl);
+    letter-spacing: var(--tracking-tighter);
+    margin-block: var(--space-10) 0;
+    max-inline-size: 20ch;
+  }
+
+  @media (min-width: 48rem) {
+    h1 {
+      font-size: var(--text-5xl);
+    }
+  }
+
+  .summary {
+    margin-block-start: var(--space-20);
+    max-inline-size: var(--measure-prose);
+    color: var(--color-text-secondary);
+    font-size: var(--text-lg);
+  }
+
+  .facts {
+    display: grid;
+    gap: var(--space-16);
+    margin: var(--space-28) 0 0;
+  }
+
+  @media (min-width: 34rem) {
+    .facts {
+      grid-template-columns: repeat(2, minmax(0, auto));
+      gap: var(--space-48);
+      justify-content: start;
+    }
+  }
+
+  .facts dt {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-overline);
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+  }
+
+  .facts dd {
+    margin: var(--space-4) 0 0;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+  }
+
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    list-style: none;
+    padding: 0;
+    margin: var(--space-24) 0 0;
+    min-inline-size: 0;
+  }
+
+  /* Long-form prose. Everything here styles MDX output, so it is :global. */
+  .body {
+    padding-block: var(--space-40);
+    max-inline-size: var(--measure-prose);
+  }
+
+  .body :global(h2) {
+    font-size: var(--text-2xl);
+    letter-spacing: var(--tracking-tight);
+    margin-block: var(--space-40) var(--space-16);
+  }
+
+  .body :global(h2:first-child) {
+    margin-block-start: 0;
+  }
+
+  .body :global(p) {
+    margin-block-end: var(--space-16);
+    color: var(--color-text-secondary);
+    font-size: var(--text-lg);
+  }
+
+  .body :global(strong) {
+    color: var(--color-text-primary);
+    font-weight: var(--weight-semibold);
+  }
+
+  .body :global(a) {
+    color: var(--color-text-link);
+  }
+
+  .body :global(code) {
+    padding: var(--space-2) var(--space-6);
+    background: var(--color-surface-sunken);
+    border-radius: var(--radius-sm);
+  }
+
+  .note {
+    padding: var(--space-16) var(--space-20);
+    background: var(--color-surface-sunken);
+    border-inline-start: var(--stroke-thick) solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+    max-inline-size: var(--measure-prose);
+  }
+
+  .pager {
+    display: grid;
+    gap: var(--space-16);
+    margin-block-start: var(--space-48);
+    padding-block-start: var(--space-24);
+    border-block-start: var(--stroke-hairline) solid var(--color-border-default);
+  }
+
+  @media (min-width: 40rem) {
+    .pager {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-24);
+    }
+  }
+
+  .pag {
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-16);
+    border: var(--stroke-hairline) solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    min-inline-size: 0;
+    transition: border-color var(--duration-fast) var(--ease-out);
+  }
+
+  .pag:hover {
+    border-color: var(--color-border-strong);
+  }
+
+  .pag.end {
+    text-align: end;
+  }
+
+  .dir {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-6);
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+    letter-spacing: var(--tracking-overline);
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+  }
+
+  .pag.end .dir {
+    justify-content: flex-end;
+  }
+
+  .ttl {
+    color: var(--color-text-primary);
+    font-weight: var(--weight-medium);
+  }
+</style>
