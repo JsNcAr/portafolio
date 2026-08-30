@@ -45,6 +45,8 @@ export const ui = {
     'home.allwork': 'All work',
 
     'home.now': 'Currently',
+    'home.also': 'Also available for project work and classes.',
+    'home.also.link': 'Services',
     'home.now.body':
       'Lead Backend and DevOps Engineer at Apollyon S.A.S, where I am the sole owner of the backend and the infrastructure it runs on.',
 
@@ -58,6 +60,48 @@ export const ui = {
       'Built with Astro. Static files, no tracking, no analytics, served by Caddy from a server I administer.',
     'footer.rights': 'All rights reserved.',
     'footer.contact': 'Get in touch',
+
+    'nav.services': 'Services',
+
+    'svc.title': 'Services',
+    'svc.lead': 'Backends, automation, and teaching.',
+    'svc.intro':
+      'Two kinds of work. Systems built and operated for companies, and one-to-one teaching in programming, mathematics and physics. Both are things I do; neither is a side effect of the other.',
+
+    'svc.engineering': 'Engineering',
+    'svc.engineering.note': 'Scoped, built, deployed and handed over.',
+    'svc.from': 'From',
+    'svc.enquire': 'Start a conversation',
+
+    'svc.delivery.direct': 'Contracted directly with me',
+    'svc.delivery.apollyon': 'Delivered through Apollyon S.A.S',
+    'svc.delivery.either': 'Direct, or through Apollyon for larger builds',
+
+    'svc.how': 'How it works',
+    'svc.how.caption':
+      'The same three steps whatever the engagement. You get working software at each one, not a status update.',
+    'svc.how.1': 'Discovery',
+    'svc.how.1.note': 'Your bottleneck and existing stack, then a scope',
+    'svc.how.2': 'Build',
+    'svc.how.2.note': 'Iterative, reviewable, tested',
+    'svc.how.3': 'Handover',
+    'svc.how.3.note': 'Documented, on infrastructure you own',
+
+    'svc.classes': 'Classes',
+    'svc.classes.lead': 'Programming, mathematics and physics.',
+    'svc.classes.intro':
+      'Remote, in Spanish or English. I read physics at Universidad de los Andes, and the numerical methods coursework behind these subjects is public on my GitHub, so you can see how I work through a problem before booking anything.',
+    'svc.classes.subjects': 'Subjects',
+    'svc.classes.formats': 'Formats',
+    'svc.classes.who': 'Who I teach',
+
+    'svc.contracting': 'Who you would be contracting with',
+    'svc.contracting.body':
+      'I am COO of Apollyon S.A.S in Bogotá, and larger builds run through the company: a team, a contract, and continuity if I am not the one holding it. Smaller engagements and all teaching are direct with me. Each service above says which applies, and I will tell you plainly if a project belongs on the other side of that line.',
+
+    'svc.cta.title': 'Have something worth building?',
+    'svc.cta.body':
+      'Tell me what you are trying to build, automate or untangle. I will come back with an architecture and a realistic timeline, not a brochure.',
 
     'meta.updated': 'Last updated',
 
@@ -121,6 +165,9 @@ export const ui = {
     'contact.lead': 'Open to backend and infrastructure work.',
     'contact.intro':
       'Email is the surest way to reach me, and I answer within a couple of days. I am in Bogotá on Colombia time and I work remotely without trouble.',
+    'contact.services':
+      'For project work or classes rather than a role, the services page has what I offer and how each engagement is contracted.',
+    'contact.services.link': 'See services',
     'contact.email.label': 'Email',
     'contact.github.label': 'GitHub',
     'contact.linkedin.label': 'LinkedIn',
@@ -166,6 +213,8 @@ export const ui = {
     'home.allwork': 'Todo el trabajo',
 
     'home.now': 'Actualmente',
+    'home.also': 'También disponible para trabajo por proyecto y clases.',
+    'home.also.link': 'Servicios',
     'home.now.body':
       'Lead Backend and DevOps Engineer en Apollyon S.A.S, donde soy el único responsable del backend y de la infraestructura sobre la que corre.',
 
@@ -179,6 +228,48 @@ export const ui = {
       'Hecho con Astro. Archivos estáticos, sin rastreo ni analítica, servidos por Caddy desde un servidor que yo administro.',
     'footer.rights': 'Todos los derechos reservados.',
     'footer.contact': 'Escribirme',
+
+    'nav.services': 'Servicios',
+
+    'svc.title': 'Servicios',
+    'svc.lead': 'Backends, automatización y clases.',
+    'svc.intro':
+      'Dos tipos de trabajo. Sistemas construidos y operados para empresas, y clases uno a uno de programación, matemáticas y física. Ambos son cosas que hago; ninguno es un efecto secundario del otro.',
+
+    'svc.engineering': 'Ingeniería',
+    'svc.engineering.note': 'Definido, construido, desplegado y entregado.',
+    'svc.from': 'Desde',
+    'svc.enquire': 'Iniciar una conversación',
+
+    'svc.delivery.direct': 'Contratado directamente conmigo',
+    'svc.delivery.apollyon': 'Entregado a través de Apollyon S.A.S',
+    'svc.delivery.either': 'Directo, o por Apollyon para desarrollos grandes',
+
+    'svc.how': 'Cómo funciona',
+    'svc.how.caption':
+      'Los mismos tres pasos en cualquier proyecto. En cada uno recibes software que funciona, no un informe de avance.',
+    'svc.how.1': 'Descubrimiento',
+    'svc.how.1.note': 'Tu cuello de botella y tu stack, luego un alcance',
+    'svc.how.2': 'Construcción',
+    'svc.how.2.note': 'Iterativa, revisable, probada',
+    'svc.how.3': 'Entrega',
+    'svc.how.3.note': 'Documentada, en infraestructura tuya',
+
+    'svc.classes': 'Clases',
+    'svc.classes.lead': 'Programación, matemáticas y física.',
+    'svc.classes.intro':
+      'Remotas, en español o en inglés. Estudié física en la Universidad de los Andes, y los trabajos de métodos numéricos detrás de estas materias están públicos en mi GitHub, así que puedes ver cómo resuelvo un problema antes de reservar nada.',
+    'svc.classes.subjects': 'Materias',
+    'svc.classes.formats': 'Formatos',
+    'svc.classes.who': 'A quién le enseño',
+
+    'svc.contracting': 'Con quién estarías contratando',
+    'svc.contracting.body':
+      'Soy COO de Apollyon S.A.S en Bogotá, y los desarrollos grandes van por la empresa: un equipo, un contrato, y continuidad si no soy yo quien lo sostiene. Los proyectos más pequeños y todas las clases son directamente conmigo. Cada servicio de arriba dice cuál aplica, y te diré con claridad si un proyecto pertenece al otro lado de esa línea.',
+
+    'svc.cta.title': '¿Tienes algo que valga la pena construir?',
+    'svc.cta.body':
+      'Cuéntame qué estás intentando construir, automatizar o desenredar. Vuelvo con una arquitectura y un cronograma realista, no con un folleto.',
 
     'meta.updated': 'Última actualización',
 
@@ -242,6 +333,9 @@ export const ui = {
     'contact.lead': 'Abierto a trabajo de backend e infraestructura.',
     'contact.intro':
       'El correo es la forma más segura de contactarme, y respondo en un par de días. Estoy en Bogotá, en hora de Colombia, y trabajo en remoto sin problema.',
+    'contact.services':
+      'Si buscas trabajo por proyecto o clases en lugar de una vacante, la página de servicios tiene lo que ofrezco y cómo se contrata cada cosa.',
+    'contact.services.link': 'Ver servicios',
     'contact.email.label': 'Correo',
     'contact.github.label': 'GitHub',
     'contact.linkedin.label': 'LinkedIn',

@@ -29,10 +29,11 @@ knowingly rather than by accident.
 | [0005](decisions/0005-self-hosted-fonts.md) | Self-hosted fonts and a zero-third-party CSP |
 | [0006](decisions/0006-honest-frontend-positioning.md) | Stating plainly that the front ends are AI-assisted |
 | [0007](decisions/0007-node-22-via-nvm.md) | Node 22 via nvm, pinned per project |
+| [0008](decisions/0008-services-alongside-portfolio.md) | Services alongside the portfolio, not instead of it |
 
 ## Status
 
-The site is complete and deployable: 18 pages across two locales, including three
-case studies. Remaining gaps — metrics, a factual review, a native Spanish pass,
+The site is complete and deployable: 20 pages across two locales, including three
+case studies and a services page. Remaining gaps — metrics, a factual review, a native Spanish pass,
 manual accessibility testing — are tracked in
 [Development → What is not built yet](development.md#what-is-not-built-yet).

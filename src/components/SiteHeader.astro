@@ -14,6 +14,7 @@ const t = useTranslations(locale);
 
 const links = [
   { href: '/work', label: t('nav.work') },
+  { href: '/services', label: t('nav.services') },
   { href: '/open-source', label: t('nav.opensource') },
   { href: '/about', label: t('nav.about') },
   { href: '/contact', label: t('nav.contact') },
@@ -122,9 +123,10 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     gap: var(--space-8);
   }
 
-  /* Below 30rem the four nav items and both tools cannot share a row. Let the
-     nav take a full row of its own rather than compressing the tools. */
-  @media (max-width: 30rem) {
+  /* Below 34rem the five nav items and both tools cannot share a row. Let the
+     nav take a full row of its own rather than compressing the tools. The
+     threshold moved with the fifth item -- re-check it if a sixth is added. */
+  @media (max-width: 34rem) {
     .bar {
       gap: var(--space-8) var(--space-12);
     }

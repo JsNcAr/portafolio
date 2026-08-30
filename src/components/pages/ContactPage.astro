@@ -3,7 +3,7 @@ import Base from '@layouts/Base.astro';
 import PageHeader from '@components/PageHeader.astro';
 import Icon from '@components/Icon.astro';
 import type { Locale } from '@i18n/ui';
-import { useTranslations } from '@i18n/utils';
+import { useTranslations, localePath } from '@i18n/utils';
 import { contact } from '@data/cv';
 
 interface Props {
@@ -47,6 +47,14 @@ const methods = [
         </dd>
       </div>
     </dl>
+
+    <p class="services-note">
+      {t('contact.services')}
+      <a href={localePath(locale, '/services')}>
+        {t('contact.services.link')}
+        <Icon name="arrow-right" size={14} />
+      </a>
+    </p>
 
     <section class="cv" aria-labelledby="cv-heading">
       <div>
@@ -111,6 +119,21 @@ const methods = [
 
   dd.plain {
     color: var(--color-text-secondary);
+  }
+
+  .services-note {
+    margin-block-start: var(--space-32);
+    max-inline-size: var(--measure-prose);
+    color: var(--color-text-secondary);
+  }
+
+  .services-note a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-6);
+    min-block-size: var(--space-28);
+    font-weight: var(--weight-medium);
+    white-space: nowrap;
   }
 
   .cv {

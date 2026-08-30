@@ -7,6 +7,7 @@
 | Interface strings, both locales | `src/i18n/ui.ts` |
 | Roles, highlights, education, certifications, contact | `src/data/cv.ts` |
 | Curated public repositories | `src/data/repos.ts` |
+| Services, class formats and audiences | `src/data/services.ts` |
 | Case-study prose | `src/content/work/<locale>/<slug>.mdx` |
 | Downloadable CV, favicons, OG cards, robots.txt | `public/` |
 
@@ -102,6 +103,21 @@ and the roles were held under those names.
 
 Role `id` values are used as anchors on `/work` and as the (future) case-study
 slugs, so changing one breaks incoming links.
+
+## Prices
+
+`src/data/services.ts` carries prices as structured data, never as prose:
+
+```ts
+interface Price { from: number; to?: number; currency: 'COP' | 'USD'; unit: 'project' | 'month' | 'hour' | 'hour-per-student' }
+```
+
+`src/lib/price.ts` formats it with `Intl.NumberFormat` against the reader's locale,
+and returns `null` when there is no price so the caller omits the line entirely
+rather than rendering an empty one. A `null` price is the correct state for a service
+whose rate has not been set — the page is complete without it.
+
+Changing a rate is one edit to one file. Never write a figure into a UI string.
 
 ## Linking between pages
 

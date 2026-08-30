@@ -1,0 +1,136 @@
+---
+import TechPill from './TechPill.astro';
+import type { Locale } from '@i18n/ui';
+import { useTranslations } from '@i18n/utils';
+import { formatPrice } from '@lib/price';
+import type { Service } from '@data/services';
+
+interface Props {
+  service: Service;
+  locale: Locale;
+}
+
+const { service, locale } = Astro.props;
+const t = useTranslations(locale);
+
+const price = formatPrice(service.price, locale);
+const deliveryLabel = {
+  direct: t('svc.delivery.direct'),
+  apollyon: t('svc.delivery.apollyon'),
+  either: t('svc.delivery.either'),
+}[service.delivery];
+---
+
+<li class:list={['service', { lead: service.lead }]}>
+  <h3>{service.title[locale]}</h3>
+  <p class="blurb">{service.blurb[locale]}</p>
+
+  <ul class="pills">
+    {service.stack.map((item) => <TechPill label={item} />)}
+  </ul>
+
+  <p class="delivery">{deliveryLabel}</p>
+
+  {price && (
+    <p class="price">
+      <span class="from">{t('svc.from')}</span>
+      <span class="amount">{price.amount}</span>
+      <span class="unit">{price.unit}</span>
+    </p>
+  )}
+</li>
+
+<style>
+  .service {
+    display: grid;
+    gap: var(--space-10);
+    align-content: start;
+    padding: var(--space-24);
+    background: var(--color-surface-card);
+    border: var(--stroke-hairline) solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    min-inline-size: 0;
+  }
+
+  /* The lead service leads on surface as well as on size, matching CaseCard. */
+  .lead {
+    padding: var(--space-32);
+    background: var(--color-surface-accent);
+    border-color: var(--color-border-accent);
+    border-block-start: var(--stroke-rule) solid var(--color-action-primary);
+  }
+
+  h3 {
+    font-size: var(--text-xl);
+    letter-spacing: var(--tracking-tight);
+    margin: 0;
+  }
+
+  .lead h3 {
+    font-size: var(--text-2xl);
+  }
+
+  @media (min-width: 48rem) {
+    .lead h3 {
+      font-size: var(--text-3xl);
+    }
+  }
+
+  .blurb {
+    color: var(--color-text-secondary);
+    max-inline-size: var(--measure-prose);
+  }
+
+  .lead .blurb {
+    font-size: var(--text-lg);
+  }
+
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    list-style: none;
+    padding: 0;
+    margin: var(--space-4) 0 0;
+    min-inline-size: 0;
+  }
+
+  /* Who the client contracts with, said on every card rather than once in a
+     footnote nobody reads. */
+  .delivery {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-accent);
+  }
+
+  .price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-6);
+    margin-block-start: var(--space-4);
+    padding-block-start: var(--space-12);
+    border-block-start: var(--stroke-hairline) solid var(--color-border-default);
+    font-variant-numeric: tabular-nums;
+    min-inline-size: 0;
+  }
+
+  .from {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-overline);
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+  }
+
+  .amount {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-primary);
+  }
+
+  .unit {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+</style>
