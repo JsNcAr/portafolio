@@ -5,6 +5,7 @@ import Icon from '@components/Icon.astro';
 import type { Locale } from '@i18n/ui';
 import { useTranslations, localePath } from '@i18n/utils';
 import { contact } from '@data/cv';
+import { whatsappLink } from '@lib/whatsapp';
 
 interface Props {
   locale: Locale;
@@ -16,6 +17,12 @@ const t = useTranslations(locale);
 const CV = '/cv/jason-arias-python-backend-engineer.pdf';
 
 const methods = [
+  {
+    label: t('contact.whatsapp.label'),
+    value: contact.whatsappDisplay,
+    href: whatsappLink(t('contact.whatsapp.prefill')),
+    icon: 'whatsapp' as const,
+  },
   { label: t('contact.email.label'), value: contact.email, href: `mailto:${contact.email}`, icon: 'mail' as const },
   { label: t('contact.github.label'), value: 'github.com/JsNcAr', href: contact.github, icon: 'github' as const },
   { label: t('contact.linkedin.label'), value: contact.linkedin.replace('https://', ''), href: contact.linkedin, icon: 'linkedin' as const },

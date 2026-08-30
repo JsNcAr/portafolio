@@ -187,6 +187,9 @@ export const certifications = [
 
 export const contact = {
   email: 'jn.arias@uniandes.edu.co',
+  /** Digits only, no plus sign -- the format wa.me requires. */
+  whatsapp: '573196817363',
+  whatsappDisplay: '+57 319 681 7363',
   github: 'https://github.com/JsNcAr',
   linkedin: 'https://linkedin.com/in/jason-nicolas-arias-gomez-50127b248',
   location: { en: 'Bogotá, Colombia — open to remote', es: 'Bogotá, Colombia — abierto a remoto' },

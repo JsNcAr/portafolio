@@ -3,6 +3,7 @@ import Icon from './Icon.astro';
 import type { Locale } from '@i18n/ui';
 import { useTranslations } from '@i18n/utils';
 import { contact } from '@data/cv';
+import { whatsappLink } from '@lib/whatsapp';
 
 interface Props {
   locale: Locale;
@@ -13,6 +14,7 @@ const t = useTranslations(locale);
 const year = new Date().getFullYear();
 
 const social = [
+  { href: whatsappLink(t('contact.whatsapp.prefill')), label: 'WhatsApp', icon: 'whatsapp' as const },
   { href: contact.github, label: 'GitHub', icon: 'github' as const },
   { href: contact.linkedin, label: 'LinkedIn', icon: 'linkedin' as const },
   { href: `mailto:${contact.email}`, label: contact.email, icon: 'mail' as const },

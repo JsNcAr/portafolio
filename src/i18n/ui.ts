@@ -59,6 +59,14 @@ export const ui = {
     'footer.built':
       'Built with Astro. Static files, no tracking, no analytics, served by Caddy from a server I administer.',
     'footer.rights': 'All rights reserved.',
+    'contact.whatsapp.label': 'WhatsApp',
+    'contact.whatsapp.prefill': 'Hi Jason, I found you through jasonarias.dev.',
+    'svc.whatsapp': 'Message on WhatsApp',
+    'svc.whatsapp.prefill':
+      'Hi Jason, I saw your services page and would like to talk about a project.',
+    'svc.classes.whatsapp.prefill':
+      'Hi Jason, I saw your services page and would like to ask about classes.',
+    'svc.classes.book': 'Ask about classes',
     'footer.contact': 'Get in touch',
 
     'nav.services': 'Services',
@@ -234,6 +242,14 @@ export const ui = {
     'footer.built':
       'Hecho con Astro. Archivos estáticos, sin rastreo ni analítica, servidos por Caddy desde un servidor que yo administro.',
     'footer.rights': 'Todos los derechos reservados.',
+    'contact.whatsapp.label': 'WhatsApp',
+    'contact.whatsapp.prefill': 'Hola Jason, te encontré por jasonarias.dev.',
+    'svc.whatsapp': 'Escribir por WhatsApp',
+    'svc.whatsapp.prefill':
+      'Hola Jason, vi tu página de servicios y me gustaría hablar de un proyecto.',
+    'svc.classes.whatsapp.prefill':
+      'Hola Jason, vi tu página de servicios y quiero preguntar por las clases.',
+    'svc.classes.book': 'Preguntar por clases',
     'footer.contact': 'Escribirme',
 
     'nav.services': 'Servicios',
