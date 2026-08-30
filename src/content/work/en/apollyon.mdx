@@ -8,6 +8,9 @@ summary: >-
 order: 1
 ---
 
+import Flow from '@components/diagrams/Flow.astro';
+import Layers from '@components/diagrams/Layers.astro';
+
 ## The brief
 
 Apollyon builds a proximity tracking and communication platform that has to keep
@@ -20,6 +23,17 @@ I am the sole owner of the backend and of the infrastructure it runs on. There i
 no platform team to hand the hard part to, so the same person designs the schema,
 writes the API, provisions the servers, configures the reverse proxy and answers
 when production stops responding.
+
+<Flow
+  caption="A device buffers while offline and replays on reconnect, so the API sees bursts rather than a steady stream."
+  steps={[
+    { label: 'Device', note: 'buffers offline' },
+    { label: 'BLE mesh', note: 'RSSI telemetry' },
+    { label: 'Caddy', note: 'edge, automatic TLS' },
+    { label: 'FastAPI', note: 'async ingest', accent: true },
+    { label: 'PostgreSQL' },
+  ]}
+/>
 
 ## The API
 
@@ -43,6 +57,16 @@ firmware can implement retry logic correctly instead of guessing from status cod
 
 Every user and device endpoint sits behind a layered scheme: OAuth2, signed JWTs,
 and API keys, with passwords hashed by bcrypt at twelve rounds.
+
+<Layers
+  caption="One scheme per kind of principal, rather than one credential stretched over both."
+  layers={[
+    { label: 'OAuth2', tag: 'people', note: 'Interactive login. Short-lived, and the user can be prompted again.' },
+    { label: 'Signed JWT', tag: 'session', note: 'Carries the claims for a request without a lookup on every call.' },
+    { label: 'API key', tag: 'devices', note: 'Issued once, scoped narrowly, revocable per unit. Nobody is there to prompt.' },
+    { label: 'bcrypt, cost 12', tag: 'at rest', note: 'Slow enough to make offline cracking expensive, fast enough for login.' },
+  ]}
+/>
 
 Three mechanisms rather than one, because humans and devices are not the same
 principal. A person logs in interactively, gets a short-lived token, and can be

@@ -12,7 +12,21 @@
          cursor:pointer; transition:background var(--duration-fast) var(--ease-out); }
   .btn:hover { background:var(--color-action-primary-hover); }
   .btn:focus-visible { outline:none; box-shadow:var(--shadow-focus-ring); }
-</style></head>
+  /* Mirrors src/styles/base.css: a theme swap is instant, so nothing is ever
+     measured mid-transition between the two palettes. */
+  :root[data-theme-switching] *, :root[data-theme-switching] *::before,
+  :root[data-theme-switching] *::after { transition:none !important; }
+</style>
+<script>
+  // Mirrors the inline script in src/layouts/Base.astro.
+  (() => {
+    const root = document.documentElement;
+    new MutationObserver(() => {
+      root.setAttribute('data-theme-switching', '');
+      requestAnimationFrame(() => requestAnimationFrame(() => root.removeAttribute('data-theme-switching')));
+    }).observe(root, { attributeFilter: ['data-theme'] });
+  })();
+</script></head>
 <body>
   <main>
     <h1>Gate probe</h1>

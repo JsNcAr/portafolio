@@ -1,0 +1,100 @@
+---
+/**
+ * A stack of labelled bands, for describing something built in layers rather
+ * than in sequence. Same reasoning as Flow: HTML text, no SVG, reflows.
+ */
+export interface Layer {
+  label: string;
+  note: string;
+  /** Short right-aligned tag, e.g. who the layer is for. */
+  tag?: string;
+}
+
+interface Props {
+  layers: Layer[];
+  caption: string;
+}
+
+const { layers, caption } = Astro.props;
+---
+
+<figure class="layers">
+  <ul>
+    {layers.map((layer, i) => (
+      <li style={`--depth: ${i}`}>
+        <div class="row">
+          <p class="label">{layer.label}</p>
+          {layer.tag && <p class="tag">{layer.tag}</p>}
+        </div>
+        <p class="note">{layer.note}</p>
+      </li>
+    ))}
+  </ul>
+  <figcaption>{caption}</figcaption>
+</figure>
+
+<style>
+  .layers {
+    margin: var(--space-32) 0;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  li {
+    padding: var(--space-14) var(--space-16);
+    background: var(--color-surface-card);
+    border: var(--stroke-thin) solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    min-inline-size: 0;
+    /* Each layer sits a little further in, so the stack reads as depth
+       rather than as another list of cards. */
+    margin-inline-start: calc(var(--depth) * var(--space-12));
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-8);
+    min-inline-size: 0;
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-primary);
+    overflow-wrap: anywhere;
+  }
+
+  .tag {
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+    color: var(--color-text-accent);
+  }
+
+  .note {
+    margin-block-start: var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+
+  figcaption {
+    margin-block-start: var(--space-12);
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+  }
+
+  @media (max-width: 30rem) {
+    li {
+      margin-inline-start: calc(var(--depth) * var(--space-6));
+    }
+  }
+</style>

@@ -8,6 +8,8 @@ summary: >-
 order: 2
 ---
 
+import Flow from '@components/diagrams/Flow.astro';
+
 ## The brief
 
 Personally AI is an automation studio: the work is client projects, each with its
@@ -39,6 +41,16 @@ person was assembling manually. I replaced it with Selenium extraction from Meta
 Business Suite, then cleaning and analysis in Pandas — cutting the reporting effort
 by around eighty percent.
 
+<Flow
+  caption="No API existed, so the pipeline starts in a browser. Everything downstream is ordinary data work."
+  steps={[
+    { label: 'Meta Business Suite', note: '60+ accounts' },
+    { label: 'Selenium', note: 'UI-only extraction', accent: true },
+    { label: 'Pandas', note: 'clean and analyse' },
+    { label: 'Report' },
+  ]}
+/>
+
 Browser automation is the tool of last resort, and it was the right one: the data
 was reachable through an interface built for humans, not through an API anyone
 could call. That choice has a cost, and being honest about it matters. A scraper is
@@ -56,6 +68,16 @@ is about the extraction itself.
 I built a CRM and lead-generation service that processes thousands of leads per run
 through the Apollo API, using optimised queries and background task management for
 high-volume workloads.
+
+<Flow
+  caption="The run is acknowledged immediately and continues in the background, because holding a request open for thousands of records is not an option."
+  steps={[
+    { label: 'Request', note: 'returns at once' },
+    { label: 'Background task', note: 'own state and retries', accent: true },
+    { label: 'Apollo API', note: 'thousands per run' },
+    { label: 'CRM' },
+  ]}
+/>
 
 Thousands of records per run rules out doing the work inside a request. A user who
 triggers a run should get an immediate acknowledgement and a way to check progress,

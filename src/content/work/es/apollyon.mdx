@@ -9,6 +9,9 @@ summary: >-
 order: 1
 ---
 
+import Flow from '@components/diagrams/Flow.astro';
+import Layers from '@components/diagrams/Layers.astro';
+
 ## El encargo
 
 Apollyon construye una plataforma de rastreo de proximidad y comunicación que tiene
@@ -22,6 +25,17 @@ Soy el único responsable del backend y de la infraestructura sobre la que corre
 hay un equipo de plataforma a quien pasarle la parte difícil, así que la misma
 persona diseña el esquema, escribe la API, aprovisiona los servidores, configura el
 proxy inverso y responde cuando producción deja de contestar.
+
+<Flow
+  caption="Un dispositivo acumula datos sin conexión y los reenvía al reconectarse, así que la API recibe ráfagas y no un flujo constante."
+  steps={[
+    { label: 'Dispositivo', note: 'acumula sin conexión' },
+    { label: 'Malla BLE', note: 'telemetría RSSI' },
+    { label: 'Caddy', note: 'borde, TLS automático' },
+    { label: 'FastAPI', note: 'ingesta asíncrona', accent: true },
+    { label: 'PostgreSQL' },
+  ]}
+/>
 
 ## La API
 
@@ -48,6 +62,16 @@ lugar de adivinar a partir de códigos de estado.
 Todos los endpoints de usuarios y dispositivos están detrás de un esquema en capas:
 OAuth2, JWT firmados y llaves de API, con contraseñas protegidas por bcrypt a doce
 rondas.
+
+<Layers
+  caption="Un esquema por cada tipo de actor, en lugar de una sola credencial estirada para ambos."
+  layers={[
+    { label: 'OAuth2', tag: 'personas', note: 'Inicio de sesión interactivo. De vida corta, y se le puede volver a pedir credenciales.' },
+    { label: 'JWT firmado', tag: 'sesión', note: 'Lleva los claims de una petición sin consultar en cada llamada.' },
+    { label: 'Llave de API', tag: 'dispositivos', note: 'Emitida una vez, con alcance limitado, revocable por unidad. No hay a quién preguntarle.' },
+    { label: 'bcrypt, costo 12', tag: 'en reposo', note: 'Lo bastante lento para encarecer un ataque fuera de línea, lo bastante rápido para el login.' },
+  ]}
+/>
 
 Tres mecanismos en lugar de uno, porque las personas y los dispositivos no son el
 mismo tipo de actor. Una persona inicia sesión de forma interactiva, recibe un token

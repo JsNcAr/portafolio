@@ -99,7 +99,9 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     color: var(--color-text-secondary);
     text-decoration: none;
     border-block-end: var(--stroke-thin) solid transparent;
-    transition: color var(--duration-fast) var(--ease-out);
+    /* Not `color`: theming swaps it, and a transition there makes every theme
+       change a cross-fade and every immediate measurement unreliable. */
+    transition: border-block-end-color var(--duration-fast) var(--ease-out);
   }
 
   nav a:hover {

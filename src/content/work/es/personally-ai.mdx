@@ -8,6 +8,8 @@ summary: >-
 order: 2
 ---
 
+import Flow from '@components/diagrams/Flow.astro';
+
 ## El encargo
 
 Personally AI es un estudio de automatización: el trabajo son proyectos de clientes,
@@ -43,6 +45,16 @@ que una persona estaba armando manualmente. Los reemplacé con extracción vía
 Selenium desde Meta Business Suite, y limpieza y análisis con Pandas — reduciendo el
 esfuerzo de reporteo cerca de un ochenta por ciento.
 
+<Flow
+  caption="No existía una API, así que el pipeline empieza en un navegador. Todo lo que sigue es trabajo de datos corriente."
+  steps={[
+    { label: 'Meta Business Suite', note: 'más de 60 cuentas' },
+    { label: 'Selenium', note: 'extracción solo por interfaz', accent: true },
+    { label: 'Pandas', note: 'limpieza y análisis' },
+    { label: 'Reporte' },
+  ]}
+/>
+
 La automatización de navegador es la herramienta de último recurso, y era la
 correcta: los datos estaban disponibles a través de una interfaz hecha para
 personas, no a través de una API que alguien pudiera llamar. Esa decisión tiene un
@@ -61,6 +73,16 @@ reanudable y sus fallas legibles como en la extracción misma.
 Construí un servicio de CRM y generación de leads que procesa miles de leads por
 ejecución mediante la API de Apollo, con consultas optimizadas y gestión de tareas
 en segundo plano para cargas de alto volumen.
+
+<Flow
+  caption="La ejecución se confirma de inmediato y continúa en segundo plano, porque mantener una petición abierta para miles de registros no es opción."
+  steps={[
+    { label: 'Petición', note: 'responde de inmediato' },
+    { label: 'Tarea en segundo plano', note: 'estado y reintentos propios', accent: true },
+    { label: 'API de Apollo', note: 'miles por ejecución' },
+    { label: 'CRM' },
+  ]}
+/>
 
 Miles de registros por ejecución descarta hacer el trabajo dentro de una petición.
 Quien dispara una ejecución debería recibir una confirmación inmediata y una forma

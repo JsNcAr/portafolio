@@ -79,6 +79,54 @@ Defined once in `base.css`:
 > lists, silently offsetting every pill but the first. Shared primitives get
 > specific names, not words the domain already uses.
 
+## Diagrams
+
+`src/components/diagrams/Flow.astro` and `Layers.astro`. Used from MDX:
+
+```jsx
+<Flow
+  caption="What the reader should take from it."
+  steps={[{ label: 'FastAPI', note: 'async ingest', accent: true }]}
+/>
+```
+
+They are **HTML and CSS, not SVG**, on purpose. The labels stay real text — so
+they are selectable, searchable, translatable and announced by a screen reader —
+and the layout reflows from a row into a stack instead of needing a horizontal
+scroller at 320px. Cost is a few hundred bytes of markup, no requests, no
+JavaScript.
+
+`accent` marks the one step a section is really about. Everything else stays
+quiet; accenting three of five means accenting none.
+
+A diagram is allowed to be wider than the 65ch prose measure, because that
+measure exists for running text.
+
+## Motion
+
+Two pieces, both essentially free:
+
+- **Cross-document view transitions**, declared as `@view-transition
+  { navigation: auto; }` inside `@media not (prefers-reduced-motion: reduce)`.
+  Browsers that support it cross-fade between pages; everything else navigates
+  normally. Deliberately *not* Astro's `ClientRouter`, which ships a router to
+  buy the same effect.
+- **Hover and focus transitions** on surfaces (background, border), never on
+  `color`.
+
+### A theme swap is instant
+
+`:root[data-theme-switching]` suppresses every transition, and a
+`MutationObserver` in the head script sets it for two frames around any change to
+`data-theme`. Without this, a theme toggle cross-fades every colour on the page —
+which reads as a glitch, and means anything measuring immediately after the swap
+(a gate, a screenshot) sees a colour belonging to neither palette. That was a real
+gate failure, not a hypothetical: `axe_audit [dark]` flagged nav links at
+`#48463e` on `#1c1b16` that settle at `#cfccc1` 400 ms later.
+
+The observer watches the attribute rather than living in the toggle's click
+handler, so a change made from devtools or a test harness is covered too.
+
 ## Rules that are not negotiable
 
 1. **No hardcoded values in components.** Every colour, size, radius and duration

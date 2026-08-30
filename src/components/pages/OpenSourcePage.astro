@@ -22,6 +22,17 @@ const groups: Array<{ key: RepoGroup; label: string }> = [
 
 const lead = repos.find((r) => r.lead)!;
 const byGroup = (key: RepoGroup) => repos.filter((r) => r.group === key && !r.lead);
+
+/**
+ * Repository names are long snake_case and kebab-case strings. The page-wide
+ * `overflow-wrap: anywhere` keeps them from setting the min-content width, but
+ * with no break opportunity it splits them mid-syllable
+ * ("Metodos1_JasonArias_SergioCru | z"). Offering <wbr> after each separator
+ * gives the browser somewhere sensible to break first.
+ */
+function breakable(name: string): string[] {
+  return name.split(/(?<=[_-])/);
+}
 ---
 
 <Base locale={locale} path="/open-source" title={t('os.title')} description={t('os.intro')}>
@@ -32,7 +43,9 @@ const byGroup = (key: RepoGroup) => repos.filter((r) => r.group === key && !r.le
       <div class="head">
         <h2>
           <a href={lead.url} rel="noopener" target="_blank">
-            <span class="stretch"></span>{lead.name}
+            <span class="stretch"></span>{breakable(lead.name).map((part, i) => (
+              <>{i > 0 && <wbr />}{part}</>
+            ))}
           </a>
         </h2>
         <p class="lang">{lead.language}</p>
@@ -49,12 +62,14 @@ const byGroup = (key: RepoGroup) => repos.filter((r) => r.group === key && !r.le
       <section class="group" aria-labelledby={`g-${group.key}`}>
         <h2 class="overline" id={`g-${group.key}`}>{group.label}</h2>
         <ul class="grid">
-          {byGroup(group.key).map((repo) => (
-            <li class="repo">
+          {byGroup(group.key).map((repo, i) => (
+            <li class:list={['repo', { first: i === 0 }]}>
               <div class="head">
                 <h3>
                   <a href={repo.url} rel="noopener" target="_blank">
-                    <span class="stretch"></span>{repo.name}
+                    <span class="stretch"></span>{breakable(repo.name).map((part, i) => (
+                      <>{i > 0 && <wbr />}{part}</>
+                    ))}
                   </a>
                 </h3>
                 <p class="lang">{repo.language}</p>
@@ -211,9 +226,25 @@ const byGroup = (key: RepoGroup) => repos.filter((r) => r.group === key && !r.le
     margin-block-start: var(--space-16);
   }
 
+  /* Six equal cards read as a generated grid. The first repository in each
+     group takes the wider track, so the eye has somewhere to land. */
   @media (min-width: 48rem) {
     .grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    /* Wide, narrow, then full width. A third card left alone in a 2/5 track
+       reads as a gap rather than as a deliberate row. */
+    .grid > .repo {
+      grid-column: span 5;
+    }
+
+    .grid > .repo:first-child {
+      grid-column: span 3;
+    }
+
+    .grid > .repo:nth-child(2) {
+      grid-column: span 2;
     }
   }
 

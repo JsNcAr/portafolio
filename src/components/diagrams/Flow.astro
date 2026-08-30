@@ -1,0 +1,143 @@
+---
+import Icon from '@components/Icon.astro';
+
+/**
+ * A left-to-right pipeline that becomes a top-to-bottom list under ~44rem.
+ *
+ * Built from HTML and CSS rather than SVG on purpose: the labels stay real text,
+ * so they are selectable, searchable, translatable and announced by a screen
+ * reader; and the layout reflows instead of needing a horizontal scroller at
+ * 320px. Costs no requests and no JavaScript.
+ */
+export interface Step {
+  label: string;
+  note?: string;
+  /** Marks the step this case study is really about. */
+  accent?: boolean;
+}
+
+interface Props {
+  steps: Step[];
+  caption: string;
+}
+
+const { steps, caption } = Astro.props;
+---
+
+<figure class="flow">
+  <ol>
+    {steps.map((step, i) => (
+      <li class:list={['step', { accent: step.accent }]}>
+        {i > 0 && (
+          <span class="arrow" aria-hidden="true">
+            <Icon name="arrow-right" size={16} />
+          </span>
+        )}
+        <span class="box">
+          <span class="label">{step.label}</span>
+          {step.note && <span class="note">{step.note}</span>}
+        </span>
+      </li>
+    ))}
+  </ol>
+  <figcaption>{caption}</figcaption>
+</figure>
+
+<style>
+  .flow {
+    margin: var(--space-32) 0;
+  }
+
+  ol {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-inline-size: 0;
+  }
+
+  .box {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-12) var(--space-16);
+    background: var(--color-surface-card);
+    border: var(--stroke-thin) solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    min-inline-size: 0;
+  }
+
+  /* The step the section is about carries the accent; the rest stay quiet. */
+  .accent .box {
+    border-color: var(--color-border-accent);
+    background: var(--color-interactive-selected-bg);
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-primary);
+    text-wrap: balance;
+  }
+
+  .note {
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+  }
+
+  .arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-tertiary);
+    /* Vertical connector on narrow screens. */
+    padding-block: var(--space-6);
+    transform: rotate(90deg);
+  }
+
+  figcaption {
+    margin-block-start: var(--space-12);
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+  }
+
+  @media (min-width: 44rem) {
+    ol {
+      flex-direction: row;
+      align-items: stretch;
+      flex-wrap: wrap;
+      row-gap: var(--space-8);
+    }
+
+    /* `flex: 1 1 0` would size every step identically regardless of its label,
+       which breaks "PostgreSQL" across lines to fit a track sized for "Device".
+       Grow from the content instead, and let the row wrap when it must. */
+    .step {
+      flex-direction: row;
+      align-items: stretch;
+      flex: 1 1 auto;
+      min-inline-size: 8.5rem;
+    }
+
+    .step .box {
+      flex: 1 1 auto;
+      justify-content: center;
+      min-inline-size: 0;
+    }
+
+    .arrow {
+      transform: none;
+      padding-block: 0;
+      padding-inline: var(--space-8);
+    }
+  }
+</style>

@@ -8,6 +8,8 @@ summary: >-
 order: 3
 ---
 
+import Flow from '@components/diagrams/Flow.astro';
+
 ## El encargo
 
 Atonga es una plataforma de comercio electrónico multicanal impulsada por IA para
@@ -22,6 +24,17 @@ Esa restricción es más dura de lo que suena, y es la que decidió la arquitect
 
 El backend es Python y FastAPI sobre PostgreSQL, atendiendo peticiones en tiempo
 real desde clientes web y de chat.
+
+<Flow
+  caption="La web, el chat y el asistente son tres transportes sobre un mismo dominio. Ninguno es un camino privilegiado que lo rodee."
+  steps={[
+    { label: 'Aplicación web' },
+    { label: 'Cliente de chat' },
+    { label: 'Asistente con LLM', note: 'acotado a la API' },
+    { label: 'Un dominio', note: 'validación y permisos', accent: true },
+    { label: 'PostgreSQL' },
+  ]}
+/>
 
 La tentación con dos frentes es construir dos backends — una API web y una
 integración de chat, cada una con su propia idea de qué es un producto y qué es un

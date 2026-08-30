@@ -8,6 +8,8 @@ summary: >-
 order: 3
 ---
 
+import Flow from '@components/diagrams/Flow.astro';
+
 ## The brief
 
 Atonga is an AI-driven multichannel e-commerce platform for small entrepreneurs —
@@ -23,6 +25,17 @@ that decided the architecture.
 
 The backend is Python and FastAPI over PostgreSQL, serving real-time requests from
 web and chat clients.
+
+<Flow
+  caption="Web, chat and the assistant are three transports over one domain. None of them is a privileged path around it."
+  steps={[
+    { label: 'Web app' },
+    { label: 'Chat client' },
+    { label: 'LLM assistant', note: 'bounded to the API' },
+    { label: 'One domain', note: 'validation and permissions', accent: true },
+    { label: 'PostgreSQL' },
+  ]}
+/>
 
 The temptation with two front ends is to build two backends — a web API and a chat
 integration, each with its own idea of what a product and an order are. It works
