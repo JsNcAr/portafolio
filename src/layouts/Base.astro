@@ -10,6 +10,12 @@ import SiteFooter from '@components/SiteFooter.astro';
 import { HTML_LANG, type Locale } from '@i18n/ui';
 import { useTranslations, localePath, alternates } from '@i18n/utils';
 import { contact, roles, education } from '@data/cv';
+import { token } from '@lib/tokens';
+
+// `?url` hands back the hashed, built path, so the preload cannot go stale when
+// the font is revved. These two subsets are what every page actually renders in.
+import sansLatin from '@fontsource-variable/ibm-plex-sans/files/ibm-plex-sans-latin-wght-normal.woff2?url';
+import monoLatin from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2?url';
 
 interface Props {
   locale: Locale;
@@ -54,6 +60,16 @@ const personSchema = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Without these the fonts are only discovered once the stylesheet has
+         parsed, which costs a round trip on the text that is the whole page. -->
+    <link rel="preload" as="font" type="font/woff2" href={sansLatin} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={monoLatin} crossorigin />
+
+    <!-- Browser chrome cannot read a custom property, so these are the only
+         literal colours in the app; both come from the token source. -->
+    <meta name="theme-color" content={token('surface.page', 'light')} media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content={token('surface.page', 'dark')} media="(prefers-color-scheme: dark)" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     {noindex ? (

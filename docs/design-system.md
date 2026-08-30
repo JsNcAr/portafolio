@@ -159,6 +159,28 @@ gate failure, not a hypothetical: `axe_audit [dark]` flagged nav links at
 The observer watches the attribute rather than living in the toggle's click
 handler, so a change made from devtools or a test harness is covered too.
 
+## Small things that are easy to lose
+
+- **Fonts are preloaded.** `Base.astro` imports the two latin subsets with
+  Vite's `?url`, so the `<link rel="preload">` carries the hashed path and
+  cannot go stale. Without it the browser only discovers them after parsing the
+  stylesheet, which costs a round trip on the text that is the whole page.
+- **`theme-color` comes from the token source.** Browser chrome cannot read a
+  custom property, so `src/lib/tokens.ts` resolves the literal at build time.
+  It consults the dark override map for the requested path *first*: most
+  semantic tokens alias straight to a primitive, so waiting for a later hop to
+  re-enter the override map silently returns the light value.
+- **There is a print stylesheet.** People assessing a portfolio print it or save
+  it as a PDF. White ground, black text, chrome hidden, external link targets
+  written out after the link text, and no page break between a heading and what
+  it introduces.
+- **Dates are `<time datetime>`** via `Period.astro`, with `tabular-nums` so
+  columns of dates line up.
+- **The footer has no top margin.** Where a page's last section supplies its own
+  ground, a margin shows the page colour through as a stray stripe. Separation
+  comes from the footer's rule and padding; pages ending on the plain ground
+  carry their own tail spacing instead.
+
 ## Rules that are not negotiable
 
 1. **No hardcoded values in components.** Every colour, size, radius and duration

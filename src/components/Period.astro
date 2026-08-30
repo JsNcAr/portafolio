@@ -1,0 +1,32 @@
+---
+import type { Locale } from '@i18n/ui';
+import { useTranslations } from '@i18n/utils';
+import { month } from '@lib/format';
+
+/**
+ * A date range as two <time> elements. `datetime` carries the machine-readable
+ * value so the dates are parseable by anything that cares; the visible text
+ * stays in the reader's language.
+ */
+interface Props {
+  start: string;
+  end: string | null;
+  locale: Locale;
+  class?: string;
+}
+
+const { start, end, locale, class: className } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<p class:list={['period', className]}>
+  <time datetime={start}>{month(start, locale)}</time>
+  <span aria-hidden="true"> &mdash; </span>
+  {end ? <time datetime={end}>{month(end, locale)}</time> : <span>{t('work.present')}</span>}
+</p>
+
+<style>
+  .period {
+    font-variant-numeric: tabular-nums;
+  }
+</style>

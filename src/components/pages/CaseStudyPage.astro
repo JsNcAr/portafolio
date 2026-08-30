@@ -4,6 +4,7 @@ import { render } from 'astro:content';
 import Base from '@layouts/Base.astro';
 import TechPill from '@components/TechPill.astro';
 import Icon from '@components/Icon.astro';
+import Period from '@components/Period.astro';
 import type { Locale } from '@i18n/ui';
 import { useTranslations, localePath } from '@i18n/utils';
 import { period } from '@lib/format';
@@ -49,7 +50,7 @@ const slug = entry.data.role;
 
         <dl class="facts">
           <div><dt>{t('cs.role')}</dt><dd>{role.title}</dd></div>
-          <div><dt>{t('cs.period')}</dt><dd>{period(role.start, role.end, locale, t('work.present'))}</dd></div>
+          <div><dt>{t('cs.period')}</dt><dd><Period start={role.start} end={role.end} locale={locale} /></dd></div>
         </dl>
 
         <ul class="pills">
@@ -303,6 +304,14 @@ const slug = entry.data.role;
     font-size: var(--text-lg);
   }
 
+  /* The opening paragraph of the piece, one size up. The oldest trick in
+     editorial typography, and it still marks where to start reading. */
+  .body :global(h2:first-of-type + p) {
+    font-size: var(--text-xl);
+    line-height: var(--leading-normal);
+    color: var(--color-text-primary);
+  }
+
   .body :global(strong) {
     color: var(--color-text-primary);
     font-weight: var(--weight-semibold);
@@ -331,7 +340,7 @@ const slug = entry.data.role;
   .pager {
     display: grid;
     gap: var(--space-16);
-    margin-block-start: var(--space-48);
+    margin-block: var(--space-48) var(--space-80);
     padding-block-start: var(--space-24);
     border-block-start: var(--stroke-hairline) solid var(--color-border-default);
   }

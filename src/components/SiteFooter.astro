@@ -47,11 +47,20 @@ const social = [
       <p class="rights">&copy; {year} Jason Nicolás Arias Gómez. {t('footer.rights')}</p>
     </div>
   </div>
+
+  <!-- A page should end on purpose rather than simply stop. -->
+  <div class="shell endmark">
+    <span class="rule" aria-hidden="true"></span>
+    <img src="/favicon.svg" alt="" width="20" height="20" />
+    <span class="rule" aria-hidden="true"></span>
+  </div>
 </footer>
 
 <style>
+  /* No top margin: where the last section supplies its own ground, a margin
+     shows the page colour through as a stray stripe. Separation comes from the
+     footer's own rule and padding instead. */
   .site-footer {
-    margin-block-start: var(--space-96);
     border-block-start: var(--stroke-hairline) solid var(--color-border-default);
     background: var(--color-surface-sunken);
   }
@@ -59,7 +68,7 @@ const social = [
   .inner {
     display: grid;
     gap: var(--space-32);
-    padding-block: var(--space-48);
+    padding-block: var(--space-56);
   }
 
   @media (min-width: 48rem) {
@@ -104,5 +113,23 @@ const social = [
 
   .rights {
     color: var(--color-text-tertiary);
+  }
+
+  .endmark {
+    display: flex;
+    align-items: center;
+    gap: var(--space-16);
+    padding-block-end: var(--space-40);
+  }
+
+  .endmark img {
+    opacity: 0.55;
+    border-radius: var(--radius-sm);
+  }
+
+  .rule {
+    flex: 1 1 0;
+    block-size: var(--stroke-hairline);
+    background: var(--color-border-default);
   }
 </style>

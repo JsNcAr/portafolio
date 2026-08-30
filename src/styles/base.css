@@ -158,6 +158,18 @@ video {
   color: var(--color-text-tertiary);
 }
 
+::selection {
+  background: var(--color-interactive-selected-bg);
+  color: var(--color-text-primary);
+}
+
+/* Dates and figures sit in columns; proportional digits make them ragged. */
+.overline,
+time,
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
 /* While the theme attribute is changing, nothing animates. A theme swap should
    be instant: otherwise every themed colour cross-fades over the hover duration,
    which reads as a glitch, and any measurement taken during the swap sees a
@@ -192,5 +204,58 @@ video {
     animation-iteration-count: 1 !important;
     transition-duration: 1ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* A portfolio gets printed and saved to PDF by people assessing it. Give them
+   something readable on paper rather than a screen layout with a dark ground. */
+@media print {
+  :root {
+    --color-surface-page: #ffffff;
+    --color-surface-card: #ffffff;
+    --color-surface-sunken: #ffffff;
+    --color-surface-accent: #ffffff;
+    --color-text-primary: #000000;
+    --color-text-secondary: #1a1a1a;
+    --color-text-tertiary: #444444;
+    --color-border-default: #bbbbbb;
+    --color-border-strong: #666666;
+  }
+
+  body {
+    background: #ffffff;
+  }
+
+  /* Chrome, the language switch and the skip link are all screen furniture. */
+  .site-header,
+  .skip-link,
+  .site-footer nav,
+  [data-theme-toggle],
+  .lang {
+    display: none !important;
+  }
+
+  /* A link's destination is invisible on paper unless it is written out. */
+  main a[href^="http"]::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.85em;
+    word-break: break-all;
+  }
+
+  /* Never split a heading from what it introduces, or a diagram across pages. */
+  h1,
+  h2,
+  h3 {
+    break-after: avoid-page;
+  }
+
+  figure,
+  li,
+  blockquote {
+    break-inside: avoid-page;
+  }
+
+  main {
+    max-inline-size: none;
   }
 }

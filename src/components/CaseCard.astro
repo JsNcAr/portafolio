@@ -1,12 +1,16 @@
 ---
 import Icon from './Icon.astro';
 import TechPill from './TechPill.astro';
+import Period from './Period.astro';
+import type { Locale } from '@i18n/ui';
 
 interface Props {
   href: string;
   org: string;
   title: string;
-  period: string;
+  locale: Locale;
+  start: string;
+  end: string | null;
   summary: string;
   stack: string[];
   cta: string;
@@ -14,11 +18,11 @@ interface Props {
   lead?: boolean;
 }
 
-const { href, org, title, period, summary, stack, cta, lead = false } = Astro.props;
+const { href, org, title, locale, start, end, summary, stack, cta, lead = false } = Astro.props;
 ---
 
 <article class:list={['case', { lead }]}>
-  <p class="overline period">{period}</p>
+  <Period start={start} end={end} locale={locale} class="overline" />
   <h3 class="org">
     <a href={href}>
       <span class="stretch"></span>{org}

@@ -1,6 +1,7 @@
 ---
 import Base from '@layouts/Base.astro';
 import PageHeader from '@components/PageHeader.astro';
+import Period from '@components/Period.astro';
 import type { Locale } from '@i18n/ui';
 import { useTranslations } from '@i18n/utils';
 import { period } from '@lib/format';
@@ -32,7 +33,7 @@ const languages = [t('about.lang.es'), t('about.lang.en'), t('about.lang.ja')];
       <ol class="timeline">
         {roles.map((role) => (
           <li>
-            <p class="when">{period(role.start, role.end, locale, t('work.present'))}</p>
+            <Period start={role.start} end={role.end} locale={locale} class="when" />
             <div>
               <p class="what">
                 <strong>{role.title}</strong> — {role.org}
@@ -145,6 +146,7 @@ const languages = [t('about.lang.es'), t('about.lang.en'), t('about.lang.ja')];
   .two-up {
     display: grid;
     gap: var(--space-32);
+    margin-block-end: var(--space-80);
     margin-block-start: var(--space-56);
     padding-block-start: var(--space-24);
     border-block-start: var(--stroke-hairline) solid var(--color-border-default);

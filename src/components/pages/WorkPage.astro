@@ -2,6 +2,7 @@
 import Base from '@layouts/Base.astro';
 import PageHeader from '@components/PageHeader.astro';
 import TechPill from '@components/TechPill.astro';
+import Period from '@components/Period.astro';
 import type { Locale } from '@i18n/ui';
 import { useTranslations, localePath } from '@i18n/utils';
 import { getCollection } from 'astro:content';
@@ -32,7 +33,7 @@ const studies = new Set(
       {roles.map((role) => (
         <li class:list={['role', { current: role.end === null }]} id={role.id}>
           <div class="meta">
-            <p class="overline">{period(role.start, role.end, locale, t('work.present'))}</p>
+            <Period start={role.start} end={role.end} locale={locale} class="overline" />
             {role.end === null && <p class="badge">{t('work.role.current')}</p>}
             <p class="place">{role.location}</p>
           </div>
@@ -73,7 +74,7 @@ const studies = new Set(
   .roles {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0 0 var(--space-64);
   }
 
   .role {

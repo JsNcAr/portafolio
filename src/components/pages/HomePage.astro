@@ -15,21 +15,6 @@ interface Props {
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 
-const MONTHS: Record<Locale, string[]> = {
-  en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-  es: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
-};
-const PRESENT: Record<Locale, string> = { en: 'Present', es: 'Actualidad' };
-
-function month(value: string): string {
-  const [year, mm] = value.split('-');
-  return `${MONTHS[locale][Number(mm) - 1]} ${year}`;
-}
-
-function period(start: string, end: string | null): string {
-  return `${month(start)} — ${end ? month(end) : PRESENT[locale]}`;
-}
-
 // The three roles that get case studies. Apollyon leads: it is current, and the
 // only one where the whole stack from schema to TLS was a single person's call.
 const featured = ['apollyon', 'personally-ai', 'atonga']
@@ -94,7 +79,9 @@ const stackLabels: Record<(typeof skills)[number]['key'], string> = {
         href={localePath(locale, `/work/${lead.id}`)}
         org={lead.org}
         title={lead.title}
-        period={period(lead.start, lead.end)}
+        locale={locale}
+        start={lead.start}
+        end={lead.end}
         summary={lead.summary[locale]}
         stack={lead.stack}
         cta={t('home.more')}
@@ -106,7 +93,9 @@ const stackLabels: Record<(typeof skills)[number]['key'], string> = {
             href={localePath(locale, `/work/${role.id}`)}
             org={role.org}
             title={role.title}
-            period={period(role.start, role.end)}
+            locale={locale}
+            start={role.start}
+            end={role.end}
             summary={role.summary[locale]}
             stack={role.stack}
             cta={t('home.more')}
@@ -284,16 +273,18 @@ const stackLabels: Record<(typeof skills)[number]['key'], string> = {
     }
   }
 
+  /* Its own ground, so the page alternates rather than running as one flat
+     column from the hero to the footer. */
   .stack-section {
-    padding-block-end: var(--space-32);
+    padding-block: var(--space-48);
+    background: var(--color-surface-sunken);
+    border-block-start: var(--stroke-hairline) solid var(--color-border-default);
   }
 
   .stack-grid {
     display: grid;
     gap: var(--space-20);
     margin: var(--space-20) 0 0;
-    padding-block-start: var(--space-20);
-    border-block-start: var(--stroke-hairline) solid var(--color-border-default);
   }
 
   .stack-row {
