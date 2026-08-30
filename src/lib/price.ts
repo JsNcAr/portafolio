@@ -7,7 +7,7 @@ const UNIT: Record<PriceUnit, Record<Locale, string>> = {
   project: { en: 'per project', es: 'por proyecto' },
   month: { en: 'per month', es: 'al mes' },
   hour: { en: 'per hour', es: 'por hora' },
-  'hour-per-student': { en: 'per hour, per student', es: 'por hora, por estudiante' },
+  'hour-group': { en: 'per hour, up to ten people', es: 'por hora, hasta diez personas' },
 };
 
 /**
@@ -28,6 +28,10 @@ export function formatPrice(
     new Intl.NumberFormat(LOCALE_TAG[locale], {
       style: 'currency',
       currency: p.currency,
+      // es-CO renders COP as a bare "$". Someone switching from the English
+      // page, where "$" is USD, would read pesos as dollars -- a factor of
+      // roughly four. Name the currency instead.
+      currencyDisplay: p.currency === 'COP' ? 'code' : 'symbol',
       maximumFractionDigits: 0,
     }).format(n);
 

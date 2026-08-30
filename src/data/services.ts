@@ -7,7 +7,7 @@ export type ServiceGroup = 'engineering' | 'teaching';
 /** Who the client would actually be contracting with. */
 export type Delivery = 'apollyon' | 'direct' | 'either';
 
-export type PriceUnit = 'project' | 'month' | 'hour' | 'hour-per-student';
+export type PriceUnit = 'project' | 'month' | 'hour' | 'hour-group';
 
 /**
  * Structured rather than a pre-formatted string, so figures render with tabular
@@ -130,11 +130,11 @@ export const websites = {
   } as Bilingual,
   stack: ['Static build', 'Caddy', 'TLS', 'Debian'],
   build: {
-    en: { from: 250000, currency: 'COP', unit: 'project' },
+    en: { from: 100, currency: 'USD', unit: 'project' },
     es: { from: 250000, currency: 'COP', unit: 'project' },
   } as PriceByLocale,
   hosting: {
-    en: { from: 25000, currency: 'COP', unit: 'month' },
+    en: { from: 10, currency: 'USD', unit: 'month' },
     es: { from: 25000, currency: 'COP', unit: 'month' },
   } as PriceByLocale,
   examples: [
@@ -194,11 +194,14 @@ export const classFormats: ClassFormat[] = [
   },
   {
     id: 'small-group',
-    price: null,
+    price: {
+      en: { from: 40, currency: 'USD', unit: 'hour-group' },
+      es: { from: 100000, currency: 'COP', unit: 'hour-group' },
+    },
     title: { en: 'Small group', es: 'Grupo pequeño' },
     note: {
-      en: 'Two to four people, remote. Priced per student, which usually makes it the cheaper route before an exam.',
-      es: 'De dos a cuatro personas, remoto. Se cobra por estudiante, que suele ser la opción más barata antes de un examen.',
+      en: 'Up to ten people, remote. One rate for the session however many of you there are, so a study group before an exam works out far cheaper each.',
+      es: 'Hasta diez personas, remoto. Una sola tarifa por sesión sin importar cuántos sean, así que un grupo de estudio antes de un examen sale mucho más barato por persona.',
     },
   },
 ];
