@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // The canonical origin. Overridable at build time so a staging deploy does not
 // emit production URLs in the sitemap: SITE_URL=https://staging.example npm run build
-const site = process.env.SITE_URL ?? 'https://jasonarias.dev';
+const site = process.env.SITE_URL ?? 'https://jsncar.tech';
 
 export default defineConfig({
   site,

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jasonarias.dev/sitemap-index.xml
+Sitemap: https://jsncar.tech/sitemap-index.xml

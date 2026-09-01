@@ -60,7 +60,7 @@ export const ui = {
       'Built with Astro. Static files, no tracking, no analytics, served by Caddy from a server I administer.',
     'footer.rights': 'All rights reserved.',
     'contact.whatsapp.label': 'WhatsApp',
-    'contact.whatsapp.prefill': 'Hi Jason, I found you through jasonarias.dev.',
+    'contact.whatsapp.prefill': 'Hi Jason, I found you through jsncar.tech.',
     'svc.whatsapp': 'Message on WhatsApp',
     'svc.whatsapp.prefill':
       'Hi Jason, I saw your services page and would like to talk about a project.',
@@ -243,7 +243,7 @@ export const ui = {
       'Hecho con Astro. Archivos estáticos, sin rastreo ni analítica, servidos por Caddy desde un servidor que yo administro.',
     'footer.rights': 'Todos los derechos reservados.',
     'contact.whatsapp.label': 'WhatsApp',
-    'contact.whatsapp.prefill': 'Hola Jason, te encontré por jasonarias.dev.',
+    'contact.whatsapp.prefill': 'Hola Jason, te encontré por jsncar.tech.',
     'svc.whatsapp': 'Escribir por WhatsApp',
     'svc.whatsapp.prefill':
       'Hola Jason, vi tu página de servicios y me gustaría hablar de un proyecto.',

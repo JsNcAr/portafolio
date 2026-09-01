@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Design tokens for jasonarias.dev. 3-tier DTCG (primitive -> semantic -> component). Palette generated in OKLCH. Register: engineering documentation on warm paper - warm graphite neutrals, deep teal primary, ochre accent for data, crimson reserved for destructive actions only.",
+  "$description": "Design tokens for jsncar.tech. 3-tier DTCG (primitive -> semantic -> component). Palette generated in OKLCH. Register: engineering documentation on warm paper - warm graphite neutrals, deep teal primary, ochre accent for data, crimson reserved for destructive actions only.",
   "primitive": {
     "$description": "Raw palette. Never referenced directly from components.",
     "graphite": {

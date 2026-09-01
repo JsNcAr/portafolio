@@ -1,4 +1,4 @@
-# jasonarias.dev
+# jsncar.tech
 
 Personal site for Jason Nicolás Arias Gómez — Python backend engineer, Bogotá.
 
