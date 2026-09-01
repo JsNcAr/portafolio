@@ -27,7 +27,7 @@ export const repos: Repo[] = [
     lead: true,
     blurb: {
       en: 'A FastAPI starter with the authentication layer already solved: OAuth2 with signed JWTs, async PostgreSQL through SQLModel, and login by username, email or phone against one identity. The closest public equivalent to the auth work described in the case studies.',
-      es: 'Un punto de partida en FastAPI con la capa de autenticación ya resuelta: OAuth2 con JWT firmados, PostgreSQL asíncrono a través de SQLModel, e inicio de sesión por usuario, correo o teléfono contra una sola identidad. Lo más cercano en público al trabajo de autenticación descrito en los casos.',
+      es: 'Un punto de partida en FastAPI con la capa de autenticación ya resuelta: OAuth2 con JWT firmados, PostgreSQL asíncrono a través de SQLModel, e inicio de sesión por usuario, correo o teléfono contra una sola identidad. Lo más parecido que tengo en público al trabajo de autenticación descrito en los casos.',
     },
     tags: ['FastAPI', 'OAuth2', 'JWT', 'SQLModel', 'asyncpg'],
   },
@@ -49,7 +49,7 @@ export const repos: Repo[] = [
     language: 'Python',
     blurb: {
       en: 'The daemons running on my own Linux server. Small, unglamorous, and the reason I am comfortable claiming systemd and Debian administration on a CV.',
-      es: 'Los daemons que corren en mi propio servidor Linux. Pequeños, poco vistosos, y la razón por la que puedo poner administración de systemd y Debian en una hoja de vida.',
+      es: 'Los daemons que corren en mi propio servidor Linux. Pequeños, poco vistosos y la razón por la que puedo poner administración de systemd y Debian en una hoja de vida.',
     },
     tags: ['Linux', 'systemd', 'self-hosted'],
   },
@@ -71,7 +71,7 @@ export const repos: Repo[] = [
     language: 'Python',
     blurb: {
       en: 'Rental and sale prices for apartments in Bogotá: extraction, cleaning, visualisation and predictive modelling. A rework of an existing open-source dataset project rather than a fork left untouched.',
-      es: 'Precios de arriendo y venta de apartamentos en Bogotá: extracción, limpieza, visualización y modelado predictivo. Una reelaboración de un proyecto de datos abierto existente, no un fork sin tocar.',
+      es: 'Precios de arriendo y venta de apartamentos en Bogotá: extracción, limpieza, visualización y modelado predictivo. Una reelaboración de un proyecto existente de datos abiertos, no un fork sin tocar.',
     },
     tags: ['ETL', 'Pandas', 'modelling'],
   },
@@ -93,7 +93,7 @@ export const repos: Repo[] = [
     language: 'Jupyter',
     blurb: {
       en: 'A Monte Carlo study of a Monopoly board: which squares actually pay, and how long it takes to find out.',
-      es: 'Un estudio de Monte Carlo sobre un tablero de Monopoly: qué casillas realmente rinden, y cuánto hay que simular para saberlo.',
+      es: 'Un estudio de Monte Carlo sobre un tablero de Monopoly: qué casillas realmente rinden y cuánto hay que simular para saberlo.',
     },
     tags: ['Monte Carlo', 'simulation', 'statistics'],
   },

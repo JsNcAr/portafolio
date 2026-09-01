@@ -43,7 +43,7 @@ export const roles: Role[] = [
       },
       {
         en: 'Containerized every service with Docker and systemd on company-owned Debian servers, with Caddy handling edge routing and automatic TLS for the production API.',
-        es: 'Contenericé cada servicio con Docker y systemd en servidores Debian propios de la empresa, con Caddy encargándose del enrutamiento de borde y del TLS automático para la API de producción.',
+        es: 'Puse cada servicio en contenedores con Docker y systemd en servidores Debian propios de la empresa, con Caddy encargándose del enrutamiento de borde y del TLS automático para la API de producción.',
       },
       {
         en: 'Deployed a self-hosted GitLab instance and CI/CD pipelines that push backend updates to production on merge, plus branching rules and internal docs on GitLab Pages.',
@@ -74,7 +74,7 @@ export const roles: Role[] = [
       },
       {
         en: 'Automated reporting for a marketing agency running 60+ client accounts — Selenium extraction from Meta Business Suite plus Pandas cleaning and analysis — replacing manual reports and cutting reporting effort by around 80%.',
-        es: 'Automaticé los reportes de una agencia de marketing con más de 60 cuentas de clientes — extracción con Selenium desde Meta Business Suite más limpieza y análisis con Pandas — reemplazando los reportes manuales y reduciendo el esfuerzo de reporteo cerca de un 80%.',
+        es: 'Automaticé los reportes de una agencia de marketing con más de 60 cuentas de clientes — extracción con Selenium desde Meta Business Suite más limpieza y análisis con Pandas — reemplazando los reportes manuales y reduciendo el tiempo dedicado a los reportes en cerca de un 80%.',
       },
       {
         en: 'Built a CRM and lead-generation service processing thousands of leads per run via the Apollo API, using optimized queries and background task management for high-volume workloads.',
@@ -173,7 +173,7 @@ export const education = {
   end: null,
   note: {
     en: 'Coursework in mathematical modeling, numerical methods, statistics and computational physics. Recipient of the national "Ser Pilo Paga" merit scholarship.',
-    es: 'Cursos en modelamiento matemático, métodos numéricos, estadística y física computacional. Becario de la beca nacional de mérito "Ser Pilo Paga".',
+    es: 'Cursos en modelamiento matemático, métodos numéricos, estadística y física computacional. Beneficiario de la beca nacional de mérito "Ser Pilo Paga".',
   },
 };
 
@@ -192,5 +192,5 @@ export const contact = {
   whatsappDisplay: '+57 319 681 7363',
   github: 'https://github.com/JsNcAr',
   linkedin: 'https://linkedin.com/in/jason-nicolas-arias-gomez-50127b248',
-  location: { en: 'Bogotá, Colombia — open to remote', es: 'Bogotá, Colombia — abierto a remoto' },
+  location: { en: 'Bogotá, Colombia — open to remote', es: 'Bogotá, Colombia — abierto a trabajo remoto' },
 };

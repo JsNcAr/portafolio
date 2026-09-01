@@ -194,9 +194,9 @@ export const ui = {
 
   es: {
     'site.name': 'Jason Arias',
-    'site.role': 'Ingeniero backend de Python',
+    'site.role': 'Ingeniero de backend Python',
     'site.description':
-      'Ingeniero backend de Python en Bogotá. Servicios en FastAPI y PostgreSQL, autenticación endurecida y la infraestructura Debian sobre la que corren.',
+      'Ingeniero de backend Python en Bogotá. Servicios en FastAPI y PostgreSQL, autenticación reforzada y la infraestructura Debian sobre la que corren.',
 
     'nav.label': 'Principal',
     'nav.home': 'Inicio',
@@ -209,21 +209,21 @@ export const ui = {
     'lang.label': 'Idioma',
     'lang.switch': 'Read in English',
 
-    'home.lead': 'Construyo backends que se mantienen en pie.',
+    'home.lead': 'Construyo backends que no se caen.',
     'home.intro.a':
-      'Servicios asíncronos en FastAPI sobre PostgreSQL, autenticación que resiste, y los servidores Debian, contenedores y pipelines que los sostienen.',
+      'Servicios asíncronos en FastAPI sobre PostgreSQL, autenticación que resiste y los servidores Debian, contenedores y pipelines que los sostienen.',
     'home.intro.b':
-      'Dos años de responsabilidad en producción: del diseño del esquema hasta el proxy inverso y el TLS, sin nadie más abajo a quien pasarle la parte difícil.',
+      'Dos años a cargo de producción: del diseño del esquema hasta el proxy inverso y el TLS, sin nadie a quien pasarle la parte difícil.',
     'home.intro.c':
-      'Física en la Universidad de los Andes detrás del trabajo matemático: filtros de Kalman, fusión de sensores y pipelines de datos que tienen que estar correctos, no solamente terminados.',
+      'Detrás del trabajo matemático, física en la Universidad de los Andes: filtros de Kalman, fusión de sensores y pipelines de datos que tienen que estar bien, no solo terminados.',
 
     'motif.alt':
-      'Una señal de posición ruidosa y la misma señal tras un filtro de Kalman: la traza cruda oscila con violencia mientras la línea filtrada se mueve con suavidad.',
-    'motif.raw': 'muestras crudas',
+      'Una señal de posición ruidosa y la misma señal tras un filtro de Kalman: la señal sin procesar oscila de forma errática mientras la línea filtrada se mueve con suavidad.',
+    'motif.raw': 'muestras sin procesar',
     'motif.filtered': 'filtrado de Kalman',
 
     'home.selected': 'Trabajo seleccionado',
-    'home.selected.note': 'Tres sistemas de los que fui responsable de principio a fin.',
+    'home.selected.note': 'Tres sistemas que llevé de principio a fin.',
     'home.more': 'Leer el caso',
     'home.allwork': 'Todo el trabajo',
 
@@ -257,7 +257,7 @@ export const ui = {
     'svc.title': 'Servicios',
     'svc.lead': 'Backends, automatización y clases.',
     'svc.intro':
-      'Dos tipos de trabajo. Sistemas construidos y operados para empresas, y clases uno a uno de programación, matemáticas y física. Ambos son cosas que hago; ninguno es un efecto secundario del otro.',
+      'Dos tipos de trabajo. Sistemas construidos y operados para empresas, y clases uno a uno de programación, matemáticas y física. Hago las dos cosas; ninguna es un subproducto de la otra.',
 
     'svc.engineering': 'Ingeniería',
     'svc.engineering.note': 'Definido, construido, desplegado y entregado.',
@@ -295,24 +295,24 @@ export const ui = {
 
     'svc.contracting': 'Con quién estarías contratando',
     'svc.contracting.body':
-      'Soy COO de Apollyon S.A.S en Bogotá, y los desarrollos grandes van por la empresa: un equipo, un contrato, y continuidad si no soy yo quien lo sostiene. Los proyectos más pequeños y todas las clases son directamente conmigo. Cada servicio de arriba dice cuál aplica, y te diré con claridad si un proyecto pertenece al otro lado de esa línea.',
+      'Soy COO de Apollyon S.A.S en Bogotá, y los desarrollos grandes van por la empresa: un equipo, un contrato y continuidad si no soy yo quien lo sostiene. Los proyectos más pequeños y todas las clases son directamente conmigo. Cada servicio de arriba dice cuál aplica, y te diré con claridad si un proyecto pertenece al otro lado de esa línea.',
 
     'svc.cta.title': '¿Tienes algo que valga la pena construir?',
     'svc.cta.body':
-      'Cuéntame qué estás intentando construir, automatizar o desenredar. Vuelvo con una arquitectura y un cronograma realista, no con un folleto.',
+      'Cuéntame qué estás intentando construir, automatizar o desenredar. Te respondo con una arquitectura y un cronograma realista, no con un folleto.',
 
     'meta.updated': 'Última actualización',
 
     'notfound.code': 'Error 404',
     'notfound.title': 'Esa página no existe.',
     'notfound.body':
-      'Puede que el enlace esté desactualizado, o que la página aún no esté construida. Todo el sitio se alcanza desde las páginas de abajo.',
+      'Puede que el enlace esté desactualizado, o que la página aún no esté construida. Puedes llegar a todo el sitio desde las páginas de abajo.',
     'notfound.home': 'Ir a la página de inicio',
 
     'work.title': 'Trabajo',
-    'work.lead': 'Cinco roles, y los sistemas detrás de ellos.',
+    'work.lead': 'Cinco roles y los sistemas detrás de ellos.',
     'work.intro':
-      'Casi todo este trabajo es privado y propietario, así que lo que sigue describe lo que construí y de lo que fui responsable, sin enlazar al código. El código público que sí lo respalda está en la página de código abierto.',
+      'Casi todo este trabajo es privado y pertenece a las empresas, así que lo que sigue describe lo que construí y de lo que fui responsable, sin enlazar al código. El código público que sí lo respalda está en la página de código abierto.',
     'work.present': 'Actualidad',
     'work.role.current': 'Rol actual',
     'cs.read': 'Leer el caso',
@@ -326,9 +326,9 @@ export const ui = {
     'cs.note': 'Escrito sobre trabajo del que fui responsable. Se omiten detalles y cifras internas de las empresas.',
 
     'os.title': 'Código abierto',
-    'os.lead': 'La mitad pública.',
+    'os.lead': 'Lo que sí es público.',
     'os.intro':
-      'Mi trabajo más fuerte está en repositorios privados de empresa. Lo que es público es una mezcla de bases de backend, análisis de datos, y los trabajos de física de donde salieron los métodos numéricos. Prefiero mostrarlo así, con honestidad, antes que rellenar una cuadrícula.',
+      'Mi trabajo más fuerte está en repositorios privados de empresa. Lo público es una mezcla de backend, análisis de datos y los trabajos de física de donde salieron los métodos numéricos. Prefiero mostrarlo con honestidad antes que inflar la lista.',
     'os.group.backend': 'Backend e infraestructura',
     'os.group.data': 'Análisis de datos',
     'os.group.numerical': 'Métodos numéricos y física',
@@ -337,16 +337,16 @@ export const ui = {
       'Algunos repositorios aquí y en otros lugares tienen interfaces web. Esas las planeé y las armé con herramientas de IA como Lovable; reflejan cómo defino y dirijo ese trabajo, no una pretensión de ser ingeniero de frontend. Mi oficio está del lado del servidor.',
     'os.coursework.title': 'Una nota sobre los trabajos de universidad',
     'os.coursework.body':
-      'Los cuadernos son trabajos de universidad y están marcados como tales. Siguen públicos porque las matemáticas que contienen son reales y es de ahí que salió el trabajo con filtros de Kalman y señales.',
+      'Los notebooks son trabajos de universidad y están marcados como tales. Siguen públicos porque las matemáticas que contienen son reales y de ahí salió el trabajo con filtros de Kalman y señales.',
     'os.viewrepo': 'Ver el repositorio',
     'os.profile': 'Todos los repositorios en GitHub',
 
     'about.title': 'Perfil',
     'about.lead': 'Ingeniero backend, formación en física, Bogotá.',
     'about.body.a':
-      'Escribo servicios en Python y administro las máquinas donde viven. En la práctica eso ha significado diseñar un esquema, entregar la API encima, ponerla en contenedores, dejarle un proxy inverso con TLS al frente, y después ser la persona a la que llaman cuando deja de responder a una hora inconveniente.',
+      'Escribo servicios en Python y administro las máquinas donde viven. En la práctica eso ha significado diseñar un esquema, entregar la API encima, ponerla en contenedores, dejarle un proxy inverso con TLS al frente, y después ser la persona a la que llaman cuando deja de responder a una hora inoportuna.',
     'about.body.b':
-      'La mayor parte de mi trabajo ha sido en empresas pequeñas donde no había un equipo de plataforma a quien pasarle la infraestructura. Por eso la hoja de vida cruza backend y DevOps en lugar de quedarse en uno de los dos: ese límite me tocaba a mí.',
+      'La mayor parte de mi trabajo ha sido en empresas pequeñas donde no había un equipo de plataforma a quien pasarle la infraestructura. Por eso la hoja de vida abarca backend y DevOps en lugar de quedarse en uno solo: ese límite me tocaba a mí.',
     'about.body.c':
       'El pregrado en física no es decoración. La fusión de sensores, los filtros de Kalman extendidos y el suavizado de RSSI sobre una malla Bluetooth son el tipo de problema donde las matemáticas deciden si la funcionalidad sirve, y esa es la parte que más disfruto.',
     'about.body.d':
@@ -356,13 +356,13 @@ export const ui = {
     'about.certifications': 'Certificaciones',
     'about.languages': 'Idiomas',
     'about.lang.es': 'Español — nativo',
-    'about.lang.en': 'Inglés — profesional de trabajo',
-    'about.lang.ja': 'Japonés — elemental',
+    'about.lang.en': 'Inglés — nivel profesional',
+    'about.lang.ja': 'Japonés — básico',
 
     'contact.title': 'Contacto',
     'contact.lead': 'Abierto a trabajo de backend e infraestructura.',
     'contact.intro':
-      'El correo es la forma más segura de contactarme, y respondo en un par de días. Estoy en Bogotá, en hora de Colombia, y trabajo en remoto sin problema.',
+      'El correo es la forma más confiable de contactarme, y respondo en un par de días. Estoy en Bogotá, en horario de Colombia, y trabajo de forma remota sin problema.',
     'contact.services':
       'Si buscas trabajo por proyecto o clases en lugar de una vacante, la página de servicios tiene lo que ofrezco y cómo se contrata cada cosa.',
     'contact.services.link': 'Ver servicios',

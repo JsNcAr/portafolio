@@ -76,7 +76,7 @@ export const services: Service[] = [
     },
     blurb: {
       en: 'Workflows that connect a CRM, a database, email and messaging and then run without anyone watching. Where a system has no API, Selenium reads the interface built for people. Cleaning and analysis in Pandas. Built to fail loudly rather than quietly return nothing.',
-      es: 'Flujos que conectan un CRM, una base de datos, correo y mensajería y después corren sin que nadie los vigile. Donde un sistema no tiene API, Selenium lee la interfaz hecha para personas. Limpieza y análisis con Pandas. Construidos para fallar de forma ruidosa y no para devolver nada en silencio.',
+      es: 'Flujos que conectan un CRM, una base de datos, correo y mensajería y después corren sin que nadie los vigile. Donde un sistema no tiene API, Selenium lee la interfaz hecha para personas. Limpieza y análisis con Pandas. Construidos para fallar de forma visible, no para devolver nada en silencio.',
     },
     stack: ['n8n', 'Selenium', 'Pandas', 'Python'],
   },
@@ -91,7 +91,7 @@ export const services: Service[] = [
     },
     blurb: {
       en: 'Retrieval over your own documents, so answers cite something real instead of being invented. WhatsApp assistants on the channel your customers already use. Local models where the data cannot leave your infrastructure. Bounded to what the underlying API already permits.',
-      es: 'Recuperación sobre tus propios documentos, para que las respuestas citen algo real en lugar de inventarlo. Asistentes de WhatsApp en el canal que tus clientes ya usan. Modelos locales cuando los datos no pueden salir de tu infraestructura. Acotados a lo que la API de base ya permite.',
+      es: 'Recuperación sobre tus propios documentos, para que las respuestas citen algo real en lugar de inventarlo. Asistentes de WhatsApp en el canal que tus clientes ya usan. Modelos locales cuando los datos no pueden salir de tu infraestructura. Acotados a lo que ya permite la API subyacente.',
     },
     stack: ['RAG', 'OpenAI API', 'Local LLMs', 'WhatsApp'],
   },
@@ -126,7 +126,7 @@ export interface SiteExample {
 export const websites = {
   blurb: {
     en: 'A site for your business, designed, built and then actually kept online. Fast, accessible, works on a phone, and findable — a static build behind a reverse proxy with automatic TLS, on infrastructure I run. The design is scoped and assembled with AI tooling; the build, the hosting and the uptime are mine.',
-    es: 'Un sitio para tu negocio, diseñado, construido y después realmente mantenido en línea. Rápido, accesible, funciona en el teléfono y se encuentra en buscadores — un build estático detrás de un proxy inverso con TLS automático, en infraestructura que yo opero. El diseño se define y se arma con herramientas de IA; la construcción, el hosting y el tiempo en línea son míos.',
+    es: 'Un sitio para tu negocio, diseñado, construido y después realmente mantenido en línea. Rápido, accesible, funciona en el teléfono y se encuentra en buscadores — un sitio estático detrás de un proxy inverso con TLS automático, en infraestructura que yo opero. El diseño se define y se arma con herramientas de IA; la construcción, el hosting y la disponibilidad son míos.',
   } as Bilingual,
   stack: ['Static build', 'Caddy', 'TLS', 'Debian'],
   build: {
@@ -189,7 +189,7 @@ export const classFormats: ClassFormat[] = [
     title: { en: 'One to one', es: 'Uno a uno' },
     note: {
       en: 'Remote, by video call. The session goes wherever you are actually stuck.',
-      es: 'Remoto, por videollamada. La sesión va a donde realmente estés atascado.',
+      es: 'Remoto, por videollamada. La sesión se enfoca en donde realmente estés atascado.',
     },
   },
   {
@@ -225,18 +225,18 @@ export const classAudiences: Audience[] = [
   },
   {
     id: 'developers',
-    label: { en: 'Working developers', es: 'Desarrolladores en ejercicio' },
+    label: { en: 'Working developers', es: 'Desarrolladores que ya trabajan' },
     note: {
       en: 'Python and backend depth: async, schema design, authentication, getting it deployed and keeping it up.',
-      es: 'Profundidad en Python y backend: asincronía, diseño de esquemas, autenticación, desplegarlo y mantenerlo en pie.',
+      es: 'Profundidad en Python y backend: asincronía, diseño de esquemas, autenticación, desplegarlo y mantenerlo en línea.',
     },
   },
   {
     id: 'career-changers',
-    label: { en: 'Career changers', es: 'Personas cambiando de carrera' },
+    label: { en: 'Career changers', es: 'Personas que cambian de carrera' },
     note: {
       en: 'Coming into programming from another field, with structured teaching rather than a playlist of videos.',
-      es: 'Llegando a la programación desde otro campo, con enseñanza estructurada y no una lista de videos.',
+      es: 'Llegar a la programación desde otro campo, con enseñanza estructurada y no con una lista de videos.',
     },
   },
 ];
