@@ -55,6 +55,24 @@ const methods = [
       </div>
     </dl>
 
+    <section class="looking" aria-labelledby="looking-heading">
+      <h2 class="overline" id="looking-heading">{t('contact.looking')}</h2>
+      <dl class="looking-rows">
+        <div class="row">
+          <dt>{t('contact.looking.role')}</dt>
+          <dd>{t('contact.looking.role.v')}</dd>
+        </div>
+        <div class="row">
+          <dt>{t('contact.looking.where')}</dt>
+          <dd>{t('contact.looking.where.v')}</dd>
+        </div>
+        <div class="row">
+          <dt>{t('contact.looking.hours')}</dt>
+          <dd>{t('contact.looking.hours.v')}</dd>
+        </div>
+      </dl>
+    </section>
+
     <p class="services-note">
       {t('contact.services')}
       <a href={localePath(locale, '/services')}>
@@ -79,6 +97,46 @@ const methods = [
 </Base>
 
 <style>
+  /* A recruiter should be able to disqualify or proceed without reading prose,
+     so this is a table of facts rather than a paragraph about availability. */
+  .looking {
+    margin-block-start: var(--space-40);
+    padding-block-start: var(--space-24);
+    border-block-start: var(--stroke-hairline) solid var(--color-border-default);
+  }
+
+  .looking-rows {
+    margin: var(--space-16) 0 0;
+    display: grid;
+    gap: var(--space-16);
+  }
+
+  .looking-rows .row {
+    display: grid;
+    gap: var(--space-4);
+    min-inline-size: 0;
+  }
+
+  @media (min-width: 40rem) {
+    .looking-rows .row {
+      grid-template-columns: 9rem minmax(0, 1fr);
+      gap: var(--space-16);
+      align-items: baseline;
+    }
+  }
+
+  .looking-rows dt {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+  }
+
+  .looking-rows dd {
+    margin: 0;
+    color: var(--color-text-secondary);
+    max-inline-size: var(--measure-prose);
+  }
+
   .methods {
     margin: var(--space-48) 0 0;
     display: grid;

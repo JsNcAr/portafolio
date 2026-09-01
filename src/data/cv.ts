@@ -14,6 +14,14 @@ export interface Role {
   summary: Bilingual;
   highlights: Array<Bilingual>;
   stack: string[];
+  /**
+   * Scannable figures for the case study header. Only ever numbers already
+   * stated in `highlights` -- this is a restatement for a reader who skims,
+   * never a new claim. Roles without measured outcomes simply omit it.
+   */
+  metrics?: Array<{ value: Bilingual; label: Bilingual }>;
+  /** When the case study prose was last revised. YYYY-MM. */
+  updated?: string;
 }
 
 /**
@@ -55,6 +63,7 @@ export const roles: Role[] = [
       },
     ],
     stack: ['FastAPI', 'SQLModel', 'PostgreSQL', 'Docker', 'systemd', 'Caddy', 'GitLab CI/CD', 'BLE', 'Kalman filters'],
+    updated: '2026-09',
   },
   {
     id: 'personally-ai',
@@ -86,6 +95,12 @@ export const roles: Role[] = [
       },
     ],
     stack: ['FastAPI', 'Pydantic', 'SQLAlchemy', 'Selenium', 'Pandas', 'Apollo API', 'Hetzner Cloud', 'Docker'],
+    metrics: [
+      { value: { en: '60+', es: '60+' }, label: { en: 'client accounts reported on', es: 'cuentas de clientes con reportes' } },
+      { value: { en: '~80%', es: '~80%' }, label: { en: 'less reporting effort', es: 'menos esfuerzo en reportes' } },
+      { value: { en: '1 to 5', es: '1 a 5' }, label: { en: 'engineers, team I grew', es: 'ingenieros, equipo que hice crecer' } },
+    ],
+    updated: '2026-09',
   },
   {
     id: 'atonga',
@@ -113,6 +128,7 @@ export const roles: Role[] = [
       },
     ],
     stack: ['FastAPI', 'PostgreSQL', 'WebSockets', 'OpenAI API', 'Jira'],
+    updated: '2026-09',
   },
   {
     id: 'personally-ai-dev',

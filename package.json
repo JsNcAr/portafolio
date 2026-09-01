@@ -17,7 +17,7 @@
     "gate:emoji": "python3 ../../scripts/check_no_emoji.py",
     "gate:static": "npm run gate:tokens && npm run gate:contrast && npm run gate:emoji",
     "gate:render": "npm run gate:browser && npm run gate:prepare && node scripts/run-render-gates.mjs",
-    "gate": "npm run build && npm run gate:static && npm run gate:render",
+    "gate": "npm run check && npm run build && npm run gate:static && npm run gate:render",
     "gate:prepare": "node scripts/prepare-gate-site.mjs",
     "serve": "node scripts/serve-local.mjs",
     "serve:build": "npm run build && node scripts/serve-local.mjs",

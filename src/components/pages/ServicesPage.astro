@@ -21,6 +21,8 @@ interface Props {
 
 const { locale } = Astro.props;
 
+// Card image widths below are measured, not guessed: it renders 310-650px wide
+// in one column and caps at 460px in two.
 const siteShots: Record<string, ImageMetadata | undefined> = {
   'gsalud.co': shotGsalud,
   'apollyon.lat': shotApollyon,
@@ -104,8 +106,6 @@ const steps = [
                   src={siteShots[site.name]!}
                   formats={['avif', 'webp']}
                   fallbackFormat="png"
-                  {/* Measured, not guessed: the card image is 310-650px wide in
-                      one column and caps at 460px in two. */}
                   widths={[460, 680, 920, 1200]}
                   sizes="(min-width: 44rem) min(29rem, 46vw), calc(100vw - 3rem)"
                   alt={`${t('svc.sites.shot')} ${site.name}`}

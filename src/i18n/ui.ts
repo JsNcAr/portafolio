@@ -184,6 +184,14 @@ export const ui = {
     'contact.services':
       'For project work or classes rather than a role, the services page has what I offer and how each engagement is contracted.',
     'contact.services.link': 'See services',
+    'contact.looking': 'What I am looking for',
+    'contact.looking.role': 'Role',
+    'contact.looking.role.v': 'Backend, infrastructure or platform engineering. Employment or contract.',
+    'contact.looking.where': 'Where',
+    'contact.looking.where.v': 'Remote, or on site in Bogotá.',
+    'contact.looking.hours': 'Overlap',
+    'contact.looking.hours.v': 'Bogotá is UTC-5 and Colombia keeps no daylight saving, so the overlap with United States business hours is a full day and does not shift twice a year.',
+
     'contact.email.label': 'Email',
     'contact.github.label': 'GitHub',
     'contact.linkedin.label': 'LinkedIn',
@@ -368,6 +376,14 @@ export const ui = {
     'contact.services':
       'Si buscas trabajo por proyecto o clases en lugar de una vacante, la página de servicios tiene lo que ofrezco y cómo se contrata cada cosa.',
     'contact.services.link': 'Ver servicios',
+    'contact.looking': 'Qué estoy buscando',
+    'contact.looking.role': 'Rol',
+    'contact.looking.role.v': 'Backend, infraestructura o ingeniería de plataforma. Empleo o contrato.',
+    'contact.looking.where': 'Dónde',
+    'contact.looking.where.v': 'Remoto, o presencial en Bogotá.',
+    'contact.looking.hours': 'Cruce horario',
+    'contact.looking.hours.v': 'Bogotá está en UTC-5 y Colombia no cambia de hora, así que el cruce con la jornada laboral de Estados Unidos es completo y no se mueve dos veces al año.',
+
     'contact.email.label': 'Correo',
     'contact.github.label': 'GitHub',
     'contact.linkedin.label': 'LinkedIn',

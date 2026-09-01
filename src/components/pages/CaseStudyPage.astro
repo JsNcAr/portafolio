@@ -3,11 +3,12 @@ import type { CollectionEntry } from 'astro:content';
 import { render } from 'astro:content';
 import Base from '@layouts/Base.astro';
 import TechPill from '@components/TechPill.astro';
+import Metrics from '@components/Metrics.astro';
 import Icon from '@components/Icon.astro';
 import Period from '@components/Period.astro';
 import type { Locale } from '@i18n/ui';
 import { useTranslations, localePath } from '@i18n/utils';
-import { period } from '@lib/format';
+import { period, month } from '@lib/format';
 import { roles } from '@data/cv';
 
 interface Props {
@@ -51,11 +52,19 @@ const slug = entry.data.role;
         <dl class="facts">
           <div><dt>{t('cs.role')}</dt><dd>{role.title}</dd></div>
           <div><dt>{t('cs.period')}</dt><dd><Period start={role.start} end={role.end} locale={locale} /></dd></div>
+          {role.updated && (
+            <div>
+              <dt>{t('meta.updated')}</dt>
+              <dd><time datetime={role.updated}>{month(role.updated, locale)}</time></dd>
+            </div>
+          )}
         </dl>
 
         <ul class="pills">
           {role.stack.map((item) => <TechPill label={item} />)}
         </ul>
+
+        {role.metrics && <Metrics metrics={role.metrics} locale={locale} />}
       </div>
     </header>
 
@@ -155,11 +164,19 @@ const slug = entry.data.role;
     margin: var(--space-28) 0 0;
   }
 
+  /* Flex, not a fixed column count: the third fact (last updated) orphaned onto
+     its own row against repeat(2), leaving an empty cell beside it. This lets
+     the row hold as many facts as fit and wrap only when it must. */
   @media (min-width: 34rem) {
     .facts {
-      grid-template-columns: repeat(2, minmax(0, auto));
-      gap: var(--space-48);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-24) var(--space-48);
       justify-content: start;
+    }
+
+    .facts > div {
+      min-inline-size: 0;
     }
   }
 

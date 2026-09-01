@@ -1,0 +1,66 @@
+---
+/**
+ * Figures from the case study, restated so a reader who skims still gets them.
+ * Every value here already appears in the prose below it -- this is scannability,
+ * not a second set of claims, and a case study with no measured outcome gets no
+ * strip rather than an invented one.
+ *
+ * Deliberately not cards: three bordered boxes read as a generated stat grid.
+ * A rule and open space keeps it reading as data belonging to the header.
+ */
+import type { Locale } from '@i18n/ui';
+
+interface Props {
+  metrics: Array<{ value: Record<Locale, string>; label: Record<Locale, string> }>;
+  locale: Locale;
+}
+
+const { metrics, locale } = Astro.props;
+---
+
+<dl class="metrics">
+  {metrics.map((m) => (
+    <div class="metric">
+      <dt class="value">{m.value[locale]}</dt>
+      <dd class="label">{m.label[locale]}</dd>
+    </div>
+  ))}
+</dl>
+
+<style>
+  .metrics {
+    margin: var(--space-24) 0 0;
+    display: grid;
+    gap: var(--space-16);
+    padding-block-start: var(--space-20);
+    border-block-start: var(--stroke-hairline) solid var(--color-border-default);
+  }
+
+  @media (min-width: 34rem) {
+    .metrics {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-24);
+    }
+  }
+
+  .metric {
+    min-inline-size: 0;
+  }
+
+  /* Tabular figures so the three read as a row of numbers, not three headings. */
+  .value {
+    font-size: var(--text-3xl);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text-primary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .label {
+    margin: var(--space-4) 0 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    text-wrap: balance;
+  }
+</style>
