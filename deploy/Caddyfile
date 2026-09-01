@@ -1,14 +1,28 @@
-# Static hosting for the portfolio. Matches the /opt/<project>/dist + file_server
-# convention already used on this server.
+# Static hosting for the portfolio. Matches the /opt/<name>-page/<repo>/dist
+# convention already used on this server -- apollyon-page/apollyon-base-ui and
+# gsalud-page/pagina-gsalud-odontologia are both a git clone that is built in
+# place, so dist/ lives inside the working tree rather than beside it.
 #
-#   Import it from the main Caddyfile:      import /opt/jasonarias/deploy/Caddyfile
-#   or paste this block in directly.
+#   Import it from the main Caddyfile:
+#     import /opt/jsncar-page/portafolio/deploy/Caddyfile
+#
+# The built files stay owned by whoever runs the build (group app-runner, mode
+# 664/775 under umask 002). Do NOT chown them to caddy: the next `git pull` and
+# rebuild would fail on files it no longer owns. Caddy reads them through the
+# world-read bit, which is all a public static site needs.
 #
 # TLS is automatic: point the A/AAAA records at this host first, or Caddy's ACME
-# challenge fails and the site never comes up.
+# challenge fails and the site never comes up. www needs its own DNS record too,
+# or Caddy cannot issue a certificate for the redirect block below.
 
-jasonarias.dev, www.jasonarias.dev {
-	root * /opt/jasonarias/dist
+# www redirects rather than serving a second copy. Every page declares its canonical
+# URL at the apex, so serving both would contradict the tag the pages already emit.
+www.jsncar.tech {
+	redir https://jsncar.tech{uri} 308
+}
+
+jsncar.tech {
+	root * /opt/jsncar-page/portafolio/dist
 	encode zstd gzip
 
 	# Astro is configured with trailingSlash: 'never' and build.format: 'directory',
@@ -53,7 +67,7 @@ jasonarias.dev, www.jasonarias.dev {
 
 	file_server
 	log {
-		output file /var/log/caddy/jasonarias.access.log
+		output file /var/log/caddy/jsncar.access.log
 		format console
 	}
 }

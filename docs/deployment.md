@@ -1,7 +1,10 @@
 # Deployment
 
-The build output is plain static files. There is no runtime on the server, no
-container, and no Node installed there.
+The build output is plain static files -- no runtime, no container, nothing to
+keep alive. Node is present on the server only because the site is built there:
+the repository is cloned to `/opt/jsncar-page/portafolio` and `git pull` plus a
+rebuild is the whole deploy. That matches the two sites already on this host
+(`apollyon-page/apollyon-base-ui`, `gsalud-page/pagina-gsalud-odontologia`).
 
 ---
 
@@ -74,38 +77,121 @@ the Spanish 404, `/es/` redirects 308 to `/es`, and the CV PDF serves as
 
 ## Deploying to the server
 
-### 1. Build
+### 0. DNS
+
+The domain is `jsncar.tech`, registered at get.tech. Its DNS is hosted on Namecheap
+so it follows the same dynamic-IP path as every other domain on this host:
+`/opt/ddns/update_dns.sh` updates one record, `@.ramsus.site`, and everything else
+aliases to it.
+
+| Host | Type | Value |
+|---|---|---|
+| `@` | ALIAS | `ramsus.site` |
+| `www` | CNAME | `ramsus.site` |
+
+**ALIAS, not CNAME.** A CNAME at the apex is forbidden by RFC 1034 -- it cannot
+coexist with the SOA and NS records the apex must carry. get.tech's own DNS panel
+permits it anyway, and the result is that every query type follows the alias and
+inherits the *target's* zone: `jsncar.tech MX` answered with ramsus.site's mail
+servers and `jsncar.tech TXT` with ramsus.site's SPF record. Namecheap's ALIAS
+resolves the target server-side and returns a plain `A`, so the apex keeps its own
+SOA, MX, TXT and CAA. That is what `apollyon.lat` and `gsalud.co` already do.
+
+To move DNS hosting (the registration stays at get.tech):
+
+1. get.tech control panel -> nameservers -> `dns1.registrar-servers.com`,
+   `dns2.registrar-servers.com`.
+2. Namecheap -> Domain List -> add `jsncar.tech` under **FreeDNS**.
+3. Delete any apex CNAME first. ALIAS conflicts with CNAME, A, AAAA and URL
+   Redirect on the same host.
+4. Add the two records above.
+
+Verify before touching Caddy, because the ACME challenge depends on it:
+
+```bash
+dig +short jsncar.tech A          # 186.28.154.118, and no CNAME line
+dig +short www.jsncar.tech        # must resolve, or the www cert fails
+dig +short jsncar.tech SOA        # must be jsncar.tech's own, not ramsus.site's
+```
+
+### 1. Gate locally, then push
 
 ```bash
 nvm use
-npm ci
-SITE_URL=https://jasonarias.dev npm run build
+npm run gate          # all-or-nothing, about a minute
+git push origin main
 ```
 
-`SITE_URL` sets the origin used for canonical URLs, `hreflang` alternates and the
-sitemap. It defaults to `https://jasonarias.dev`. Set it to whatever origin the
-deploy is actually reachable at, or those tags will point somewhere the page is
-not.
+**The gates cannot run on the server.** `npm run gate` calls
+`../../scripts/*.py` from the design-system kit, which lives above this
+repository and is not cloned with it. On the server those paths resolve to
+`/opt/scripts/` and do not exist. Local is the only place quality is checked, so
+a push is the point of no return -- gate before it, not after.
 
-Run `npm run gate` before shipping. It is all-or-nothing and takes about a minute.
+### 2. First-time server setup
 
-### 2. Publish
+One clone, using a GitHub **deploy key** so the server needs no account
+credentials. `~/.ssh/config` on the server maps a per-repo alias to that key:
+
+```
+Host github.com-jsncar-website
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_jsncar_deploy
+    IdentitiesOnly yes
+```
+
+`IdentitiesOnly yes` matters: without it ssh offers every key it has and GitHub
+authenticates as whichever one it accepts first, which may not be the deploy key
+and may not have access to this repository.
 
 ```bash
-sudo mkdir -p /opt/jasonarias
-sudo rsync -a --delete dist/ /opt/jasonarias/dist/
-sudo chown -R caddy:caddy /opt/jasonarias
+sudo mkdir -p /opt/jsncar-page
+sudo chown app-runner:app-runner /opt/jsncar-page
+sudo chmod 2775 /opt/jsncar-page
+cd /opt/jsncar-page
+git clone git@github.com-jsncar-website:JsNcAr/portafolio.git
 ```
 
-`--delete` is what removes files from a previous build. Without it, a renamed page
-keeps answering at its old URL indefinitely.
+The `2775` sets the setgid bit, so everything created underneath inherits group
+`app-runner` and stays group-writable. With `umask 002` that yields `664` files
+and `775` directories -- world-readable, which is the only thing Caddy needs.
 
-### 3. Serve
+> **Do not `chown` the tree to `caddy`.** Caddy only ever reads these files, and
+> it reads them through the world-read bit. Handing ownership to `caddy` breaks
+> the next `git pull` and rebuild, which run as a human account.
 
-Copy `deploy/Caddyfile` into place, or import it from the main Caddyfile:
+### 3. Every deploy after that
+
+```bash
+/opt/jsncar-page/portafolio/deploy/pull-deploy.sh
+```
+
+That script pulls, runs `npm ci` only when the lockfile moved, builds into
+`dist.new`, checks the build actually produced pages, and swaps it into place
+with two renames.
+
+The swap is the point. Astro **clears its output directory at the start of a
+build**, so building straight into the directory Caddy serves gives every deploy
+a window where the site is empty -- and a failed build leaves it empty until
+someone notices. Building beside the live directory and renaming avoids both.
+
+Caddy needs no reload for a content deploy: it reads from disk per request and
+the root path never changes. Reload only when `deploy/Caddyfile` itself changed.
+
+`SITE_URL` is baked in at build time -- it sets canonical URLs, `hreflang`
+alternates and the sitemap. The script defaults it to `https://jsncar.tech`.
+Override it (`SITE_URL=https://staging.example deploy/pull-deploy.sh`) only if
+the build will be reachable somewhere else, or those tags point at a page that
+is not there.
+
+### 4. Serve
+
+Import the repo's Caddyfile from the main one, so the config stays versioned
+with the site:
 
 ```
-import /opt/jasonarias/deploy/Caddyfile
+import /opt/jsncar-page/portafolio/deploy/Caddyfile
 ```
 
 Then:
@@ -115,8 +201,13 @@ sudo caddy validate --config /etc/caddy/Caddyfile
 sudo systemctl reload caddy
 ```
 
-**DNS must already resolve to this host**, or Caddy's ACME challenge fails and the
-site never comes up. Point the `A`/`AAAA` records first.
+**Step 0 must already be done.** Caddy requests certificates for `jsncar.tech` and
+`www.jsncar.tech` on reload; if either name does not resolve to this host the ACME
+challenge fails and the site never comes up. Watch it happen:
+
+```bash
+sudo journalctl -u caddy -f | grep -i -E 'certificate|acme|error'
+```
 
 ---
 
@@ -124,6 +215,8 @@ site never comes up. Point the `A`/`AAAA` records first.
 
 | Rule | Why |
 |---|---|
+| `root * /opt/jsncar-page/portafolio/dist` | the repo is cloned and built on the server, so `dist/` sits inside the working tree |
+| `www.jsncar.tech` 308s to the apex | every page declares a canonical URL at the apex; serving both would contradict it |
 | `try_files {path} {path}/index.html {path}.html` | `build.format: 'directory'` puts `/work` at `work/index.html` |
 | 308 redirect off trailing slashes | canonical URLs carry none, so `/work/` must not answer as a duplicate |
 | `/_astro/*` cached one year, immutable | filenames are content-hashed |
@@ -147,12 +240,24 @@ Both are caught by actually requesting a page. Neither is caught by
 
 ## Rollback
 
-Keep the previous build:
+`pull-deploy.sh` leaves the previous build in place, so rolling back is two
+renames and takes effect immediately:
 
 ```bash
-sudo mv /opt/jasonarias/dist /opt/jasonarias/dist.prev
-sudo rsync -a --delete dist/ /opt/jasonarias/dist/
+cd /opt/jsncar-page/portafolio
+mv dist dist.bad && mv dist.prev dist
 ```
 
-Rolling back is then a `mv` back and `systemctl reload caddy`. No migrations
-exist, so there is nothing else to undo.
+No Caddy reload, no migrations, nothing else to undo. Only one generation is
+kept -- a second deploy overwrites `dist.prev`, so roll back before redeploying.
+
+To go back further, roll the code back instead and rebuild:
+
+```bash
+git log --oneline -10
+git checkout <commit>
+deploy/pull-deploy.sh          # pull --ff-only will fail on a detached HEAD
+```
+
+That last step needs the pull removed or the branch reset; for a real revert
+prefer `git revert` on your machine, gate it, and push.

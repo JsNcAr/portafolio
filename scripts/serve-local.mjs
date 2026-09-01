@@ -72,11 +72,26 @@ const local = [
   '}',
   '',
   source
-    .replace(/^jasonarias\.dev, www\.jasonarias\.dev \{/m, `http://localhost:${port} {`)
-    .replace(/root \* \/opt\/jasonarias\/dist/, `root * ${resolve('dist')}`)
+    // The www redirect block is HTTPS-only and would 308 straight off localhost.
+    .replace(/^www\.jsncar\.tech \{[\s\S]*?\n\}\n+/m, '')
+    .replace(/^jsncar\.tech \{/m, `http://localhost:${port} {`)
+    // Path-agnostic on purpose: a hardcoded production path that stops matching
+    // would silently leave the local server pointed at /opt. Guarded below.
+    .replace(/^\troot \* \S+$/m, `\troot * ${resolve('dist')}`)
     .replace(/^\s*Strict-Transport-Security.*$/m, '') // HTTPS-only, meaningless here
     .replace(/\n\tlog \{[\s\S]*?\n\t\}/, ''),         // no /var/log/caddy locally
 ].join('\n');
+
+// A failed rewrite must be loud. Serving /opt from a local test would look like
+// it worked while showing whatever the production directory happens to contain.
+// Comments in deploy/Caddyfile legitimately mention the production path, so only
+// active directives count.
+const activeConfig = local.split('\n').filter((l) => !l.trim().startsWith('#'));
+if (activeConfig.some((l) => l.includes('/opt/jsncar-page'))) {
+  console.error('serve-local: deploy/Caddyfile still references /opt after rewriting.');
+  console.error('  A rule in this script no longer matches the Caddyfile. Fix it before serving.');
+  process.exit(1);
+}
 
 const configPath = join(tmpdir(), `caddy-local-${process.pid}.Caddyfile`);
 writeFileSync(configPath, local);
