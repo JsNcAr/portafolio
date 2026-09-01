@@ -20,7 +20,8 @@
     "gate": "npm run build && npm run gate:static && npm run gate:render",
     "gate:prepare": "node scripts/prepare-gate-site.mjs",
     "serve": "node scripts/serve-local.mjs",
-    "serve:build": "npm run build && node scripts/serve-local.mjs"
+    "serve:build": "npm run build && node scripts/serve-local.mjs",
+    "deploy": "node scripts/deploy.mjs"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",

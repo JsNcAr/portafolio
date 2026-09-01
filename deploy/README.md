@@ -6,17 +6,23 @@ rebuild -- the same shape as the other sites on this host.
 
 Full detail, including DNS, is in `docs/deployment.md`.
 
-## Before you push
+## Deploying
+
+From this repo, on the machine that also hosts the site:
 
     nvm use
-    npm run gate
+    npm run deploy
+
+Gates, pushes, then runs `pull-deploy.sh` on the target and checks the live site.
+Refuses on a dirty tree or off `main`.
 
 The gates call `../../scripts/*.py` from the design-system kit, which is not part
-of this repository and does not exist on the server. Local is the only place they
-run, so gate before pushing rather than after.
+of this repository and does not exist under the deploy path. Local is the only
+place they run, which is why `npm run deploy` gates here and never there.
 
-## On the server
+## Or by hand
 
+    npm run gate && git push origin main
     /opt/jsncar-page/portafolio/deploy/pull-deploy.sh
 
 Pulls, reinstalls only if the lockfile moved, builds into `dist.new`, verifies the

@@ -114,13 +114,42 @@ dig +short www.jsncar.tech        # must resolve, or the www cert fails
 dig +short jsncar.tech SOA        # must be jsncar.tech's own, not ramsus.site's
 ```
 
-### 1. Gate locally, then push
+### 1. Every deploy: one command
 
 ```bash
 nvm use
-npm run gate          # all-or-nothing, about a minute
-git push origin main
+npm run deploy
 ```
+
+That gates, pushes, and then runs the target's `deploy/pull-deploy.sh` --
+which pulls, reinstalls only if the lockfile moved, builds into `dist.new`,
+checks the build produced pages, and swaps it in. It finishes by requesting the
+live site through Caddy and reporting the status code.
+
+The deploy target is a clone on **this same machine** (`/opt/jsncar-page/portafolio`),
+so there is no ssh hop and no second terminal. Override with `DEPLOY_DIR=` if
+that ever changes.
+
+It refuses to run on a dirty tree or off `main`: a deploy should be a commit you
+can point at. `--no-gate` skips the gates for documentation-only changes and
+says so loudly; `--no-push` deploys what is already on `origin/main`.
+
+The equivalent by hand, if you want to watch it happen:
+
+```bash
+npm run gate && git push origin main
+/opt/jsncar-page/portafolio/deploy/pull-deploy.sh
+```
+
+### Three steps that do nothing
+
+Worth stating, because all three look like they are working:
+
+| Step | Why it is a no-op |
+|---|---|
+| `npm run gate` **on the server** | it calls `../../scripts/*.py`, which resolves to `/opt/scripts/` there and does not exist, so the chain aborts at the first gate |
+| `SITE_URL=https://jsncar.tech npm run build` | that is already the default in `astro.config.mjs`. Pass `SITE_URL` only for a staging origin |
+| `sudo systemctl reload caddy` after a content deploy | Caddy reads files from disk per request. Reload only when `deploy/Caddyfile` itself changed |
 
 **The gates cannot run on the server.** `npm run gate` calls
 `../../scripts/*.py` from the design-system kit, which lives above this
@@ -161,15 +190,7 @@ and `775` directories -- world-readable, which is the only thing Caddy needs.
 > it reads them through the world-read bit. Handing ownership to `caddy` breaks
 > the next `git pull` and rebuild, which run as a human account.
 
-### 3. Every deploy after that
-
-```bash
-/opt/jsncar-page/portafolio/deploy/pull-deploy.sh
-```
-
-That script pulls, runs `npm ci` only when the lockfile moved, builds into
-`dist.new`, checks the build actually produced pages, and swaps it into place
-with two renames.
+### 3. What pull-deploy.sh does
 
 The swap is the point. Astro **clears its output directory at the start of a
 build**, so building straight into the directory Caddy serves gives every deploy
