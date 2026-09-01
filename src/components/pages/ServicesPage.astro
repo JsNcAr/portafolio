@@ -1,6 +1,7 @@
 ---
 import Base from '@layouts/Base.astro';
 import PageHeader from '@components/PageHeader.astro';
+import Portrait from '@components/Portrait.astro';
 import ServiceCard from '@components/ServiceCard.astro';
 import TechPill from '@components/TechPill.astro';
 import Icon from '@components/Icon.astro';
@@ -106,8 +107,17 @@ const steps = [
   <section class="classes" aria-labelledby="classes">
     <div class="shell">
       <h2 class="overline" id="classes">{t('svc.classes')}</h2>
-      <p class="classes-lead">{t('svc.classes.lead')}</p>
-      <p class="classes-intro">{t('svc.classes.intro')}</p>
+
+      <div class="classes-head">
+        <div class="classes-copy">
+          <p class="classes-lead">{t('svc.classes.lead')}</p>
+          <p class="classes-intro">{t('svc.classes.intro')}</p>
+        </div>
+        <!-- Here the photograph is information, not decoration: it is who the
+             student would be booking. So it carries a real alt, unlike /about
+             where the name is already in the page header. -->
+        <Portrait width={11} alt={t('site.name')} class="teacher" />
+      </div>
 
       <dl class="rows">
         <div class="row">
@@ -410,8 +420,28 @@ const steps = [
 
   /* Display type, so it needs the tight leading. Without this it inherits the
      body's --leading-relaxed and the three lines drift apart. */
-  .classes-lead {
+  /* Text first, face second: on a narrow screen the offer should be read before
+     the portrait, and the portrait should not push the lead below the fold. */
+  .classes-head {
     margin-block-start: var(--space-12);
+    display: grid;
+    gap: var(--space-24);
+    justify-items: start;
+  }
+
+  .teacher {
+    max-inline-size: 11rem;
+  }
+
+  @media (min-width: 48rem) {
+    .classes-head {
+      grid-template-columns: minmax(0, 1fr) 11rem;
+      gap: var(--space-32);
+      align-items: start;
+    }
+  }
+
+  .classes-lead {
     font-size: var(--text-3xl);
     font-weight: var(--weight-semibold);
     line-height: var(--leading-tight);

@@ -1,6 +1,7 @@
 ---
 import Base from '@layouts/Base.astro';
 import PageHeader from '@components/PageHeader.astro';
+import Portrait from '@components/Portrait.astro';
 import Period from '@components/Period.astro';
 import type { Locale } from '@i18n/ui';
 import { useTranslations } from '@i18n/utils';
@@ -21,11 +22,16 @@ const languages = [t('about.lang.es'), t('about.lang.en'), t('about.lang.ja')];
   <PageHeader overline={t('about.title')} title={t('about.lead')} />
 
   <div class="shell">
-    <div class="prose body">
-      <p>{t('about.body.a')}</p>
-      <p>{t('about.body.b')}</p>
-      <p>{t('about.body.c')}</p>
-      <p>{t('about.body.d')}</p>
+    <div class="intro">
+      <!-- The name is the page title above, so repeating it in alt would be
+           read twice. The photograph adds identity, not new information. -->
+      <Portrait width={13} alt="" class="me" eager />
+      <div class="prose body">
+        <p>{t('about.body.a')}</p>
+        <p>{t('about.body.b')}</p>
+        <p>{t('about.body.c')}</p>
+        <p>{t('about.body.d')}</p>
+      </div>
     </div>
 
     <section class="block" aria-labelledby="timeline">
@@ -77,8 +83,29 @@ const languages = [t('about.lang.es'), t('about.lang.en'), t('about.lang.ja')];
 </Base>
 
 <style>
-  .body {
+  /* Stacked by default; the portrait sits beside the prose once there is room
+     for both without squeezing the measure below its comfortable width. */
+  .intro {
+    display: grid;
+    gap: var(--space-24);
     padding-block-start: var(--space-40);
+    justify-items: start;
+  }
+
+  .me {
+    max-inline-size: 13rem;
+  }
+
+  @media (min-width: 48rem) {
+    .intro {
+      grid-template-columns: 13rem minmax(0, 1fr);
+      gap: var(--space-32);
+      align-items: start;
+    }
+  }
+
+  .body {
+    display: grid;
     display: grid;
     gap: var(--space-16);
     font-size: var(--text-lg);

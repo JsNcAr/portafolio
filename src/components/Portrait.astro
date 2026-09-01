@@ -1,0 +1,59 @@
+---
+/**
+ * The one place the photograph is defined. Both callers pass a rendered width so
+ * Astro can emit exactly the sources that width needs, rather than a generic set.
+ *
+ * `<Picture>` (not `<Image>`) because it emits a <picture> with avif and webp
+ * sources and a jpeg fallback in one element. The source is 712x890, so no
+ * requested width upscales it.
+ */
+import { Picture } from 'astro:assets';
+import portrait from '@assets/jason-arias.jpg';
+
+interface Props {
+  /** Rendered width in rem at the widest breakpoint. Drives widths + sizes. */
+  width: number;
+  alt: string;
+  /** Above the fold on its page? Then it must not be lazy. */
+  eager?: boolean;
+  class?: string;
+}
+
+const { width, alt, eager = false, class: className } = Astro.props;
+
+// 1x and 2x for the rendered size, capped at the source's own width.
+const px = Math.round(width * 16);
+const widths = [px, px * 2].filter((w) => w <= 712);
+if (widths.length === 0) widths.push(712);
+---
+
+<Picture
+  src={portrait}
+  formats={['avif', 'webp']}
+  fallbackFormat="jpeg"
+  widths={widths}
+  sizes={`${width}rem`}
+  alt={alt}
+  loading={eager ? 'eager' : 'lazy'}
+  decoding={eager ? 'sync' : 'async'}
+  class:list={['portrait', className]}
+/>
+
+<style>
+  /*
+   * Aspect ratio is declared so the box is reserved before the image decodes.
+   * width/height come from the asset, but the intrinsic ratio is what stops the
+   * text below it shifting.
+   */
+  .portrait {
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 712 / 890;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border-default);
+    /* A photograph is the only element on the page with its own light source.
+       The ring keeps its edge deliberate against both grounds. */
+    box-shadow: var(--shadow-sm);
+  }
+</style>
