@@ -1,0 +1,230 @@
+---
+import { readFileSync } from 'node:fs';
+import Base from '@layouts/Base.astro';
+import PageHeader from '@components/PageHeader.astro';
+import Flow from '@components/diagrams/Flow.astro';
+import Icon from '@components/Icon.astro';
+import type { Locale } from '@i18n/ui';
+import { useTranslations } from '@i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+/**
+ * Read out of deploy/Caddyfile at build time rather than retyped here. A page
+ * that lists the headers the server sends is worth nothing if it can disagree
+ * with the config that sends them, and a second copy always eventually does.
+ */
+const caddyfile = readFileSync('deploy/Caddyfile', 'utf8');
+const headerBlock = caddyfile.match(/\n\theader \{\n([\s\S]*?)\n\t\}/);
+if (!headerBlock) {
+  throw new Error('ColophonPage: no header block found in deploy/Caddyfile.');
+}
+const headers = headerBlock[1]
+  .split('\n')
+  .map((line) => line.trim())
+  .filter((line) => line && !line.startsWith('#') && !line.startsWith('-'))
+  .map((line) => {
+    const m = line.match(/^([A-Za-z-]+)\s+"(.*)"$/);
+    if (!m) throw new Error(`ColophonPage: cannot parse header line: ${line}`);
+    return [m[1], m[2]] as const;
+  });
+if (headers.length < 4) {
+  throw new Error(`ColophonPage: only parsed ${headers.length} headers; the block shape changed.`);
+}
+
+/** Third parties, so a reader does not have to take the section above on trust. */
+const scanners = [
+  { label: 'SSL Labs', href: 'https://www.ssllabs.com/ssltest/analyze.html?d=jsncar.tech' },
+  { label: 'securityheaders.com', href: 'https://securityheaders.com/?q=https%3A%2F%2Fjsncar.tech' },
+  { label: 'Mozilla Observatory', href: 'https://developer.mozilla.org/en-US/observatory/analyze?host=jsncar.tech' },
+];
+
+const roles = [
+  ['col.host.proxy', 'col.host.proxy.v'],
+  ['col.host.db', 'col.host.db.v'],
+  ['col.host.objects', 'col.host.objects.v'],
+  ['col.host.containers', 'col.host.containers.v'],
+  ['col.host.ci', 'col.host.ci.v'],
+  ['col.host.ai', 'col.host.ai.v'],
+  ['col.host.ops', 'col.host.ops.v'],
+] as const;
+---
+
+<Base locale={locale} path="/colophon" title={t('col.title')} description={t('col.intro')}>
+  <PageHeader overline={t('col.title')} title={t('col.lead')} intro={t('col.intro')} />
+
+  <div class="shell">
+    <section class="block" aria-labelledby="site">
+      <h2 class="overline" id="site">{t('col.site')}</h2>
+      <p class="body">{t('col.site.body')}</p>
+    </section>
+
+    <section class="block" aria-labelledby="edge">
+      <h2 class="overline" id="edge">{t('col.edge')}</h2>
+      <p class="body">{t('col.edge.body')}</p>
+
+      <p class="sub">{t('col.edge.headers')}</p>
+      <dl class="headers">
+        {headers.map(([name, value]) => (
+          <div class="hrow">
+            <dt>{name}</dt>
+            <dd>{value}</dd>
+          </div>
+        ))}
+      </dl>
+      <p class="note">{t('col.edge.csp.note')}</p>
+
+      <p class="sub">{t('col.edge.verify')}</p>
+      <ul class="scanners">
+        {scanners.map((s) => (
+          <li>
+            <a href={s.href} rel="noopener" target="_blank">
+              {s.label}
+              <Icon name="arrow-up-right" size={14} />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="block" aria-labelledby="deploy">
+      <h2 class="overline" id="deploy">{t('col.deploy')}</h2>
+      <Flow
+        caption={t('col.deploy.caption')}
+        steps={[
+          { label: t('col.deploy.1'), note: t('col.deploy.1.note') },
+          { label: t('col.deploy.2'), note: t('col.deploy.2.note') },
+          { label: t('col.deploy.3'), note: t('col.deploy.3.note'), accent: true },
+          { label: t('col.deploy.4'), note: t('col.deploy.4.note') },
+        ]}
+      />
+      <p class="body">{t('col.deploy.body')}</p>
+    </section>
+
+    <section class="block" aria-labelledby="host">
+      <h2 class="overline" id="host">{t('col.host')}</h2>
+      <p class="body">{t('col.host.body')}</p>
+      <dl class="roles">
+        {roles.map(([k, v]) => (
+          <div class="rrow">
+            <dt>{t(k)}</dt>
+            <dd>{t(v)}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <section class="block" aria-labelledby="fails">
+      <h2 class="overline" id="fails">{t('col.fails')}</h2>
+      <p class="body">{t('col.fails.body')}</p>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .block {
+    margin-block-start: var(--space-48);
+    padding-block-start: var(--space-24);
+    border-block-start: var(--stroke-hairline) solid var(--color-border-default);
+  }
+
+  .block:first-child {
+    margin-block-start: var(--space-40);
+  }
+
+  .body {
+    margin-block-start: var(--space-16);
+    max-inline-size: var(--measure-prose);
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+  }
+
+  .sub {
+    margin-block-start: var(--space-28);
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+  }
+
+  .note {
+    margin-block-start: var(--space-16);
+    max-inline-size: var(--measure-prose);
+    color: var(--color-text-secondary);
+  }
+
+  /* Header names are long, unbreakable-ish tokens; anywhere is what actually
+     shrinks min-content at 280px, break-word alone does not. */
+  .headers,
+  .roles {
+    margin: var(--space-12) 0 0;
+    display: grid;
+    gap: var(--space-12);
+  }
+
+  .roles {
+    gap: var(--space-16);
+  }
+
+  .hrow,
+  .rrow {
+    display: grid;
+    gap: var(--space-4);
+    min-inline-size: 0;
+  }
+
+  @media (min-width: 44rem) {
+    .hrow {
+      grid-template-columns: 18rem minmax(0, 1fr);
+      gap: var(--space-16);
+      align-items: baseline;
+    }
+
+    .rrow {
+      grid-template-columns: 14rem minmax(0, 1fr);
+      gap: var(--space-16);
+      align-items: baseline;
+    }
+  }
+
+  .hrow dt,
+  .rrow dt {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+    overflow-wrap: anywhere;
+  }
+
+  .hrow dd,
+  .rrow dd {
+    margin: 0;
+    color: var(--color-text-secondary);
+    max-inline-size: var(--measure-prose);
+    overflow-wrap: anywhere;
+  }
+
+  .hrow dd {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+  }
+
+  .scanners {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-12) 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8) var(--space-24);
+  }
+
+  .scanners a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-6);
+    min-block-size: var(--space-28);
+    color: var(--color-text-link);
+  }
+</style>

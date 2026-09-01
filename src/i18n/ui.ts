@@ -59,6 +59,7 @@ export const ui = {
     'footer.built':
       'Built with Astro. Static files, no tracking, no analytics, served by Caddy from a server I administer.',
     'footer.rights': 'All rights reserved.',
+    'footer.colophon': 'How this is built and served',
     'contact.whatsapp.label': 'WhatsApp',
     'contact.whatsapp.prefill': 'Hi Jason, I found you through jsncar.tech.',
     'svc.whatsapp': 'Message on WhatsApp',
@@ -118,6 +119,51 @@ export const ui = {
     'svc.cta.title': 'Have something worth building?',
     'svc.cta.body':
       'Tell me what you are trying to build, automate or untangle. I will come back with an architecture and a realistic timeline, not a brochure.',
+
+    'col.title': 'Colophon',
+    'col.lead': 'One machine, and how I run it.',
+    'col.intro': 'The footer says this site is served by Caddy from a server I administer. This page is that sentence written out: what runs on the host, how a change reaches production, and how the whole thing fails.',
+
+    'col.site': 'This site',
+    'col.site.body': 'Astro, built to static files. No runtime, no database behind it, no framework shipped to the browser, no tracking and no analytics. Every colour, size and duration resolves from one token file, and seventeen render gates — contrast, keyboard operation, target size, reduced motion, RTL mirroring, silent overflow — run over every page in both themes before anything ships.',
+
+    'col.edge': 'The edge',
+    'col.edge.body': 'Caddy terminates TLS with certificates it obtains and renews on its own, serves over HTTP/2, redirects www to the apex and strips trailing slashes so each page has one URL, and returns the Spanish 404 to Spanish paths. Content is read from disk per request, so publishing restarts nothing.',
+    'col.edge.headers': 'Every response carries',
+    'col.edge.csp.note': 'No third-party origin is permitted at all. Fonts, styles and scripts are served from this host, so nothing on the page can call anywhere else.',
+    'col.edge.verify': 'Independent scanners, so this is checkable rather than claimed:',
+
+    'col.deploy': 'Getting a change out',
+    'col.deploy.caption': 'The gates run before the push, on my own machine. They call scripts that are not part of the deployed repository, so the server could not run them even if it tried.',
+    'col.deploy.1': 'Gate and push',
+    'col.deploy.1.note': 'seventeen gates, then origin',
+    'col.deploy.2': 'Pull',
+    'col.deploy.2.note': 'on the host, via a deploy key',
+    'col.deploy.3': 'Build beside',
+    'col.deploy.3.note': 'into a directory nobody is serving',
+    'col.deploy.4': 'Swap',
+    'col.deploy.4.note': 'two renames',
+    'col.deploy.body': 'The swap is the part that matters. Astro clears its output directory when a build starts, so building straight into the directory Caddy serves would empty the site for the length of every build, and leave it empty if that build failed. Building beside it and renaming makes the change effectively instant and leaves the previous build in place, so a rollback is the same two renames in the other order — no reload, nothing to reconfigure.',
+
+    'col.host': 'The host',
+    'col.host.body': 'One bare-metal Debian machine that I install, patch and answer for. It runs this site alongside a number of other services, described here by what they do rather than by where they are.',
+    'col.host.proxy': 'Reverse proxy and TLS',
+    'col.host.proxy.v': 'Caddy, in front of every site and service on the box.',
+    'col.host.db': 'Relational database',
+    'col.host.db.v': 'PostgreSQL, on the fastest disk and deliberately off the media pools.',
+    'col.host.objects': 'Object storage',
+    'col.host.objects.v': 'An S3-compatible store for application media.',
+    'col.host.containers': 'Containers',
+    'col.host.containers.v': 'Docker, with persistent volumes pinned to a dedicated disk so a full root partition cannot take the daemon down with it.',
+    'col.host.ci': 'Source control and delivery',
+    'col.host.ci.v': 'A self-hosted Git forge with push-to-deploy pipelines. Each repository gets its own key, so a compromised pipeline reaches one project rather than the host.',
+    'col.host.ai': 'Local model inference',
+    'col.host.ai.v': 'For work where the data cannot leave the machine it is already on.',
+    'col.host.ops': 'Monitoring and hardening',
+    'col.host.ops.v': 'Per-host metrics with alerting rules, SMART disk monitoring, and fail2ban on the exposed surface.',
+
+    'col.fails': 'How it fails',
+    'col.fails.body': 'It is one machine on a residential connection with a dynamic address, which is worth saying plainly on a page about reliability. A dynamic DNS updater watches that address and republishes it when it changes, so an address change costs the poll interval plus the record TTL. There is no second machine, so a kernel update takes everything down together — deliberately, at a time I pick. That is the right trade for a personal host and the wrong one for a company, which is why the production systems in the case studies are built differently.',
 
     'meta.updated': 'Last updated',
 
@@ -251,6 +297,7 @@ export const ui = {
     'footer.built':
       'Hecho con Astro. Archivos estáticos, sin rastreo ni analítica, servidos por Caddy desde un servidor que yo administro.',
     'footer.rights': 'Todos los derechos reservados.',
+    'footer.colophon': 'Cómo está hecho y cómo se sirve',
     'contact.whatsapp.label': 'WhatsApp',
     'contact.whatsapp.prefill': 'Hola Jason, te encontré por jsncar.tech.',
     'svc.whatsapp': 'Escribir por WhatsApp',
@@ -310,6 +357,51 @@ export const ui = {
     'svc.cta.title': '¿Tienes algo que valga la pena construir?',
     'svc.cta.body':
       'Cuéntame qué estás intentando construir, automatizar o desenredar. Te respondo con una arquitectura y un cronograma realista, no con un folleto.',
+
+    'col.title': 'Colofón',
+    'col.lead': 'Una máquina y cómo la administro.',
+    'col.intro': 'El pie de página dice que este sitio lo sirve Caddy desde un servidor que yo administro. Esta página desarrolla esa frase: qué corre en el servidor, cómo llega un cambio a producción y cómo falla todo esto.',
+
+    'col.site': 'Este sitio',
+    'col.site.body': 'Astro, compilado a archivos estáticos. Sin runtime, sin base de datos detrás, sin framework enviado al navegador, sin rastreo ni analítica. Cada color, tamaño y duración sale de un solo archivo de tokens, y diecisiete verificaciones de render — contraste, operación por teclado, tamaño de los objetivos, movimiento reducido, espejado RTL, desbordamiento silencioso — corren sobre cada página en ambos temas antes de publicar nada.',
+
+    'col.edge': 'El borde',
+    'col.edge.body': 'Caddy termina el TLS con certificados que obtiene y renueva solo, sirve sobre HTTP/2, redirige www al dominio raíz y quita las barras finales para que cada página tenga una sola URL, y devuelve el 404 en español a las rutas en español. El contenido se lee del disco en cada petición, así que publicar no reinicia nada.',
+    'col.edge.headers': 'Cada respuesta lleva',
+    'col.edge.csp.note': 'No se permite ningún origen externo. Las fuentes, los estilos y los scripts se sirven desde este mismo servidor, así que nada en la página puede llamar a otro lado.',
+    'col.edge.verify': 'Escáneres independientes, para que esto se pueda comprobar en vez de solo afirmarlo:',
+
+    'col.deploy': 'Sacar un cambio a producción',
+    'col.deploy.caption': 'Las verificaciones corren antes del push, en mi propia máquina. Llaman scripts que no son parte del repositorio desplegado, así que el servidor no podría correrlas aunque lo intentara.',
+    'col.deploy.1': 'Verificar y hacer push',
+    'col.deploy.1.note': 'diecisiete verificaciones, luego origin',
+    'col.deploy.2': 'Pull',
+    'col.deploy.2.note': 'en el servidor, con llave de despliegue',
+    'col.deploy.3': 'Construir al lado',
+    'col.deploy.3.note': 'en un directorio que nadie está sirviendo',
+    'col.deploy.4': 'Intercambiar',
+    'col.deploy.4.note': 'dos renombrados',
+    'col.deploy.body': 'El intercambio es lo que importa. Astro borra su directorio de salida al empezar un build, así que construir directamente en el directorio que sirve Caddy dejaría el sitio vacío durante todo el build, y vacío del todo si ese build falla. Construir al lado y renombrar hace que el cambio sea prácticamente instantáneo y deja el build anterior en su sitio, así que revertir son los mismos dos renombrados al revés: sin recargar nada y sin reconfigurar nada.',
+
+    'col.host': 'El servidor',
+    'col.host.body': 'Una sola máquina física con Debian que yo instalo, actualizo y de la que respondo. Corre este sitio junto con varios servicios más, descritos aquí por lo que hacen y no por dónde están.',
+    'col.host.proxy': 'Proxy inverso y TLS',
+    'col.host.proxy.v': 'Caddy, delante de cada sitio y servicio de la máquina.',
+    'col.host.db': 'Base de datos relacional',
+    'col.host.db.v': 'PostgreSQL, en el disco más rápido y deliberadamente fuera de los discos de medios.',
+    'col.host.objects': 'Almacenamiento de objetos',
+    'col.host.objects.v': 'Un almacén compatible con S3 para los medios de las aplicaciones.',
+    'col.host.containers': 'Contenedores',
+    'col.host.containers.v': 'Docker, con los volúmenes persistentes fijados a un disco aparte para que una partición raíz llena no se lleve el daemon por delante.',
+    'col.host.ci': 'Control de versiones y despliegue',
+    'col.host.ci.v': 'Un servidor Git propio con pipelines de push-to-deploy. Cada repositorio tiene su propia llave, así que un pipeline comprometido llega a un proyecto y no al servidor entero.',
+    'col.host.ai': 'Inferencia local de modelos',
+    'col.host.ai.v': 'Para trabajo donde los datos no pueden salir de la máquina en la que ya están.',
+    'col.host.ops': 'Monitoreo y endurecimiento',
+    'col.host.ops.v': 'Métricas por host con reglas de alerta, monitoreo SMART de discos y fail2ban sobre la superficie expuesta.',
+
+    'col.fails': 'Cómo falla',
+    'col.fails.body': 'Es una sola máquina en una conexión residencial con dirección dinámica, y vale la pena decirlo sin rodeos en una página sobre confiabilidad. Un actualizador de DNS dinámico vigila esa dirección y la republica cuando cambia, así que un cambio de dirección cuesta el intervalo de consulta más el TTL del registro. No hay una segunda máquina, así que una actualización de kernel tumba todo junto, a propósito y a la hora que yo elija. Ese es el intercambio correcto para un servidor personal y el incorrecto para una empresa, y por eso los sistemas en producción de los casos están construidos de otra manera.',
 
     'meta.updated': 'Última actualización',
 
