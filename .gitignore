@@ -6,5 +6,8 @@ dist.prev/
 .gate-site/
 
 # Screenshots from `npm run shot`, which land next to the file being shot.
+# The blanket rule caught src/assets/*.png too, so the example-site captures
+# were silently left out of a commit and the build would fail on the server.
 *.png
 !public/*.png
+!src/assets/*.png

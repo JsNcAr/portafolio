@@ -52,12 +52,24 @@ const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" 
 
 writeFileSync('public/favicon.svg', faviconSvg);
 
+// Read the role from the translations rather than keeping a second copy here.
+// The Spanish wording was corrected in ui.ts and this file still said
+// "Ingeniero backend de Python" -- the card had silently drifted from the site.
+const uiSource = readFileSync('src/i18n/ui.ts', 'utf8');
+const roleFor = (lang) => {
+  const block = lang === 'es' ? uiSource.slice(uiSource.indexOf('  es: {')) : uiSource;
+  const m = block.match(/'site\.role':\s*'([^']+)'/);
+  if (!m) {
+    console.error(`build-brand-assets: could not read site.role for ${lang} from ui.ts.`);
+    process.exit(1);
+  }
+  return m[1];
+};
+
 const ogCard = (lang) => {
-  const role = lang === 'es' ? 'Ingeniero backend de Python' : 'Python backend engineer';
-  const line = lang === 'es'
-    ? 'FastAPI · PostgreSQL · Docker · Linux'
-    : 'FastAPI · PostgreSQL · Docker · Linux';
-  const place = lang === 'es' ? 'Bogotá, Colombia' : 'Bogotá, Colombia';
+  const role = roleFor(lang);
+  const line = 'FastAPI · PostgreSQL · Docker · Linux';
+  const place = 'Bogotá, Colombia';
   return `<!doctype html><html><head><meta charset="utf-8">
 <link rel="stylesheet" href="../node_modules/@fontsource-variable/ibm-plex-sans/wght.css">
 <link rel="stylesheet" href="../node_modules/@fontsource/ibm-plex-mono/400.css">
@@ -65,22 +77,29 @@ const ogCard = (lang) => {
   * { box-sizing: border-box; margin: 0; }
   body { width: 1200px; height: 630px; background: ${C.paper};
          font-family: 'IBM Plex Sans Variable', sans-serif; display: flex; }
-  .card { flex: 1; padding: 88px 96px; display: flex; flex-direction: column;
-          justify-content: space-between; border-left: 16px solid ${C.teal}; }
-  .role { font-family: 'IBM Plex Mono', monospace; font-size: 26px; letter-spacing: .09em;
+  .card { flex: 1; min-width: 0; padding: 76px 64px 76px 88px; display: flex;
+          flex-direction: column; justify-content: space-between;
+          border-left: 16px solid ${C.teal}; }
+  .role { font-family: 'IBM Plex Mono', monospace; font-size: 24px; letter-spacing: .09em;
           text-transform: uppercase; color: ${C.muted}; }
-  h1 { font-size: 104px; line-height: 1.04; letter-spacing: -.03em; color: ${C.ink};
-       font-weight: 600; max-width: 14ch; }
-  .foot { display: flex; justify-content: space-between; align-items: baseline;
-          border-top: 1px solid ${C.rule}; padding-top: 28px; }
-  .stack { font-family: 'IBM Plex Mono', monospace; font-size: 28px; color: ${C.inkSoft}; }
-  .where { font-size: 26px; color: ${C.muted}; }
+  h1 { font-size: 82px; line-height: 1.04; letter-spacing: -.03em; color: ${C.ink};
+       font-weight: 600; max-width: 11ch; }
+  .foot { border-top: 1px solid ${C.rule}; padding-top: 24px; }
+  .stack { font-family: 'IBM Plex Mono', monospace; font-size: 24px; color: ${C.inkSoft}; }
+  .where { font-size: 23px; color: ${C.muted}; margin-top: 8px; }
+  /* A face is what makes a link preview get opened, so it gets a third of the
+     card. The 4:5 source is taller than this slot, so cover fits the height
+     exactly and trims the sides -- the framing is whatever the asset already
+     has, which is why that crop was chosen carefully. */
+  .shot { width: 400px; flex: none; border-left: 1px solid ${C.rule}; }
+  .shot img { width: 100%; height: 630px; object-fit: cover; display: block; }
 </style></head><body>
   <div class="card">
     <p class="role">${role}</p>
     <h1>Jason Nicolás Arias Gómez</h1>
     <div class="foot"><p class="stack">${line}</p><p class="where">${place}</p></div>
   </div>
+  <div class="shot"><img src="../src/assets/jason-arias.jpg" alt=""></div>
 </body></html>`;
 };
 
@@ -119,10 +138,18 @@ for (const lang of ['en', 'es']) {
   await ogPage.evaluate(() => document.fonts.ready);
   // Fail loudly rather than shipping a card silently set in a fallback face.
   const usedPlex = await ogPage.evaluate(() =>
-    document.fonts.check('600 104px "IBM Plex Sans Variable"'),
+    document.fonts.check('600 82px "IBM Plex Sans Variable"'),
   );
   if (!usedPlex) {
     console.error('build-brand-assets: IBM Plex Sans did not load; card would use a fallback face.');
+    process.exit(1);
+  }
+  const portraitOk = await ogPage.evaluate(() => {
+    const img = document.querySelector('.shot img');
+    return Boolean(img && img.complete && img.naturalWidth > 0);
+  });
+  if (!portraitOk) {
+    console.error('build-brand-assets: the portrait did not load; card would ship a blank third.');
     process.exit(1);
   }
   await ogPage.screenshot({ path: `public/og-${lang}.png` });

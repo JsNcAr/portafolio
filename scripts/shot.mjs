@@ -33,6 +33,31 @@ if (dark) await page.evaluate(() => document.documentElement.setAttribute('data-
 await page.addStyleTag({ content: '*,*::before,*::after{transition:none!important;animation:none!important}' });
 await page.mouse.move(-50, -50);
 await page.evaluate(() => document.fonts.ready);
+
+// A fullPage screenshot does not move the viewport, so loading="lazy" images
+// below the fold never start loading and photograph as empty boxes -- which
+// reads as a broken layout when it is only a capture artifact. Walk the page
+// once to trigger them, then return to the top before shooting.
+if (args.includes('--full')) {
+  await page.evaluate(async () => {
+    const step = window.innerHeight;
+    for (let y = 0; y < document.body.scrollHeight; y += step) {
+      window.scrollTo(0, y);
+      await new Promise((r) => setTimeout(r, 60));
+    }
+    window.scrollTo(0, 0);
+  });
+  // Decode, rather than merely fetch, before the shutter.
+  await page.evaluate(() =>
+    Promise.all(
+      [...document.images].filter((i) => !i.complete).map(
+        (i) => new Promise((r) => { i.onload = i.onerror = r; }),
+      ),
+    ),
+  );
+  await page.waitForTimeout(250);
+}
+
 await page.screenshot({ path: out, fullPage: args.includes('--full') });
 await browser.close();
 console.log(`shot: ${out} (${width}px, ${dark ? 'dark' : 'light'})`);

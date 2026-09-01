@@ -100,6 +100,7 @@ export const ui = {
     'svc.sites.build': 'Design and build',
     'svc.sites.hosting': 'Hosting and upkeep',
     'svc.sites.examples': 'Built and hosted by me',
+    'svc.sites.shot': 'Home page of',
     'svc.sites.visit': 'Visit',
 
     'svc.classes': 'Classes',
@@ -283,6 +284,7 @@ export const ui = {
     'svc.sites.build': 'Diseño y construcción',
     'svc.sites.hosting': 'Hosting y mantenimiento',
     'svc.sites.examples': 'Construidos y hospedados por mí',
+    'svc.sites.shot': 'Página de inicio de',
     'svc.sites.visit': 'Visitar',
 
     'svc.classes': 'Clases',

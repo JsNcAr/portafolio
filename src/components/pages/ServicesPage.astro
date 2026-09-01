@@ -2,6 +2,9 @@
 import Base from '@layouts/Base.astro';
 import PageHeader from '@components/PageHeader.astro';
 import Portrait from '@components/Portrait.astro';
+import { Picture } from 'astro:assets';
+import shotGsalud from '@assets/site-gsalud.png';
+import shotApollyon from '@assets/site-apollyon.png';
 import ServiceCard from '@components/ServiceCard.astro';
 import TechPill from '@components/TechPill.astro';
 import Icon from '@components/Icon.astro';
@@ -17,6 +20,11 @@ interface Props {
 }
 
 const { locale } = Astro.props;
+
+const siteShots: Record<string, ImageMetadata | undefined> = {
+  'gsalud.co': shotGsalud,
+  'apollyon.lat': shotApollyon,
+};
 const t = useTranslations(locale);
 
 const engineering = services.filter((s) => s.group === 'engineering');
@@ -91,12 +99,29 @@ const steps = [
         <ul>
           {websites.examples.map((site) => (
             <li>
-              <a href={site.url} rel="noopener" target="_blank">
-                <span class="stretch"></span>
-                <span class="site-name">{site.name}</span>
-                <Icon name="arrow-up-right" size={14} />
-              </a>
-              <p class="site-note">{site.note[locale]}</p>
+              {siteShots[site.name] && (
+                <Picture
+                  src={siteShots[site.name]!}
+                  formats={['avif', 'webp']}
+                  fallbackFormat="png"
+                  {/* Measured, not guessed: the card image is 310-650px wide in
+                      one column and caps at 460px in two. */}
+                  widths={[460, 680, 920, 1200]}
+                  sizes="(min-width: 44rem) min(29rem, 46vw), calc(100vw - 3rem)"
+                  alt={`${t('svc.sites.shot')} ${site.name}`}
+                  loading="lazy"
+                  decoding="async"
+                  class="shot"
+                />
+              )}
+              <div class="example-body">
+                <a href={site.url} rel="noopener" target="_blank">
+                  <span class="stretch"></span>
+                  <span class="site-name">{site.name}</span>
+                  <Icon name="arrow-up-right" size={14} />
+                </a>
+                <p class="site-note">{site.note[locale]}</p>
+              </div>
             </li>
           ))}
         </ul>
@@ -354,7 +379,10 @@ const steps = [
 
   .examples li {
     position: relative;
-    padding: var(--space-20);
+    /* The screenshot runs to the card edge, so padding moves inside and the
+       radius is enforced by clipping. The focus ring is the li's own
+       box-shadow, which overflow does not clip. */
+    overflow: hidden;
     background: var(--color-surface-card);
     border: var(--stroke-hairline) solid var(--color-border-default);
     border-radius: var(--radius-md);
@@ -372,6 +400,20 @@ const steps = [
   /* Stretched link: the ring belongs on the card, not on the text. */
   .examples li:has(a:focus-visible) {
     box-shadow: var(--shadow-focus-ring);
+  }
+
+  .example-body {
+    padding: var(--space-20);
+  }
+
+  /* Reserved by aspect-ratio so the card does not grow as the image decodes. */
+  .shot {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 1200 / 750;
+    object-fit: cover;
+    border-block-end: var(--stroke-hairline) solid var(--color-border-default);
   }
 
   .stretch {
