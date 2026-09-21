@@ -169,6 +169,17 @@ export const roles: Role[] = [
   },
 ];
 
+/**
+ * The opening paragraph of the CV. Recovered from the hand-made PDF, which was
+ * the only place it existed -- the reason that PDF could not be regenerated
+ * from this file. Kept CV-shaped (claims plus evidence) rather than reusing the
+ * site's home-page copy, which is written for a different reader.
+ */
+export const summary: Bilingual = {
+  en: 'Python backend engineer with 2+ years building and running production APIs end to end: asynchronous FastAPI services on PostgreSQL, hardened OAuth2/JWT authentication, Dockerized deployments on Debian servers, and CI/CD pipelines that ship to production on merge. Comfortable owning the whole path from schema design to reverse proxy and TLS, and equally at home in data-heavy work — automated pipelines, sensor-fusion algorithms, and LLM integrations. Physics background (Universidad de los Andes) behind the mathematical side.',
+  es: 'Ingeniero de backend Python con más de dos años construyendo y operando APIs en producción de punta a punta: servicios asíncronos en FastAPI sobre PostgreSQL, autenticación reforzada con OAuth2 y JWT, despliegues en contenedores sobre servidores Debian y pipelines de CI/CD que llegan a producción al hacer merge. Me hago cargo de todo el camino, del diseño del esquema al proxy inverso y el TLS, y me muevo con la misma soltura en trabajo de datos: pipelines automatizados, algoritmos de fusión de sensores e integraciones con LLM. Formación en física de la Universidad de los Andes detrás del lado matemático.',
+};
+
 export const skills: Array<{ key: 'languages' | 'backend' | 'infra' | 'data'; items: string[] }> = [
   { key: 'languages', items: ['Python', 'SQL', 'Bash', 'Kotlin (basic)'] },
   {
@@ -183,7 +194,10 @@ export const skills: Array<{ key: 'languages' | 'backend' | 'infra' | 'data'; it
 ];
 
 export const education = {
-  degree: 'BSc Physics (in progress)',
+  degree: {
+    en: 'BSc Physics (in progress)',
+    es: 'Pregrado en Física (en curso)',
+  },
   org: 'Universidad de los Andes, Colombia',
   start: '2018',
   end: null,
