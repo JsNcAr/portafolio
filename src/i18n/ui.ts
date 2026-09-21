@@ -192,13 +192,14 @@ export const ui = {
     'os.title': 'Open source',
     'os.lead': 'The public half.',
     'os.intro':
-      'My strongest work sits in private company repositories. What is public is a mix of backend groundwork, data analysis, and the physics coursework where the numerical methods came from. I would rather show you that honestly than pad a grid.',
+      'Most of my professional work sits in private company repositories. What is public is one complete product, with a verified engine, a test suite and a release pipeline, alongside backend groundwork, data analysis, and the physics coursework the numerical methods came from. I would rather show you that honestly than pad a grid.',
     'os.group.backend': 'Backend and infrastructure',
     'os.group.data': 'Data analysis',
     'os.group.numerical': 'Numerical methods and physics',
-    'os.frontend.title': 'A note on the front ends',
-    'os.frontend.body':
-      'Some repositories here and elsewhere have web front ends. I planned and assembled those with AI tooling such as Lovable; they reflect how I scope and direct that work, not a claim to be a front-end engineer. My own craft is on the server side.',
+    'os.ai.title': 'A note on AI tooling',
+    'os.ai.body':
+      'I build with AI coding agents. The web front ends here and Champions MetaDesk Studio were largely written by them to my specifications; the scoping, the architecture and the verification (golden scenarios, tests, release gates) are mine.',
+    'os.lead.shot': 'The damage calculator in Champions MetaDesk Studio',
     'os.coursework.title': 'A note on the coursework',
     'os.coursework.body':
       'The notebooks are university work and are labelled as such. They stay public because the mathematics in them is real and it is where the Kalman filtering and signal work came from.',
@@ -430,13 +431,14 @@ export const ui = {
     'os.title': 'Código abierto',
     'os.lead': 'Lo que sí es público.',
     'os.intro':
-      'Mi trabajo más fuerte está en repositorios privados de empresa. Lo público es una mezcla de backend, análisis de datos y los trabajos de física de donde salieron los métodos numéricos. Prefiero mostrarlo con honestidad antes que inflar la lista.',
+      'La mayor parte de mi trabajo profesional está en repositorios privados de empresa. Lo público es un producto completo, con un motor verificado, pruebas y un flujo de publicación, junto a trabajo de backend, análisis de datos y los trabajos de física de donde salieron los métodos numéricos. Prefiero mostrarlo con honestidad antes que inflar la lista.',
     'os.group.backend': 'Backend e infraestructura',
     'os.group.data': 'Análisis de datos',
     'os.group.numerical': 'Métodos numéricos y física',
-    'os.frontend.title': 'Una nota sobre los frontends',
-    'os.frontend.body':
-      'Algunos repositorios aquí y en otros lugares tienen interfaces web. Esas las planeé y las armé con herramientas de IA como Lovable; reflejan cómo defino y dirijo ese trabajo, no una pretensión de ser ingeniero de frontend. Mi oficio está del lado del servidor.',
+    'os.ai.title': 'Una nota sobre las herramientas de IA',
+    'os.ai.body':
+      'Construyo con agentes de programación con IA. Las interfaces web de algunos repositorios y Champions MetaDesk Studio los escribieron en gran parte esos agentes a partir de mis especificaciones; el alcance, la arquitectura y la verificación (escenarios de referencia, pruebas y controles de publicación) son míos.',
+    'os.lead.shot': 'La calculadora de daño de Champions MetaDesk Studio',
     'os.coursework.title': 'Una nota sobre los trabajos de universidad',
     'os.coursework.body':
       'Los notebooks son trabajos de universidad y están marcados como tales. Siguen públicos porque las matemáticas que contienen son reales y de ahí salió el trabajo con filtros de Kalman y señales.',

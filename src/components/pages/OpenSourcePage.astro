@@ -3,6 +3,9 @@ import Base from '@layouts/Base.astro';
 import PageHeader from '@components/PageHeader.astro';
 import TechPill from '@components/TechPill.astro';
 import Icon from '@components/Icon.astro';
+import { Picture } from 'astro:assets';
+// Copied from JsNcAr/champions-metadesk-studio docs/images/calc.png at 6806db8.
+import championsCalc from '@assets/project-champions-calc.png';
 import type { Locale } from '@i18n/ui';
 import { useTranslations } from '@i18n/utils';
 import { repos, githubProfile, type RepoGroup } from '@data/repos';
@@ -21,6 +24,15 @@ const groups: Array<{ key: RepoGroup; label: string }> = [
 ];
 
 const lead = repos.find((r) => r.lead)!;
+
+// Keyed by repo name, like the example-site shots on /services, so a lead
+// without a screenshot simply renders without one.
+const leadShots: Record<string, ImageMetadata | undefined> = {
+  'champions-metadesk-studio': championsCalc,
+};
+const leadShot = leadShots[lead.name];
+// widths/sizes below are measured, not guessed: the lead image renders 310-650px
+// wide in one column and caps at 942px, the shell's measure.
 const byGroup = (key: RepoGroup) => repos.filter((r) => r.group === key && !r.lead);
 
 /**
@@ -40,6 +52,20 @@ function breakable(name: string): string[] {
 
   <div class="shell">
     <article class="repo lead">
+      {leadShot && (
+        <Picture
+          src={leadShot}
+          formats={['avif', 'webp']}
+          fallbackFormat="png"
+          widths={[480, 720, 960, 1440]}
+          sizes="min(59rem, calc(100vw - 3rem))"
+          alt={t('os.lead.shot')}
+          loading="eager"
+          decoding="async"
+          class="shot"
+        />
+      )}
+      <div class="lead-body">
       <div class="head">
         <h2>
           <a href={lead.url} rel="noopener" target="_blank">
@@ -56,6 +82,7 @@ function breakable(name: string): string[] {
         <span>{t('os.viewrepo')}</span>
         <Icon name="arrow-up-right" size={14} />
       </p>
+      </div>
     </article>
 
     {groups.map((group) => (
@@ -88,8 +115,8 @@ function breakable(name: string): string[] {
 
     <aside class="notes">
       <div class="note">
-        <h2>{t('os.frontend.title')}</h2>
-        <p>{t('os.frontend.body')}</p>
+        <h2>{t('os.ai.title')}</h2>
+        <p>{t('os.ai.body')}</p>
       </div>
       <div class="note">
         <h2>{t('os.coursework.title')}</h2>
@@ -132,10 +159,33 @@ function breakable(name: string): string[] {
     box-shadow: var(--shadow-focus-ring);
   }
 
+  /* The screenshot runs to the card edge, so the padding moves to .lead-body
+     and the radius is enforced by clipping. The focus ring is the card's own
+     box-shadow, which overflow does not clip. */
   .lead {
     margin-block-start: var(--space-48);
-    padding: var(--space-32);
+    padding: 0;
+    gap: 0;
+    overflow: hidden;
     border-block-start: var(--stroke-rule) solid var(--color-action-primary);
+  }
+
+  .lead-body {
+    display: grid;
+    gap: var(--space-10);
+    align-content: start;
+    padding: var(--space-32);
+    min-inline-size: 0;
+  }
+
+  /* Reserved by aspect-ratio so the card does not grow as the image decodes. */
+  .shot {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 1440 / 900;
+    object-fit: cover;
+    border-block-end: var(--stroke-hairline) solid var(--color-border-default);
   }
 
   .stretch {
