@@ -10,6 +10,11 @@ const UNIT: Record<PriceUnit, Record<Locale, string>> = {
   'hour-group': { en: 'per hour, up to ten people', es: 'por hora, hasta diez personas' },
 };
 
+/** The unit as the page shows it, reused by the structured data so the two agree. */
+export function unitLabel(unit: PriceUnit, locale: Locale): string {
+  return UNIT[unit][locale];
+}
+
 /**
  * Formats a price range for display. Returns null when there is no price, so a
  * caller can omit the line entirely rather than render an empty one.

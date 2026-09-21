@@ -10,6 +10,7 @@ import type { Locale } from '@i18n/ui';
 import { useTranslations, localePath } from '@i18n/utils';
 import { period, month } from '@lib/format';
 import { roles } from '@data/cv';
+import { breadcrumbNode } from '@lib/seo';
 
 interface Props {
   locale: Locale;
@@ -28,13 +29,21 @@ const sections = headings.filter((h) => h.depth === 2);
 // study and the work page can never disagree about them.
 const role = roles.find((r) => r.id === entry.data.role)!;
 const slug = entry.data.role;
+
+const abs = (p: string) => new URL(localePath(locale, p), Astro.site).href;
+const breadcrumb = breadcrumbNode(abs(`/work/${slug}`), [
+  { name: t('nav.home'), url: abs('/') },
+  { name: t('nav.work'), url: abs('/work') },
+  { name: entry.data.title, url: abs(`/work/${slug}`) },
+]);
 ---
 
 <Base
   locale={locale}
   path={`/work/${slug}`}
-  title={entry.data.title}
-  description={entry.data.summary}
+  title={entry.data.metaTitle}
+  description={entry.data.metaDescription}
+  extraNodes={[breadcrumb]}
 >
   <article>
     <header class="head">

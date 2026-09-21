@@ -20,7 +20,7 @@ const destinations = [
 ];
 ---
 
-<Base locale={locale} path="/404" noindex title={t('notfound.title')} description={t('notfound.body')}>
+<Base locale={locale} path="/404" noindex title={`${t('notfound.title')} — ${t('site.name')}`} description={t('notfound.body')}>
   <section class="notfound">
     <div class="shell inner">
       <p class="overline">{t('notfound.code')}</p>

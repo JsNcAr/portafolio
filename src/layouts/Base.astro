@@ -11,6 +11,9 @@ import { HTML_LANG, type Locale } from '@i18n/ui';
 import { useTranslations, localePath, alternates } from '@i18n/utils';
 import { contact, roles, education } from '@data/cv';
 import { token } from '@lib/tokens';
+import { getImage } from 'astro:assets';
+import portrait from '@assets/jason-arias.jpg';
+import { websiteNode, personNode, webPageNode, graph, type PageType } from '@lib/seo';
 
 // `?url` hands back the hashed, built path, so the preload cannot go stale when
 // the font is revved. These two subsets are what every page actually renders in.
@@ -21,38 +24,44 @@ interface Props {
   locale: Locale;
   /** Canonical, English-rooted path for this page: '/', '/work', '/work/apollyon'. */
   path: string;
+  /** The complete <title>, written for search. No suffix is added here. */
   title: string;
   description: string;
   /** Error pages: no canonical, no hreflang, no indexing. */
   noindex?: boolean;
+  /** 'ProfilePage' for the page about the person; everything else is a WebPage. */
+  pageType?: PageType;
+  /** Page-specific schema.org nodes, joined into the same graph. */
+  extraNodes?: Record<string, unknown>[];
 }
 
-const { locale, path, title, description, noindex = false } = Astro.props;
+const { locale, path, title, description, noindex = false, pageType = 'WebPage', extraNodes = [] } = Astro.props;
 const t = useTranslations(locale);
 const canonical = new URL(localePath(locale, path), Astro.site);
 const alts = alternates(path);
-const fullTitle = path === '/' ? `${t('site.name')} — ${t('site.role')}` : `${title} — ${t('site.name')}`;
 const ogImage = new URL(`/og-${locale}.png`, Astro.site);
 
-// Structured data lets a search result show the role and employer rather than
-// guessing them out of the page text. Every field is already public on the site.
+// One connected graph: the site and the person are the same node on every page
+// (stable @id), and each page adds a node for itself plus anything it passes in.
+// Every value is already public on the site.
 const currentRole = roles.find((role) => role.end === null);
-const personSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: 'Jason Nicolás Arias Gómez',
-  alternateName: 'Jason Arias',
-  jobTitle: t('site.role'),
-  email: `mailto:${contact.email}`,
-  url: canonical.origin,
-  image: ogImage.href,
-  sameAs: [contact.github, contact.linkedin],
-  address: { '@type': 'PostalAddress', addressLocality: 'Bogotá', addressCountry: 'CO' },
-  worksFor: currentRole ? { '@type': 'Organization', name: currentRole.org } : undefined,
-  alumniOf: { '@type': 'CollegeOrUniversity', name: education.org },
-  knowsLanguage: ['es', 'en'],
-  knowsAbout: ['Python', 'FastAPI', 'PostgreSQL', 'Docker', 'Linux', 'DevOps', 'REST APIs'],
-};
+const origin = canonical.origin;
+// The photograph, not the OG banner: Person.image should be a picture of the person.
+const portraitImage = await getImage({ src: portrait, width: 480, format: 'jpg' });
+const schemaGraph = graph([
+  websiteNode(origin, t('site.name')),
+  personNode({
+    origin,
+    jobTitle: t('site.role'),
+    email: contact.email,
+    imageUrl: new URL(portraitImage.src, Astro.site).href,
+    sameAs: [contact.github, contact.linkedin],
+    employer: currentRole?.orgUrl ? { name: currentRole.org, url: currentRole.orgUrl } : undefined,
+    almaMater: education.org,
+  }),
+  webPageNode({ origin, url: canonical.href, type: pageType, name: title, description, lang: HTML_LANG[locale] }),
+  ...extraNodes,
+]);
 ---
 
 <!doctype html>
@@ -70,7 +79,7 @@ const personSchema = {
          literal colours in the app; both come from the token source. -->
     <meta name="theme-color" content={token('surface.page', 'light')} media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content={token('surface.page', 'dark')} media="(prefers-color-scheme: dark)" />
-    <title>{fullTitle}</title>
+    <title>{title}</title>
     <meta name="description" content={description} />
     {noindex ? (
       <meta name="robots" content="noindex, follow" />
@@ -85,7 +94,7 @@ const personSchema = {
     )}
 
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={fullTitle} />
+    <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={HTML_LANG[locale].replace('-', '_')} />
@@ -107,7 +116,7 @@ const personSchema = {
       <script
         type="application/ld+json"
         is:inline
-        set:html={JSON.stringify(personSchema)}
+        set:html={schemaGraph}
       />
     )}
 

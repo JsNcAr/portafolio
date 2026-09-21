@@ -165,6 +165,30 @@ export const ui = {
     'col.fails': 'How it fails',
     'col.fails.body': 'It is one machine on a residential connection with a dynamic address, which is worth saying plainly on a page about reliability. A dynamic DNS updater watches that address and republishes it when it changes, so an address change costs the poll interval plus the record TTL. There is no second machine, so a kernel update takes everything down together — deliberately, at a time I pick. That is the right trade for a personal host and the wrong one for a company, which is why the production systems in the case studies are built differently.',
 
+    // Search metadata, kept apart from the visible copy so editing a headline
+    // never silently changes what search engines show, and the reverse.
+    // Titles are the complete <title>. Lengths are enforced by check-seo.mjs.
+    'meta.home.title': 'Jason Nicolás Arias Gómez — Python backend engineer, Bogotá',
+    'meta.home.description':
+      'Python backend engineer in Bogotá: FastAPI and PostgreSQL services, hardened auth, and the Debian servers and pipelines they run on. Case studies and CV.',
+    'meta.work.title': 'Backend and DevOps experience — Jason Arias',
+    'meta.work.description':
+      'Five roles across backend, DevOps and data: offline-first platforms, automation at volume and conversational commerce, with case studies for three of them.',
+    'meta.about.title': 'About Jason Arias — backend engineer, physics, Bogotá',
+    'meta.about.description':
+      'Backend engineer with a physics degree from Universidad de los Andes: Python services, the servers they run on, and the Kalman filtering behind the maths.',
+    'meta.services.title': 'Backend, automation and web development in Bogotá',
+    'meta.services.description':
+      'Backend and infrastructure, automation, AI assistants, websites with hosting, and remote programming, maths and physics classes. Published prices.',
+    'meta.opensource.title': 'Open source Python projects — Jason Arias',
+    'meta.opensource.description':
+      'Public Python work: a desktop app with a damage engine verified against its reference, a FastAPI auth starter, data analysis and numerical-methods coursework.',
+    'meta.contact.title': 'Contact Jason Arias — backend engineer in Bogotá',
+    'meta.contact.description':
+      'Reach Jason Arias by email, WhatsApp, GitHub or LinkedIn. Open to backend, infrastructure and platform roles, remote or in Bogotá, with full US-hours overlap.',
+    'meta.colophon.title': 'Colophon: how jsncar.tech is built and served',
+    'meta.colophon.description':
+      'How this site is built and served: a static Astro build behind Caddy on one self-administered Debian host, deployed with an atomic swap, and how it fails.',
     'meta.updated': 'Last updated',
 
     'notfound.code': 'Error 404',
@@ -404,6 +428,30 @@ export const ui = {
     'col.fails': 'Cómo falla',
     'col.fails.body': 'Es una sola máquina en una conexión residencial con dirección dinámica, y vale la pena decirlo sin rodeos en una página sobre confiabilidad. Un actualizador de DNS dinámico vigila esa dirección y la republica cuando cambia, así que un cambio de dirección cuesta el intervalo de consulta más el TTL del registro. No hay una segunda máquina, así que una actualización de kernel tumba todo junto, a propósito y a la hora que yo elija. Ese es el intercambio correcto para un servidor personal y el incorrecto para una empresa, y por eso los sistemas en producción de los casos están construidos de otra manera.',
 
+    // Search metadata, kept apart from the visible copy so editing a headline
+    // never silently changes what search engines show, and the reverse.
+    // Titles are the complete <title>. Lengths are enforced by check-seo.mjs.
+    'meta.home.title': 'Jason Nicolás Arias Gómez — Ingeniero backend Python, Bogotá',
+    'meta.home.description':
+      'Ingeniero de backend Python en Bogotá: servicios en FastAPI y PostgreSQL, autenticación reforzada y los servidores Debian donde corren. Casos y hoja de vida.',
+    'meta.work.title': 'Experiencia en backend y DevOps — Jason Arias',
+    'meta.work.description':
+      'Cinco roles entre backend, DevOps y datos: plataformas offline-first, automatización a escala y comercio conversacional, con casos de estudio para tres.',
+    'meta.about.title': 'Perfil de Jason Arias — backend, física y Bogotá',
+    'meta.about.description':
+      'Ingeniero de backend con formación en física de la Universidad de los Andes: servicios en Python, los servidores donde corren y los filtros de Kalman.',
+    'meta.services.title': 'Desarrollo backend, sitios web y clases en Bogotá',
+    'meta.services.description':
+      'Backend e infraestructura, automatización, asistentes de IA, sitios web con hosting y clases en línea de programación, matemáticas y física. Precios publicados.',
+    'meta.opensource.title': 'Proyectos de código abierto en Python — Jason Arias',
+    'meta.opensource.description':
+      'Trabajo público en Python: una app de escritorio con un motor de daño verificado contra su referencia, una base FastAPI con autenticación y trabajos numéricos.',
+    'meta.contact.title': 'Contactar a Jason Arias — ingeniero backend en Bogotá',
+    'meta.contact.description':
+      'Escríbele a Jason Arias por correo, WhatsApp, GitHub o LinkedIn. Abierto a roles de backend, infraestructura y plataforma, remoto o presencial en Bogotá.',
+    'meta.colophon.title': 'Colofón: cómo se construye y se sirve jsncar.tech',
+    'meta.colophon.description':
+      'Cómo está hecho y cómo se sirve este sitio: un build estático de Astro tras Caddy en un servidor Debian propio, desplegado con un intercambio atómico.',
     'meta.updated': 'Última actualización',
 
     'notfound.code': 'Error 404',

@@ -9,6 +9,8 @@ import championsCalc from '@assets/project-champions-calc.png';
 import type { Locale } from '@i18n/ui';
 import { useTranslations } from '@i18n/utils';
 import { repos, githubProfile, type RepoGroup } from '@data/repos';
+import { sourceCodeNode } from '@lib/seo';
+import { localePath } from '@i18n/utils';
 
 interface Props {
   locale: Locale;
@@ -31,6 +33,17 @@ const leadShots: Record<string, ImageMetadata | undefined> = {
   'champions-metadesk-studio': championsCalc,
 };
 const leadShot = leadShots[lead.name];
+
+const pageUrl = new URL(localePath(locale, '/open-source'), Astro.site).href;
+const leadCode = sourceCodeNode({
+  origin: new URL(Astro.site!).origin,
+  url: pageUrl,
+  name: lead.name,
+  description: lead.blurb[locale],
+  repository: lead.url,
+  language: lead.language,
+  ...(lead.license ? { license: lead.license } : {}),
+});
 // widths/sizes below are measured, not guessed: the lead image renders 310-650px
 // wide in one column and caps at 942px, the shell's measure.
 const byGroup = (key: RepoGroup) => repos.filter((r) => r.group === key && !r.lead);
@@ -47,7 +60,7 @@ function breakable(name: string): string[] {
 }
 ---
 
-<Base locale={locale} path="/open-source" title={t('os.title')} description={t('os.intro')}>
+<Base locale={locale} path="/open-source" title={t('meta.opensource.title')} description={t('meta.opensource.description')} extraNodes={[leadCode]}>
   <PageHeader overline={t('os.title')} title={t('os.lead')} intro={t('os.intro')} />
 
   <div class="shell">

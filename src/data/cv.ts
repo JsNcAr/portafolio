@@ -6,6 +6,8 @@ export interface Role {
   /** Stable id, used for anchors and keys. */
   id: string;
   org: string;
+  /** The organisation's public site, where it has one. Read by the structured data. */
+  orgUrl?: string;
   /** Job title, kept in English in both locales: these are the titles as held. */
   title: string;
   start: string;
@@ -20,7 +22,11 @@ export interface Role {
    * never a new claim. Roles without measured outcomes simply omit it.
    */
   metrics?: Array<{ value: Bilingual; label: Bilingual }>;
-  /** When the case study prose was last revised. YYYY-MM. */
+  /**
+   * When the case study prose was last revised, as a full date (YYYY-MM-DD) taken
+   * from the MDX files' git history. The page shows only the month; the sitemap
+   * needs the day, and a day that is merely the 1st of the month would be invented.
+   */
   updated?: string;
 }
 
@@ -32,6 +38,7 @@ export const roles: Role[] = [
   {
     id: 'apollyon',
     org: 'Apollyon S.A.S',
+    orgUrl: 'https://apollyon.lat',
     title: 'Lead Backend & DevOps Engineer (COO)',
     start: '2024-10',
     end: null,
@@ -63,7 +70,7 @@ export const roles: Role[] = [
       },
     ],
     stack: ['FastAPI', 'SQLModel', 'PostgreSQL', 'Docker', 'systemd', 'Caddy', 'GitLab CI/CD', 'BLE', 'Kalman filters'],
-    updated: '2026-09',
+    updated: '2026-08-30',
   },
   {
     id: 'personally-ai',
@@ -100,7 +107,7 @@ export const roles: Role[] = [
       { value: { en: '~80%', es: '~80%' }, label: { en: 'less reporting effort', es: 'menos esfuerzo en reportes' } },
       { value: { en: '1 to 5', es: '1 a 5' }, label: { en: 'engineers, team I grew', es: 'ingenieros, equipo que hice crecer' } },
     ],
-    updated: '2026-09',
+    updated: '2026-08-30',
   },
   {
     id: 'atonga',
@@ -128,7 +135,7 @@ export const roles: Role[] = [
       },
     ],
     stack: ['FastAPI', 'PostgreSQL', 'WebSockets', 'OpenAI API', 'Jira'],
-    updated: '2026-09',
+    updated: '2026-08-30',
   },
   {
     id: 'personally-ai-dev',

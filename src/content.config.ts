@@ -16,8 +16,15 @@ const work = defineCollection({
     /** Matches an id in src/data/cv.ts -> roles. */
     role: z.enum(['apollyon', 'personally-ai', 'atonga']),
     title: z.string(),
-    /** One sentence, used for the page description and link previews. */
+    /** One sentence, shown under the title on the page and on the case card. */
     summary: z.string(),
+    /**
+     * Search metadata, kept apart from title and summary so the visible copy can
+     * change without silently changing what search engines show. Required, so a
+     * new case study without them fails the build. check-seo.mjs enforces lengths.
+     */
+    metaTitle: z.string(),
+    metaDescription: z.string(),
     /** Ordering on /work. Lower sorts first. */
     order: z.number(),
   }),

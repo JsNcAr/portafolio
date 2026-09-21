@@ -9,7 +9,9 @@ import ServiceCard from '@components/ServiceCard.astro';
 import TechPill from '@components/TechPill.astro';
 import Icon from '@components/Icon.astro';
 import Flow from '@components/diagrams/Flow.astro';
-import { formatPrice } from '@lib/price';
+import { formatPrice, unitLabel } from '@lib/price';
+import { serviceNodes } from '@lib/seo';
+import { roles } from '@data/cv';
 import type { Locale } from '@i18n/ui';
 import { useTranslations, localePath } from '@i18n/utils';
 import { services, websites, classSubjects, classFormats, classAudiences } from '@data/services';
@@ -33,6 +35,25 @@ const engineering = services.filter((s) => s.group === 'engineering');
 const lead = engineering.find((s) => s.lead)!;
 const rest = engineering.filter((s) => !s.lead);
 
+// Apollyon-delivered services name the company as provider; its URL lives in cv.ts.
+const company = roles.find((r) => r.id === 'apollyon')!;
+const schemaServices = serviceNodes({
+  origin: new URL(Astro.site!).origin,
+  url: new URL(localePath(locale, '/services'), Astro.site).href,
+  locale,
+  engineering,
+  company: { name: company.org, url: company.orgUrl! },
+  websites: {
+    name: t('svc.sites'),
+    build: websites.build,
+    hosting: websites.hosting,
+    buildLabel: t('svc.sites.build'),
+    hostingLabel: t('svc.sites.hosting'),
+  },
+  classes: { name: `${t('svc.classes')}: ${t('svc.classes.lead').replace(/\.$/, '')}`, formats: classFormats },
+  unitText: (u) => unitLabel(u, locale),
+});
+
 const build = formatPrice(websites.build, locale);
 const hosting = formatPrice(websites.hosting, locale);
 
@@ -43,7 +64,7 @@ const steps = [
 ];
 ---
 
-<Base locale={locale} path="/services" title={t('svc.title')} description={t('svc.intro')}>
+<Base locale={locale} path="/services" title={t('meta.services.title')} description={t('meta.services.description')} extraNodes={schemaServices}>
   <PageHeader overline={t('svc.title')} title={t('svc.lead')} intro={t('svc.intro')} />
 
   <section class="shell block" aria-labelledby="engineering">

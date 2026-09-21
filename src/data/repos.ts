@@ -14,6 +14,8 @@ export interface Repo {
   tags: string[];
   /** The one repo that best corroborates the CV. Rendered larger. */
   lead?: boolean;
+  /** Licence URL, for the structured data. Only set where the repo has a LICENSE file. */
+  license?: string;
 }
 
 const gh = (name: string) => `https://github.com/JsNcAr/${name}`;
@@ -34,6 +36,7 @@ export const repos: Repo[] = [
       es: 'Un banco de trabajo no oficial, de escritorio y web, para Pokémon Champions competitivo: inventario, constructor de equipos, el meta de torneos en vivo desde Limitless y Victory Road, y una calculadora de daño en ambas direcciones. El motor de daño es un port a Python de la calculadora de Smogon, contrastado con casi mil escenarios generados por la original, donde cada tirada tiene que coincidir. Con pruebas y lint en CI en cada push, y publicado como aplicación independiente para Windows, macOS y Linux.',
     },
     tags: ['Python', 'Flet', 'SQLModel', 'SQLite', 'GitHub Actions', 'PyInstaller'],
+    license: 'https://opensource.org/license/mit',
   },
   {
     name: 'basic_api',

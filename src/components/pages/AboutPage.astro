@@ -18,7 +18,7 @@ const t = useTranslations(locale);
 const languages = [t('about.lang.es'), t('about.lang.en'), t('about.lang.ja')];
 ---
 
-<Base locale={locale} path="/about" title={t('about.title')} description={t('about.lead')}>
+<Base locale={locale} path="/about" title={t('meta.about.title')} description={t('meta.about.description')} pageType="ProfilePage">
   <PageHeader overline={t('about.title')} title={t('about.lead')} />
 
   <div class="shell">

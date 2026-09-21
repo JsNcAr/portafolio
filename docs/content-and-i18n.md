@@ -23,10 +23,17 @@ purpose:
 ---
 role: apollyon          # joins to an id in src/data/cv.ts
 title: Owning a platform end to end
-summary: One sentence, used for the page description and link previews.
+summary: One sentence, shown under the title and on the case card.
+metaTitle: "Apollyon case study: owning a platform end to end"      # the <title>
+metaDescription: "How I owned an offline-first tracking platform..."  # 120-160 chars
 order: 1                # ordering on /work
 ---
 ```
+
+`metaTitle` and `metaDescription` are **required**: a case study without them fails
+the build. They're kept apart from `title` and `summary` so the visible copy can
+change without silently changing what search engines show. See "Search metadata"
+below.
 
 Dates, job title and stack are **not** in frontmatter. They are read from
 `cv.ts` via `role`, so the case study and the work page cannot disagree.
@@ -86,6 +93,37 @@ Read them in a page with:
 const t = useTranslations(locale);
 <h1>{t('contact.lead')}</h1>
 ```
+
+## Search metadata
+
+Every indexable page has a search title and description that are **separate from
+its visible copy**:
+
+- Static pages read `meta.<page>.title` and `meta.<page>.description` from
+  `src/i18n/ui.ts`, in both locales.
+- Case studies read `metaTitle` and `metaDescription` from their frontmatter.
+
+The title is the complete `<title>`. `Base.astro` adds no suffix, so put the name
+wherever it reads best. `npm run gate` runs `scripts/check-seo.mjs`, which fails on:
+
+- a title outside 30-60 characters, or a description outside 120-160
+- a duplicate title or description anywhere on the site
+- anything other than one `<h1>` per page
+- a missing canonical, or one that differs from `og:url`
+- hreflang that isn't reciprocal between the two locales
+- JSON-LD that doesn't parse or isn't one connected graph
+- a sitemap that doesn't list exactly the indexable pages
+
+**Structured data** is built in `src/lib/seo.ts` as one schema.org `@graph`: the same
+`WebSite` and `Person` on every page (stable `@id`), a `WebPage` for the page
+itself, and page-specific nodes passed to `Base` through `extraNodes` (breadcrumbs
+on case studies, `Service` with offers on /services, `SoftwareSourceCode` on
+/open-source). The rule: **only describe what the page visibly says**. Every value
+is read from `cv.ts`, `services.ts`, `repos.ts` or i18n, never written fresh.
+
+**Sitemap `lastmod`** is set only for case studies, from `updated` in `cv.ts`. That
+is a full date taken from the MDX files' git history. Update it when you revise a
+case study's prose, and nowhere else: Google ignores dates that are always "now".
 
 ## Editing CV content
 
