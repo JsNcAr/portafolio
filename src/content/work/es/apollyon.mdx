@@ -17,7 +17,7 @@ import Layers from '@components/diagrams/Layers.astro';
 
 ## El encargo
 
-Apollyon construye una plataforma de rastreo de proximidad y comunicación que tiene
+Apollyon construye **Korvy**, una plataforma de rastreo de proximidad y comunicación para eventos masivos que tiene
 que seguir funcionando cuando no hay conectividad. Esa restricción determina todo
 lo demás: los dispositivos no pueden dar por hecha una red, las posiciones tienen
 que calcularse en el terreno en lugar de consultarse, y el backend tiene que
@@ -109,7 +109,7 @@ hace cargo de que la relación entre intensidad de señal y distancia no es line
 El resultado es una posición que se mueve como se mueve un objeto real, en lugar de
 una que sigue al ruido.
 
-Esta es la parte del trabajo donde el pregrado en física deja de ser un antecedente
+Esta es la parte del trabajo donde mi formación en física deja de ser un antecedente
 y pasa a ser la razón por la que la funcionalidad sirve.
 
 ## Cómo corre
@@ -127,7 +127,7 @@ piensa.
 
 ## Cómo se entrega
 
-Desplegué una instancia autoalojada de GitLab con pipelines de CI/CD que llevan las
+Desplegué una instancia autoalojada de GitLab con pipelines de CI/CD que ejecutan suites automatizadas en `pytest` antes de llevar las
 actualizaciones del backend a producción al hacer merge, además de reglas de ramas
 y documentación interna en GitLab Pages.
 
