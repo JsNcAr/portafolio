@@ -216,18 +216,20 @@ export const ui = {
     'os.title': 'Open source',
     'os.lead': 'The public half.',
     'os.intro':
-      'Most of my professional work sits in private company repositories. What is public is one complete product, with a verified engine, a test suite and a release pipeline, alongside backend groundwork, data analysis, and the physics coursework the numerical methods came from. I would rather show you that honestly than pad a grid.',
+      'Most of my professional work sits in private company repositories. What is public are two complete products — a desktop and web calculation engine with verified test replays, and a live historical knowledge base backed by an automated AI extraction pipeline — alongside backend groundwork, data analysis, and the physics coursework the numerical methods came from. I would rather show you that honestly than pad a grid.',
     'os.group.backend': 'Backend and infrastructure',
     'os.group.data': 'Data analysis',
     'os.group.numerical': 'Numerical methods and physics',
     'os.ai.title': 'A note on AI tooling',
     'os.ai.body':
-      'I build with AI coding agents. The web front ends here and Champions MetaDesk Studio were largely written by them to my specifications; the scoping, the architecture and the verification (golden scenarios, tests, release gates) are mine.',
+      'I build with AI coding agents. The web front ends here, Champions MetaDesk Studio, and Bastardpedia were largely written by them to my specifications; the scoping, the architecture, the data pipelines, and the verification (golden scenarios, tests, release gates) are mine.',
     'os.lead.shot': 'The damage calculator in Champions MetaDesk Studio',
+    'os.shot.bastardpedia': 'The catalogue and search interface in Bastardpedia',
     'os.coursework.title': 'A note on the coursework',
     'os.coursework.body':
       'The notebooks are university work and are labelled as such. They stay public because the mathematics in them is real and it is where the Kalman filtering and signal work came from.',
     'os.viewrepo': 'View repository',
+    'os.viewlive': 'Live application',
     'os.profile': 'All repositories on GitHub',
 
     'about.title': 'About',
@@ -479,18 +481,20 @@ export const ui = {
     'os.title': 'Código abierto',
     'os.lead': 'Lo que sí es público.',
     'os.intro':
-      'La mayor parte de mi trabajo profesional está en repositorios privados de empresa. Lo público es un producto completo, con un motor verificado, pruebas y un flujo de publicación, junto a trabajo de backend, análisis de datos y los trabajos de física de donde salieron los métodos numéricos. Prefiero mostrarlo con honestidad antes que inflar la lista.',
+      'La mayor parte de mi trabajo profesional está en repositorios privados de empresa. Lo público son dos productos completos —un motor de cálculo para escritorio y web contrastado contra pruebas de referencia, y una base de conocimiento histórico en vivo respaldada por un flujo automatizado de extracción con IA— junto a trabajo de backend, análisis de datos y los trabajos de física de donde salieron los métodos numéricos. Prefiero mostrarlo con honestidad antes que inflar la lista.',
     'os.group.backend': 'Backend e infraestructura',
     'os.group.data': 'Análisis de datos',
     'os.group.numerical': 'Métodos numéricos y física',
     'os.ai.title': 'Una nota sobre las herramientas de IA',
     'os.ai.body':
-      'Construyo con agentes de programación con IA. Las interfaces web de algunos repositorios y Champions MetaDesk Studio los escribieron en gran parte esos agentes a partir de mis especificaciones; el alcance, la arquitectura y la verificación (escenarios de referencia, pruebas y controles de publicación) son míos.',
+      'Construyo con agentes de programación con IA. Las interfaces web de este sitio, Champions MetaDesk Studio y Bastardpedia las escribieron en gran parte esos agentes a partir de mis especificaciones; el alcance, la arquitectura, los flujos de datos y la verificación (escenarios de referencia, pruebas y controles de publicación) son míos.',
     'os.lead.shot': 'La calculadora de daño de Champions MetaDesk Studio',
+    'os.shot.bastardpedia': 'El catálogo y la interfaz de búsqueda en Bastardpedia',
     'os.coursework.title': 'Una nota sobre los trabajos de universidad',
     'os.coursework.body':
       'Los notebooks son trabajos de universidad y están marcados como tales. Siguen públicos porque las matemáticas que contienen son reales y de ahí salió el trabajo con filtros de Kalman y señales.',
     'os.viewrepo': 'Ver el repositorio',
+    'os.viewlive': 'Aplicación en vivo',
     'os.profile': 'Todos los repositorios en GitHub',
 
     'about.title': 'Perfil',

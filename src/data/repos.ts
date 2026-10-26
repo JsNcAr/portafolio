@@ -7,6 +7,8 @@ export type RepoGroup = 'backend' | 'data' | 'numerical';
 export interface Repo {
   name: string;
   url: string;
+  /** Live deployment URL, where applicable. */
+  homepage?: string;
   group: RepoGroup;
   language: string;
   /** Our own description, not GitHub's -- it says why the repo is worth opening. */
@@ -22,7 +24,7 @@ const gh = (name: string) => `https://github.com/JsNcAr/${name}`;
 
 export const repos: Repo[] = [
   {
-    // The one complete public product. Blurb avoids the test count on purpose:
+    // The lead public product. Blurb avoids the test count on purpose:
     // it changes with every release and the page would quietly disagree with
     // the README.
     name: 'champions-metadesk-studio',
@@ -85,6 +87,7 @@ export const repos: Repo[] = [
   {
     name: 'bastardpedia',
     url: gh('bastardpedia'),
+    homepage: 'https://bastardpedia.ramsus.site/',
     group: 'data',
     language: 'TypeScript',
     blurb: {
