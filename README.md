@@ -23,6 +23,7 @@ npm run dev          # http://localhost:4321, hot reload
 | `npm run serve:build` | Build, then serve |
 | `npm run check` | TypeScript and Astro diagnostics |
 | `npm run gate` | Build plus every quality gate. Must be green before deploying |
+| `npm run deploy` | Gate, push, and deploy to the server in one command |
 | `npm run tokens` | Regenerate `src/styles/theme.css` from `design-tokens.json` |
 | `npm run shot -- <file>` | Screenshot a built page for visual review |
 
@@ -36,5 +37,5 @@ Full documentation is in [`docs/`](docs/README.md). Start with
 
 - **Node 22.12 or later.** Astro 7 refuses to run on Node 20. `.nvmrc` pins it;
   this machine's system Node is older, so `nvm use` is not optional.
-- **Python 3** for three of the static gates.
+- **Python 3** for three of the static gates (`gate:tokens`, `gate:contrast`, `gate:emoji`; `gate:seo` runs on Node).
 - **Caddy** for `npm run serve` (optional; `npm run preview` is the fallback).

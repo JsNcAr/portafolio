@@ -244,6 +244,7 @@ sudo journalctl -u caddy -f | grep -i -E 'certificate|acme|error'
 | HTML `max-age=0, must-revalidate` | otherwise a deploy is invisible to anyone who has visited |
 | `handle_errors` with a per-locale rewrite | Spanish visitors get the Spanish 404 |
 | CSP with no third-party origins | nothing is loaded off-origin, so the policy can be strict |
+| `Permissions-Policy` | disables unused browser APIs (geolocation, camera, microphone, payment, usb) |
 | `-Server` | no need to advertise |
 
 ### Two Caddy syntax traps, both hit while writing this

@@ -33,7 +33,7 @@ knowingly rather than by accident.
 
 ## Status
 
-The site is complete and deployable: 20 pages across two locales, including three
-case studies and a services page. Remaining gaps — metrics, a factual review, a native Spanish pass,
-manual accessibility testing — are tracked in
+The site is complete and deployable: 22 pages across two locales, including three
+case studies, a services page and a colophon. Remaining gaps — a factual review
+of case studies, manual accessibility testing — are tracked in
 [Development → What is not built yet](development.md#what-is-not-built-yet).

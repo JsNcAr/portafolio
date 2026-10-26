@@ -16,6 +16,7 @@ Roughly a minute.
 | `gate:tokens` | `design-tokens.json` parses; every alias resolves |
 | `gate:contrast` | Required token pairs meet WCAG 2.2 in light **and** dark |
 | `gate:emoji` | No emoji anywhere in the source |
+| `gate:seo` | Search metadata lengths (title 30-60, description 120-160), duplicate checks, single `<h1>`, canonical/hreflang reciprocity, connected JSON-LD graph, and sitemap synchronization |
 
 Contrast is checked on the token source, so a palette cannot ship broken even
 before a page uses it. Decorative pairs (hairline borders) are advisory and
@@ -71,8 +72,8 @@ Five of the kit's gates parse their target as `argv.find(a => !a.startsWith('--'
 
 `verify_states` · `axe_audit` · `verify_responsive` · `verify_interactive` · `verify_rtl`
 
-Hand one of those a list of nineteen pages and it opens the first, passes, and
-says nothing about the other eighteen. Point it at a directory instead and its
+Hand one of those a list of twenty-three pages and it opens the first, passes, and
+says nothing about the other twenty-two. Point it at a directory instead and its
 walk is non-recursive, so every nested route is missed.
 
 `run-render-gates.mjs` therefore marks each gate `MANY` or `ONE` and invokes the

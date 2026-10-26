@@ -51,6 +51,8 @@ Content is typed TypeScript, not Markdown or a CMS:
   error rather than a silent English fallback in production.
 - `src/data/repos.ts` — the curated public repositories, with our own blurbs
   rather than GitHub's descriptions.
+- `src/data/services.ts` — services, website builds, class formats and audiences,
+  with structured pricing.
 - `src/i18n/ui.ts` — interface strings for both locales.
 
 See [ADR 0003](decisions/0003-typed-data-not-cms.md) for why.

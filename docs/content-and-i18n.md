@@ -47,11 +47,13 @@ Brand assets are generated, not hand-drawn:
 
 ```bash
 node scripts/build-brand-assets.mjs     # favicons, OG cards, webmanifest
+node scripts/capture-examples.mjs       # live screenshots of example sites for /services
 ```
 
 It reads `design-tokens.json`, so the favicon and link-preview cards cannot drift
 from the theme. It fails if IBM Plex does not load rather than shipping a card set
-in a fallback face.
+in a fallback face. `capture-examples.mjs` runs on demand using Playwright to snapshot
+gsalud.co and apollyon.lat into `src/assets/`.
 
 ## The two locales
 
@@ -62,7 +64,7 @@ English at the root (`/work`), Spanish under a prefix (`/es/work`). Configured i
 i18n: {
   defaultLocale: 'en',
   locales: ['en', 'es'],
-  routing: { prefixDefaultLocale: false },
+  routing: { prefixDefaultLocale: false, redirectToDefaultLocale: false },
 }
 ```
 
@@ -147,7 +149,7 @@ slugs, so changing one breaks incoming links.
 `src/data/services.ts` carries prices as structured data, never as prose:
 
 ```ts
-interface Price { from: number; to?: number; currency: 'COP' | 'USD'; unit: 'project' | 'month' | 'hour' | 'hour-per-student' }
+interface Price { from: number; to?: number; currency: 'COP' | 'USD'; unit: 'project' | 'month' | 'hour' | 'hour-group' }
 ```
 
 `src/lib/price.ts` formats it with `Intl.NumberFormat` against the reader's locale,

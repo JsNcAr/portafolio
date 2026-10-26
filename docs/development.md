@@ -67,12 +67,13 @@ src/
     pages/          One component per page, taking `locale` as a prop.
     *.astro         Shared UI: header, footer, cards, icons.
   layouts/Base.astro  HTML shell: head, metadata, skip link, header, footer.
-  data/             Typed content. cv.ts (roles, education) and repos.ts.
+  data/             Typed content: cv.ts (roles, education), repos.ts, services.ts.
   i18n/             ui.ts (string table) and utils.ts (helpers).
-  lib/              Small pure helpers.
+  lib/              Small pure helpers (price, seo, signal, tokens, whatsapp).
   styles/           theme.css (generated) and base.css (element defaults).
-public/             Copied verbatim: CV PDF, robots.txt.
-scripts/            Build, gate and preview tooling.
+  assets/           Images: portrait, site screenshots, project screenshots.
+public/             Copied verbatim: CV PDF, robots.txt, favicons, OG cards, webmanifest.
+scripts/            Build, gate, capture and preview tooling.
 deploy/             Caddyfile and deployment instructions.
 harness/            A standalone page the render gates check alongside the build.
 docs/               This documentation.
@@ -93,14 +94,13 @@ Then `npm run check && npm run gate`, and look at it.
 
 ## What is not built yet
 
-- **Metrics.** The case studies describe architecture and reasoning but carry no
-  figures — uptime, request volume, latency, deploy frequency, records per run.
-  They are deliberately absent rather than estimated. Adding them is the single
-  biggest available improvement to the case studies.
 - **A factual review of the case studies.** They are written from the CV plus
   standard engineering exposition of the named technologies. Nothing is invented,
   but only Jason can confirm that the emphasis and the reasoning match what
   actually happened.
-- **A native Spanish pass.** The Spanish is a careful draft, not a native rewrite.
+- **Further case-study metrics.** Personally AI carries measured outcomes
+  (60+ accounts, ~80% less effort, team 1 to 5). Apollyon and Atonga are
+  architecture stories without measured figures; adding real metrics where data
+  becomes available without estimating is an ongoing improvement.
 - **Manual accessibility testing.** See
   [Accessibility → What is not automated](accessibility.md#what-is-not-automated).
