@@ -48,7 +48,7 @@ export const ui = {
     'home.also': 'Also available for project work and classes.',
     'home.also.link': 'Services',
     'home.now.body':
-      'Lead Backend and DevOps Engineer at Apollyon S.A.S, where I am the sole owner of the backend and the infrastructure it runs on.',
+      'Backend and DevOps Engineer at Apollyon S.A.S, where I am the sole owner of the backend and the infrastructure it runs on.',
 
     'stack.title': 'Working stack',
     'stack.languages': 'Languages',
@@ -114,7 +114,7 @@ export const ui = {
 
     'svc.contracting': 'Who you would be contracting with',
     'svc.contracting.body':
-      'I am COO of Apollyon S.A.S in Bogotá, and larger builds run through the company: a team, a contract, and continuity if I am not the one holding it. Smaller engagements and all teaching are direct with me. Each service above says which applies, and I will tell you plainly if a project belongs on the other side of that line.',
+      'I am a co-founder of Apollyon S.A.S in Bogotá, and larger builds run through the company: a team, a contract, and continuity if I am not the one holding it. Smaller engagements and all teaching are direct with me. Each service above says which applies, and I will tell you plainly if a project belongs on the other side of that line.',
 
     'svc.cta.title': 'Have something worth building?',
     'svc.cta.body':
@@ -173,10 +173,10 @@ export const ui = {
       'Python backend engineer in Bogotá: FastAPI and PostgreSQL services, hardened auth, and the Debian servers and pipelines they run on. Case studies and CV.',
     'meta.work.title': 'Backend and DevOps experience — Jason Arias',
     'meta.work.description':
-      'Five roles across backend, DevOps and data: offline-first platforms, automation at volume and conversational commerce, with case studies for three of them.',
+      'Four roles across backend, DevOps and data: offline-first platforms, automation at volume and conversational commerce, with case studies for three of them.',
     'meta.about.title': 'About Jason Arias — backend engineer, physics, Bogotá',
     'meta.about.description':
-      'Backend engineer with a physics degree from Universidad de los Andes: Python services, the servers they run on, and the Kalman filtering behind the maths.',
+      'Backend engineer with a physics background from Universidad de los Andes: Python services, the servers they run on, and the Kalman filtering behind the maths.',
     'meta.services.title': 'Backend, automation and web development in Bogotá',
     'meta.services.description':
       'Backend and infrastructure, automation, AI assistants, websites with hosting, and remote programming, maths and physics classes. Published prices.',
@@ -198,7 +198,7 @@ export const ui = {
     'notfound.home': 'Go to the home page',
 
     'work.title': 'Work',
-    'work.lead': 'Five roles, and the systems behind them.',
+    'work.lead': 'Four roles, and the systems behind them.',
     'work.intro':
       'Most of this work is private and proprietary, so what follows describes what I built and owned rather than linking to source. The public code that does corroborate it is on the open source page.',
     'work.present': 'Present',
@@ -239,7 +239,7 @@ export const ui = {
     'about.body.b':
       'Most of my work has been at small companies where there was no platform team to hand the infrastructure to. That is the reason the CV reads across backend and DevOps rather than one or the other: the boundary was mine to cover.',
     'about.body.c':
-      'The physics degree is not decoration. Sensor fusion, Extended Kalman Filters and RSSI smoothing on a Bluetooth mesh are the kind of problem where the mathematics decides whether the feature works, and that is the part I enjoy most.',
+      'The physics training is not decoration. Sensor fusion, Extended Kalman Filters and RSSI smoothing on a Bluetooth mesh are the kind of problem where the mathematics decides whether the feature works, and that is the part I enjoy most.',
     'about.body.d':
       'I am not a front-end engineer, and I try not to be described as one. Where my projects have interfaces, I planned them and built them with AI tooling. I would rather be judged on the API underneath.',
     'about.timeline': 'Experience',
@@ -313,7 +313,7 @@ export const ui = {
     'home.also': 'También disponible para trabajo por proyecto y clases.',
     'home.also.link': 'Servicios',
     'home.now.body':
-      'Lead Backend and DevOps Engineer en Apollyon S.A.S, donde soy el único responsable del backend y de la infraestructura sobre la que corre.',
+      'Backend and DevOps Engineer en Apollyon S.A.S, donde soy el único responsable del backend y de la infraestructura sobre la que corre.',
 
     'stack.title': 'Stack de trabajo',
     'stack.languages': 'Lenguajes',
@@ -379,7 +379,7 @@ export const ui = {
 
     'svc.contracting': 'Con quién estarías contratando',
     'svc.contracting.body':
-      'Soy COO de Apollyon S.A.S en Bogotá, y los desarrollos grandes van por la empresa: un equipo, un contrato y continuidad si no soy yo quien lo sostiene. Los proyectos más pequeños y todas las clases son directamente conmigo. Cada servicio de arriba dice cuál aplica, y te diré con claridad si un proyecto pertenece al otro lado de esa línea.',
+      'Soy cofundador de Apollyon S.A.S en Bogotá, y los desarrollos grandes van por la empresa: un equipo, un contrato y continuidad si no soy yo quien lo sostiene. Los proyectos más pequeños y todas las clases son directamente conmigo. Cada servicio de arriba dice cuál aplica, y te diré con claridad si un proyecto pertenece al otro lado de esa línea.',
 
     'svc.cta.title': '¿Tienes algo que valga la pena construir?',
     'svc.cta.body':
@@ -438,7 +438,7 @@ export const ui = {
       'Ingeniero de backend Python en Bogotá: servicios en FastAPI y PostgreSQL, autenticación reforzada y los servidores Debian donde corren. Casos y hoja de vida.',
     'meta.work.title': 'Experiencia en backend y DevOps — Jason Arias',
     'meta.work.description':
-      'Cinco roles entre backend, DevOps y datos: plataformas offline-first, automatización a escala y comercio conversacional, con casos de estudio para tres.',
+      'Cuatro roles entre backend, DevOps y datos: plataformas offline-first, automatización a escala y comercio conversacional, con casos de estudio para tres.',
     'meta.about.title': 'Perfil de Jason Arias — backend, física y Bogotá',
     'meta.about.description':
       'Ingeniero de backend con formación en física de la Universidad de los Andes: servicios en Python, los servidores donde corren y los filtros de Kalman.',
@@ -463,7 +463,7 @@ export const ui = {
     'notfound.home': 'Ir a la página de inicio',
 
     'work.title': 'Trabajo',
-    'work.lead': 'Cinco roles y los sistemas detrás de ellos.',
+    'work.lead': 'Cuatro roles y los sistemas detrás de ellos.',
     'work.intro':
       'Casi todo este trabajo es privado y pertenece a las empresas, así que lo que sigue describe lo que construí y de lo que fui responsable, sin enlazar al código. El código público que sí lo respalda está en la página de código abierto.',
     'work.present': 'Actualidad',
@@ -504,7 +504,7 @@ export const ui = {
     'about.body.b':
       'La mayor parte de mi trabajo ha sido en empresas pequeñas donde no había un equipo de plataforma a quien pasarle la infraestructura. Por eso la hoja de vida abarca backend y DevOps en lugar de quedarse en uno solo: ese límite me tocaba a mí.',
     'about.body.c':
-      'El pregrado en física no es decoración. La fusión de sensores, los filtros de Kalman extendidos y el suavizado de RSSI sobre una malla Bluetooth son el tipo de problema donde las matemáticas deciden si la funcionalidad sirve, y esa es la parte que más disfruto.',
+      'La formación en física no es decoración. La fusión de sensores, los filtros de Kalman extendidos y el suavizado de RSSI sobre una malla Bluetooth son el tipo de problema donde las matemáticas deciden si la funcionalidad sirve, y esa es la parte que más disfruto.',
     'about.body.d':
       'No soy ingeniero de frontend y trato de que no me describan como tal. Donde mis proyectos tienen interfaz, la planeé y la construí con herramientas de IA. Prefiero que me evalúen por la API que está debajo.',
     'about.timeline': 'Experiencia',

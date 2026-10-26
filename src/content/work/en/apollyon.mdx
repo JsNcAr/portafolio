@@ -16,7 +16,7 @@ import Layers from '@components/diagrams/Layers.astro';
 
 ## The brief
 
-Apollyon builds a proximity tracking and communication platform that has to keep
+Apollyon builds **Korvy**, a proximity tracking and communication platform for large-scale events that has to keep
 working when there is no connectivity. That constraint shapes everything: devices
 cannot assume a network, positions have to be derived on the ground rather than
 looked up, and the backend has to accept a burst of buffered telemetry whenever a
@@ -101,7 +101,7 @@ The **extended** variant handles the fact that the relationship between signal
 strength and distance is not linear. The result is a position that moves the way
 an object actually moves, instead of one that follows the noise.
 
-This is the part of the work where a physics degree stops being background and
+This is the part of the work where my physics training stops being background and
 starts being the reason the feature works at all.
 
 ## Running it
@@ -118,7 +118,7 @@ small fleet buys complexity rather than reliability. Caddy because certificate r
 
 ## Shipping it
 
-I deployed a self-hosted GitLab instance with CI/CD pipelines that push backend
+I deployed a self-hosted GitLab instance with CI/CD pipelines running automated `pytest` suites before pushing backend
 updates to production on merge, plus branching rules and internal documentation on
 GitLab Pages.
 

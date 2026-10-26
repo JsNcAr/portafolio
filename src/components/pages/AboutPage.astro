@@ -54,7 +54,7 @@ const languages = [t('about.lang.es'), t('about.lang.en'), t('about.lang.ja')];
     <section class="block" aria-labelledby="education">
       <h2 class="overline" id="education">{t('about.education')}</h2>
       <div class="edu">
-        <p class="when">{education.start} — {t('work.present')}</p>
+        <p class="when">{education.track[locale]}</p>
         <div>
           <p class="what">
             <strong>{education.degree[locale]}</strong> — {education.org}

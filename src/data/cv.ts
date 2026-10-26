@@ -39,80 +39,80 @@ export const roles: Role[] = [
     id: 'apollyon',
     org: 'Apollyon S.A.S',
     orgUrl: 'https://apollyon.lat',
-    title: 'Lead Backend & DevOps Engineer (COO)',
+    title: 'Backend & DevOps Engineer',
     start: '2024-10',
     end: null,
     location: 'Bogotá',
     summary: {
-      en: 'Offline-first proximity tracking and communication platform. Sole backend and infrastructure owner.',
-      es: 'Plataforma de rastreo de proximidad y comunicación con enfoque offline-first. Único responsable del backend y la infraestructura.',
+      en: 'Co-founded engineering venture building Korvy, an offline-first event tracking platform. Sole backend and infrastructure owner (full-time focus between contracts; maintained on weekends during full-time roles).',
+      es: 'Emprendimiento de ingeniería cofundado para construir Korvy, una plataforma offline-first de rastreo para eventos. Único responsable de backend e infraestructura (dedicación completa entre contratos; mantenido en fines de semana durante roles de tiempo completo).',
     },
     highlights: [
       {
-        en: "Built the platform's fully asynchronous REST API in Python (FastAPI, SQLModel, PostgreSQL), designing the schema, migrations and error contracts from scratch.",
-        es: 'Construí la API REST completamente asíncrona de la plataforma en Python (FastAPI, SQLModel, PostgreSQL), diseñando el esquema, las migraciones y los contratos de error desde cero.',
+        en: 'Built the asynchronous REST API for Korvy in Python (FastAPI, SQLModel, PostgreSQL), designing the relational schema, migrations, and explicit error contracts for offline firmware retry logic.',
+        es: 'Construí la API REST asíncrona de Korvy en Python (FastAPI, SQLModel, PostgreSQL), diseñando el esquema relacional, las migraciones y contratos de error explícitos para la lógica de reintento del firmware sin conexión.',
       },
       {
-        en: 'Implemented multi-layered authentication — OAuth2, signed JWTs and API keys with 12-round bcrypt hashing — securing all user and device endpoints.',
-        es: 'Implementé autenticación en varias capas — OAuth2, JWT firmados y llaves de API con hashing bcrypt de 12 rondas — asegurando todos los endpoints de usuarios y dispositivos.',
+        en: 'Implemented multi-layered authentication — OAuth2, signed JWTs, and API keys with 12-round bcrypt hashing — securing all user and device telemetry endpoints.',
+        es: 'Implementé autenticación en varias capas — OAuth2, JWT firmados y llaves de API con hashing bcrypt de 12 rondas — asegurando todos los endpoints de usuarios y telemetría de dispositivos.',
       },
       {
         en: 'Containerized every service with Docker and systemd on company-owned Debian servers, with Caddy handling edge routing and automatic TLS for the production API.',
         es: 'Puse cada servicio en contenedores con Docker y systemd en servidores Debian propios de la empresa, con Caddy encargándose del enrutamiento de borde y del TLS automático para la API de producción.',
       },
       {
-        en: 'Deployed a self-hosted GitLab instance and CI/CD pipelines that push backend updates to production on merge, plus branching rules and internal docs on GitLab Pages.',
-        es: 'Desplegué una instancia de GitLab autoalojada y pipelines de CI/CD que llevan las actualizaciones del backend a producción al hacer merge, además de reglas de ramas y documentación interna en GitLab Pages.',
+        en: 'Deployed a self-hosted GitLab instance and CI/CD pipelines running automated pytest suites and linting gates before pushing containerized updates to production on merge, plus internal docs on GitLab Pages.',
+        es: 'Desplegué una instancia de GitLab autoalojada y pipelines de CI/CD que ejecutan suites automatizadas de pytest y controles de lint antes de llevar actualizaciones en contenedores a producción al hacer merge, además de documentación interna en GitLab Pages.',
       },
       {
-        en: 'Engineered a Bluetooth Low Energy mesh network for offline telemetry, applying Extended Kalman Filters and RSSI smoothing to turn noisy radio signals into usable spatial positioning.',
-        es: 'Diseñé una red mesh de Bluetooth Low Energy para telemetría sin conexión, aplicando filtros de Kalman extendidos y suavizado de RSSI para convertir señales de radio ruidosas en posicionamiento espacial utilizable.',
+        en: 'Implemented radio-frequency telemetry ingestion over a Bluetooth Low Energy (BLE) mesh, applying Extended Kalman Filters and RSSI smoothing to turn noisy radio signals into usable spatial positioning.',
+        es: 'Implementé la ingesta de telemetría de radiofrecuencia sobre una red mesh de Bluetooth Low Energy (BLE), aplicando filtros de Kalman extendidos y suavizado de RSSI para convertir señales de radio ruidosas en posicionamiento espacial utilizable.',
       },
     ],
-    stack: ['FastAPI', 'SQLModel', 'PostgreSQL', 'Docker', 'systemd', 'Caddy', 'GitLab CI/CD', 'BLE', 'Kalman filters'],
-    updated: '2026-08-30',
+    stack: ['FastAPI', 'SQLModel', 'PostgreSQL', 'pytest', 'Docker', 'systemd', 'Caddy', 'GitLab CI/CD', 'BLE', 'Kalman filters'],
+    updated: '2026-10-26',
   },
   {
     id: 'personally-ai',
     org: 'Personally AI',
-    title: 'Backend & Data Engineer, Head of Engineering (CTO)',
+    title: 'Backend & Data Engineer',
     start: '2025-07',
     end: '2026-02',
     location: 'Bogotá',
     summary: {
-      en: 'AI automation studio. Grew engineering from a solo operation to a team of 5 while remaining hands-on.',
-      es: 'Estudio de automatización con IA. Hice crecer el equipo de ingeniería de una operación individual a cinco personas sin dejar de programar.',
+      en: 'AI automation studio. Rehired to standardize backend architecture, lead client API delivery, and mentor a growing engineering team from 1 to 5 developers while remaining hands-on.',
+      es: 'Estudio de automatización con IA. Recontratado para estandarizar la arquitectura backend, liderar la entrega de APIs para clientes y guiar el crecimiento del equipo de ingeniería de 1 a 5 desarrolladores sin dejar de programar.',
     },
     highlights: [
       {
-        en: 'Designed and shipped secure REST APIs with FastAPI, Pydantic and SQLAlchemy, standardizing JWT and API-key authentication across client-facing endpoints.',
-        es: 'Diseñé y entregué APIs REST seguras con FastAPI, Pydantic y SQLAlchemy, estandarizando la autenticación por JWT y llaves de API en los endpoints de cara al cliente.',
+        en: 'Designed and shipped secure REST APIs with FastAPI, Pydantic, and SQLAlchemy, managing schema evolution with Alembic migrations and standardizing JWT and API-key authentication across client-facing endpoints.',
+        es: 'Diseñé y entregué APIs REST seguras con FastAPI, Pydantic y SQLAlchemy, gestionando la evolución de esquemas con migraciones en Alembic y estandarizando la autenticación por JWT y llaves de API en los endpoints de cara al cliente.',
       },
       {
         en: 'Automated reporting for a marketing agency running 60+ client accounts — Selenium extraction from Meta Business Suite plus Pandas cleaning and analysis — replacing manual reports and cutting reporting effort by around 80%.',
         es: 'Automaticé los reportes de una agencia de marketing con más de 60 cuentas de clientes — extracción con Selenium desde Meta Business Suite más limpieza y análisis con Pandas — reemplazando los reportes manuales y reduciendo el tiempo dedicado a los reportes en cerca de un 80%.',
       },
       {
-        en: 'Built a CRM and lead-generation service processing thousands of leads per run via the Apollo API, using optimized queries and background task management for high-volume workloads.',
-        es: 'Construí un servicio de CRM y generación de leads que procesa miles de leads por ejecución mediante la API de Apollo, con consultas optimizadas y gestión de tareas en segundo plano para cargas de alto volumen.',
+        en: 'Built a CRM and lead-generation service processing thousands of leads per run via the Apollo API, using optimized SQL queries and background task management for high-volume workloads.',
+        es: 'Construí un servicio de CRM y generación de leads que procesa miles de leads por ejecución mediante la API de Apollo, con consultas SQL optimizadas y gestión de tareas en segundo plano para cargas de alto volumen.',
       },
       {
-        en: 'Ran hybrid infrastructure (Hetzner Cloud plus on-prem Debian) with Docker and Linux daemons, and reviewed architecture for an LLM lead-scoring chatbot integrated with HubSpot.',
-        es: 'Operé infraestructura híbrida (Hetzner Cloud más Debian on-premise) con Docker y daemons de Linux, y revisé la arquitectura de un chatbot de puntuación de leads con LLM integrado con HubSpot.',
+        en: 'Ran hybrid infrastructure (Hetzner Cloud plus on-prem Debian) with Docker and Linux daemons, led code reviews for 4 developers, and reviewed architecture for an LLM lead-scoring chatbot integrated with HubSpot.',
+        es: 'Operé infraestructura híbrida (Hetzner Cloud más Debian on-premise) con Docker y daemons de Linux, lideré revisiones de código para 4 desarrolladores y revisé la arquitectura de un chatbot de puntuación de leads con LLM integrado con HubSpot.',
       },
     ],
-    stack: ['FastAPI', 'Pydantic', 'SQLAlchemy', 'Selenium', 'Pandas', 'Apollo API', 'Hetzner Cloud', 'Docker'],
+    stack: ['FastAPI', 'Pydantic', 'SQLAlchemy', 'Alembic', 'Selenium', 'Pandas', 'Apollo API', 'Hetzner Cloud', 'Docker'],
     metrics: [
       { value: { en: '60+', es: '60+' }, label: { en: 'client accounts reported on', es: 'cuentas de clientes con reportes' } },
       { value: { en: '~80%', es: '~80%' }, label: { en: 'less reporting effort', es: 'menos esfuerzo en reportes' } },
-      { value: { en: '1 to 5', es: '1 a 5' }, label: { en: 'engineers, team I grew', es: 'ingenieros, equipo que hice crecer' } },
+      { value: { en: '1 to 5', es: '1 a 5' }, label: { en: 'engineers, team I mentored', es: 'ingenieros, equipo que guié' } },
     ],
-    updated: '2026-08-30',
+    updated: '2026-10-26',
   },
   {
     id: 'atonga',
     org: 'Atonga',
-    title: 'Backend Engineer / Co-CTO',
+    title: 'Backend Engineer',
     start: '2024-10',
     end: '2025-06',
     location: 'Bogotá',
@@ -122,20 +122,20 @@ export const roles: Role[] = [
     },
     highlights: [
       {
-        en: 'Co-designed the backend architecture in Python and FastAPI over PostgreSQL, serving real-time requests from web and chat clients.',
-        es: 'Codiseñé la arquitectura del backend en Python y FastAPI sobre PostgreSQL, atendiendo peticiones en tiempo real desde clientes web y de chat.',
+        en: 'Co-designed the core backend architecture in Python and FastAPI over PostgreSQL, serving real-time requests from web and chat clients over a single unified domain model.',
+        es: 'Codiseñé la arquitectura central del backend en Python y FastAPI sobre PostgreSQL, atendiendo peticiones en tiempo real desde clientes web y de chat sobre un único modelo de dominio unificado.',
       },
       {
-        en: 'Integrated an LLM-powered assistant that lets sellers manage storefronts and buyers find products conversationally.',
-        es: 'Integré un asistente con LLM que permite a los vendedores gestionar sus tiendas y a los compradores encontrar productos conversando.',
+        en: 'Integrated an LLM-powered assistant (OpenAI API, WebSockets) that lets sellers manage storefronts and buyers find products conversationally.',
+        es: 'Integré un asistente con LLM (OpenAI API, WebSockets) que permite a los vendedores gestionar sus tiendas y a los compradores encontrar productos conversando.',
       },
       {
-        en: 'Set engineering standards and remote workflows for the team, coordinating delivery through Jira and Slack.',
-        es: 'Definí los estándares de ingeniería y los flujos de trabajo remoto del equipo, coordinando la entrega con Jira y Slack.',
+        en: 'Set engineering standards, API contracts, and remote workflows for the team, coordinating delivery through Jira and Slack.',
+        es: 'Definí los estándares de ingeniería, contratos de API y flujos de trabajo remoto del equipo, coordinando la entrega con Jira y Slack.',
       },
     ],
     stack: ['FastAPI', 'PostgreSQL', 'WebSockets', 'OpenAI API', 'Jira'],
-    updated: '2026-08-30',
+    updated: '2026-10-26',
   },
   {
     id: 'personally-ai-dev',
@@ -160,66 +160,53 @@ export const roles: Role[] = [
     ],
     stack: ['OpenCV', 'Tesseract', 'GPT-4o vision', 'Python'],
   },
-  {
-    id: 'uniandes-ta',
-    org: 'Universidad de los Andes',
-    title: 'Teaching Assistant',
-    start: '2020-02',
-    end: '2020-06',
-    location: 'Bogotá',
-    summary: {
-      en: 'Supported coursework grading and student feedback for an undergraduate art history course.',
-      es: 'Apoyé la calificación de trabajos y la retroalimentación a estudiantes en un curso de pregrado de historia del arte.',
-    },
-    highlights: [],
-    stack: [],
-  },
 ];
 
 /**
- * The opening paragraph of the CV. Recovered from the hand-made PDF, which was
- * the only place it existed -- the reason that PDF could not be regenerated
- * from this file. Kept CV-shaped (claims plus evidence) rather than reusing the
- * site's home-page copy, which is written for a different reader.
+ * The opening paragraph of the CV. Kept CV-shaped (claims plus evidence) rather
+ * than reusing the site's home-page copy, which is written for a different reader.
  */
 export const summary: Bilingual = {
-  en: 'Python backend engineer with 2+ years building and running production APIs end to end: asynchronous FastAPI services on PostgreSQL, hardened OAuth2/JWT authentication, Dockerized deployments on Debian servers, and CI/CD pipelines that ship to production on merge. Comfortable owning the whole path from schema design to reverse proxy and TLS, and equally at home in data-heavy work — automated pipelines, sensor-fusion algorithms, and LLM integrations. Physics background (Universidad de los Andes) behind the mathematical side.',
-  es: 'Ingeniero de backend Python con más de dos años construyendo y operando APIs en producción de punta a punta: servicios asíncronos en FastAPI sobre PostgreSQL, autenticación reforzada con OAuth2 y JWT, despliegues en contenedores sobre servidores Debian y pipelines de CI/CD que llegan a producción al hacer merge. Me hago cargo de todo el camino, del diseño del esquema al proxy inverso y el TLS, y me muevo con la misma soltura en trabajo de datos: pipelines automatizados, algoritmos de fusión de sensores e integraciones con LLM. Formación en física de la Universidad de los Andes detrás del lado matemático.',
+  en: 'Python backend engineer with 2+ years building and running production APIs end to end: asynchronous FastAPI services on PostgreSQL, schema migrations with Alembic, hardened OAuth2/JWT authentication, automated pytest suites in CI/CD, and Dockerized deployments on Debian Linux servers. Comfortable owning the whole path from relational schema design to Caddy reverse proxy and TLS, and equally at home in data-heavy backend workloads — automated ETL pipelines, high-volume API integrations, and Kalman-filtered telemetry. Grounded in rigorous mathematical and physics training (Universidad de los Andes & Universidad Nacional de Colombia).',
+  es: 'Ingeniero de backend Python con más de dos años construyendo y operando APIs en producción de punta a punta: servicios asíncronos en FastAPI sobre PostgreSQL, migraciones con Alembic, autenticación reforzada con OAuth2 y JWT, suites automatizadas de pytest en CI/CD y despliegues en contenedores sobre servidores Debian Linux. Me hago cargo de todo el camino, del diseño del esquema relacional al proxy inverso con Caddy y TLS, y me muevo con la misma soltura en cargas intensivas de datos: pipelines ETL automatizados, integraciones de alto volumen y telemetría filtrada con Kalman. Base matemática y física sólida (Universidad de los Andes y Universidad Nacional de Colombia).',
 };
 
 export const skills: Array<{ key: 'languages' | 'backend' | 'infra' | 'data'; items: string[] }> = [
-  { key: 'languages', items: ['Python', 'SQL', 'Bash', 'Kotlin (basic)'] },
+  { key: 'languages', items: ['Python (Asyncio)', 'SQL', 'Bash / Shell', 'C++ (Numerical)', 'Kotlin (Basic)'] },
   {
     key: 'backend',
-    items: ['FastAPI', 'SQLModel', 'SQLAlchemy', 'Pydantic', 'PostgreSQL', 'REST', 'WebSockets', 'Webhooks', 'OAuth2', 'JWT', 'RBAC', 'bcrypt'],
+    items: ['FastAPI', 'SQLModel', 'SQLAlchemy', 'Alembic', 'Pydantic', 'PostgreSQL', 'asyncpg', 'REST APIs', 'WebSockets', 'Webhooks', 'OAuth2 / JWT', 'RBAC', 'bcrypt', 'pytest'],
   },
   {
     key: 'infra',
-    items: ['Debian / Ubuntu', 'Docker', 'systemd', 'Caddy', 'GitLab CI/CD', 'GitHub Actions', 'Hetzner Cloud', 'on-prem servers', 'Git'],
+    items: ['Debian / Ubuntu', 'Docker', 'Docker Compose', 'systemd', 'Caddy (Automatic TLS)', 'GitLab CI/CD', 'GitHub Actions', 'Hetzner Cloud', 'On-prem Linux servers', 'Git'],
   },
-  { key: 'data', items: ['Pandas', 'NumPy', 'Selenium', 'OpenCV', 'OpenAI API (RAG)', 'Extended Kalman Filters'] },
+  {
+    key: 'data',
+    items: ['Pandas', 'NumPy', 'Selenium', 'OpenCV', 'Tesseract OCR', 'OpenAI API (RAG & Structured Outputs)', 'Extended Kalman Filters (EKF)', 'ETL Pipelines'],
+  },
 ];
 
 export const education = {
   degree: {
-    en: 'BSc Physics (in progress)',
-    es: 'Pregrado en Física (en curso)',
+    en: 'BSc in Physics (80% Completed)',
+    es: 'Pregrado en Física (80% completado)',
   },
-  org: 'Universidad de los Andes, Colombia',
-  start: '2018',
-  end: null,
+  org: 'Universidad de los Andes & Universidad Nacional de Colombia',
+  track: {
+    en: 'Flexible evening track',
+    es: 'Horario nocturno flexible',
+  },
   note: {
-    en: 'Coursework in mathematical modeling, numerical methods, statistics and computational physics. Recipient of the national "Ser Pilo Paga" merit scholarship.',
-    es: 'Cursos en modelamiento matemático, métodos numéricos, estadística y física computacional. Beneficiario de la beca nacional de mérito "Ser Pilo Paga".',
+    en: 'Completed 8 semesters of core and computational physics at Universidad de los Andes (mathematical modeling, numerical methods in C++/Python, differential equations, and statistical mechanics) as a recipient of the national "Ser Pilo Paga" merit scholarship; completing remaining credits on a flexible, non-blocking schedule at Universidad Nacional de Colombia.',
+    es: 'Ocho semestres cursados de física fundamental y computacional en la Universidad de los Andes (modelamiento matemático, métodos numéricos en C++/Python, ecuaciones diferenciales y mecánica estadística) como beneficiario de la beca nacional de mérito "Ser Pilo Paga"; cursando los créditos finales en horario flexible en la Universidad Nacional de Colombia.',
   },
 };
 
 export const certifications = [
   'FastAPI: Databases, Modularization and Production Deployment — Platzi',
-  'Python Professional — Platzi',
-  'Exploratory Data Analysis — Platzi',
-  'Internet Computer Networks — Platzi',
-  'Prompt Engineering with ChatGPT — Platzi',
+  'Python Professional & Exploratory Data Analysis — Platzi',
+  'Computer Networks & Internet Infrastructure — Platzi',
 ];
 
 export const contact = {
