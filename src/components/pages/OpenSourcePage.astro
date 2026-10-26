@@ -6,6 +6,7 @@ import Icon from '@components/Icon.astro';
 import { Picture } from 'astro:assets';
 // Copied from JsNcAr/champions-metadesk-studio docs/images/calc.png at 6806db8.
 import championsCalc from '@assets/project-champions-calc.png';
+import bastardpediaShot from '@assets/project-bastardpedia.png';
 import type { Locale } from '@i18n/ui';
 import { useTranslations } from '@i18n/utils';
 import { repos, githubProfile, type RepoGroup } from '@data/repos';
@@ -33,6 +34,13 @@ const leadShots: Record<string, ImageMetadata | undefined> = {
   'champions-metadesk-studio': championsCalc,
 };
 const leadShot = leadShots[lead.name];
+
+const gridShots: Record<string, ImageMetadata | undefined> = {
+  bastardpedia: bastardpediaShot,
+};
+const gridShotAlts: Record<string, string> = {
+  bastardpedia: t('os.shot.bastardpedia'),
+};
 
 const pageUrl = new URL(localePath(locale, '/open-source'), Astro.site).href;
 const leadCode = sourceCodeNode({
@@ -91,10 +99,18 @@ function breakable(name: string): string[] {
       </div>
       <p class="blurb">{lead.blurb[locale]}</p>
       <ul class="pills">{lead.tags.map((tag) => <TechPill label={tag} />)}</ul>
-      <p class="cta" aria-hidden="true">
-        <span>{t('os.viewrepo')}</span>
-        <Icon name="arrow-up-right" size={14} />
-      </p>
+      <div class="actions">
+        <p class="cta" aria-hidden="true">
+          <span>{t('os.viewrepo')}</span>
+          <Icon name="arrow-up-right" size={14} />
+        </p>
+        {lead.homepage && (
+          <a href={lead.homepage} class="live-link" rel="noopener" target="_blank">
+            <span>{t('os.viewlive')}</span>
+            <Icon name="arrow-up-right" size={14} />
+          </a>
+        )}
+      </div>
       </div>
     </article>
 
@@ -102,26 +118,52 @@ function breakable(name: string): string[] {
       <section class="group" aria-labelledby={`g-${group.key}`}>
         <h2 class="overline" id={`g-${group.key}`}>{group.label}</h2>
         <ul class="grid">
-          {byGroup(group.key).map((repo, i) => (
-            <li class:list={['repo', { first: i === 0 }]}>
-              <div class="head">
-                <h3>
-                  <a href={repo.url} rel="noopener" target="_blank">
-                    <span class="stretch"></span>{breakable(repo.name).map((part, i) => (
-                      <>{i > 0 && <wbr />}{part}</>
-                    ))}
-                  </a>
-                </h3>
-                <p class="lang">{repo.language}</p>
-              </div>
-              <p class="blurb">{repo.blurb[locale]}</p>
-              <ul class="pills">{repo.tags.map((tag) => <TechPill label={tag} />)}</ul>
-              <p class="cta" aria-hidden="true">
-                <span>{t('os.viewrepo')}</span>
-                <Icon name="arrow-up-right" size={14} />
-              </p>
-            </li>
-          ))}
+          {byGroup(group.key).map((repo, i) => {
+            const shot = gridShots[repo.name];
+            return (
+              <li class:list={['repo', { first: i === 0, 'has-shot': Boolean(shot) }]}>
+                {shot && (
+                  <Picture
+                    src={shot}
+                    formats={['avif', 'webp']}
+                    fallbackFormat="png"
+                    widths={[360, 540, 720, 1080]}
+                    sizes="(min-width: 48rem) 36rem, calc(100vw - 3rem)"
+                    alt={gridShotAlts[repo.name] ?? repo.name}
+                    loading="lazy"
+                    decoding="async"
+                    class="card-shot"
+                  />
+                )}
+                <div class="card-body">
+                  <div class="head">
+                    <h3>
+                      <a href={repo.url} rel="noopener" target="_blank">
+                        <span class="stretch"></span>{breakable(repo.name).map((part, i) => (
+                          <>{i > 0 && <wbr />}{part}</>
+                        ))}
+                      </a>
+                    </h3>
+                    <p class="lang">{repo.language}</p>
+                  </div>
+                  <p class="blurb">{repo.blurb[locale]}</p>
+                  <ul class="pills">{repo.tags.map((tag) => <TechPill label={tag} />)}</ul>
+                  <div class="actions">
+                    <p class="cta" aria-hidden="true">
+                      <span>{t('os.viewrepo')}</span>
+                      <Icon name="arrow-up-right" size={14} />
+                    </p>
+                    {repo.homepage && (
+                      <a href={repo.homepage} class="live-link" rel="noopener" target="_blank">
+                        <span>{t('os.viewlive')}</span>
+                        <Icon name="arrow-up-right" size={14} />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </li>
+            );
+          })}
         </ul>
       </section>
     ))}
@@ -161,6 +203,32 @@ function breakable(name: string): string[] {
     transition:
       border-color var(--duration-fast) var(--ease-out),
       box-shadow var(--duration-fast) var(--ease-out);
+  }
+
+  .repo.has-shot {
+    padding: 0;
+    gap: 0;
+    overflow: hidden;
+  }
+
+  .card-body {
+    display: grid;
+    gap: var(--space-10);
+    align-content: start;
+    min-inline-size: 0;
+  }
+
+  .repo.has-shot .card-body {
+    padding: var(--space-24);
+  }
+
+  .card-shot {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 1440 / 900;
+    object-fit: cover;
+    border-block-end: var(--stroke-hairline) solid var(--color-border-default);
   }
 
   .repo:hover {
@@ -267,6 +335,18 @@ function breakable(name: string): string[] {
     min-inline-size: 0;
   }
 
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-12) var(--space-20);
+    margin-block-start: var(--space-8);
+  }
+
+  .actions .cta {
+    margin-block-start: 0;
+  }
+
   .cta {
     display: inline-flex;
     align-items: center;
@@ -275,6 +355,37 @@ function breakable(name: string): string[] {
     font-size: var(--text-sm);
     font-weight: var(--weight-medium);
     color: var(--color-text-link);
+  }
+
+  .live-link {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-link);
+    background: var(--color-surface-page);
+    border: var(--stroke-hairline) solid var(--color-border-accent);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-8);
+    text-decoration: none;
+    transition:
+      background var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out);
+  }
+
+  .live-link:hover {
+    background: var(--color-interactive-selected-bg);
+    border-color: var(--color-border-strong);
+    text-decoration: none;
+  }
+
+  .live-link:focus-visible {
+    outline: 2px solid var(--color-interactive-focus-ring);
+    outline-offset: 2px;
   }
 
   .group {
