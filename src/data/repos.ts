@@ -83,6 +83,18 @@ export const repos: Repo[] = [
     tags: ['Telegram', 'dynamic DNS', 'self-hosted'],
   },
   {
+    name: 'bastardpedia',
+    url: gh('bastardpedia'),
+    group: 'data',
+    language: 'TypeScript',
+    blurb: {
+      en: 'An offline-first search index and strict historical taxonomy for 600+ Behind the Bastards stories, live at bastardpedia.ramsus.site. An ingestion pipeline extracts episode transcripts, an AI agent classifies them against a validated taxonomy, and an installable PWA performs in-memory search and personal list storage via IndexedDB.',
+      es: 'Un índice de búsqueda offline-first y taxonomía histórica estricta para más de 600 historias de Behind the Bastards, en vivo en bastardpedia.ramsus.site. Un pipeline de ingesta extrae transcripciones, un agente de IA las clasifica contra una taxonomía validada, y una PWA instalable realiza búsquedas en memoria y almacena listas personales en IndexedDB.',
+    },
+    tags: ['TypeScript', 'AI pipeline', 'Taxonomy', 'MiniSearch', 'IndexedDB', 'PWA'],
+    license: 'https://opensource.org/license/mit',
+  },
+  {
     name: 'Bogota-Apartments-Rework',
     url: gh('Bogota-Apartments-Rework'),
     group: 'data',
