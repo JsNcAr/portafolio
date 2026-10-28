@@ -215,6 +215,6 @@ export const contact = {
   whatsapp: '573196817363',
   whatsappDisplay: '+57 319 681 7363',
   github: 'https://github.com/JsNcAr',
-  linkedin: 'https://linkedin.com/in/jason-nicolas-arias-gomez-50127b248',
+  linkedin: 'https://www.linkedin.com/in/jason-nicolas-arias-gomez',
   location: { en: 'Bogotá, Colombia — open to remote', es: 'Bogotá, Colombia — abierto a trabajo remoto' },
 };
