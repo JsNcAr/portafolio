@@ -14,7 +14,10 @@ interface Props {
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 
-const CV = '/cv/jason-arias-python-backend-engineer.pdf';
+const CV =
+  locale === 'es'
+    ? '/cv/jason-arias-ingeniero-backend-python.pdf'
+    : '/cv/jason-arias-python-backend-engineer.pdf';
 
 const methods = [
   {

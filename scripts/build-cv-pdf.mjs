@@ -3,34 +3,22 @@ import path from 'node:path';
 import fs from 'node:fs/promises';
 
 const ROOT = process.cwd();
-const OUT_PDF = path.join(ROOT, 'public/cv/jason-arias-python-backend-engineer.pdf');
+const OUT_PDF_EN = path.join(ROOT, 'public/cv/jason-arias-python-backend-engineer.pdf');
+const OUT_PDF_ES = path.join(ROOT, 'public/cv/jason-arias-ingeniero-backend-python.pdf');
 
 async function fontBase64(relPath) {
   const buf = await fs.readFile(path.join(ROOT, relPath));
   return buf.toString('base64');
 }
 
-async function build() {
-  const [
-    plexSansLatin,
-    plexSansLatinExt,
-    plexSansItalicLatin,
-    plexMonoRegularLatin,
-    plexMonoMediumLatin,
-  ] = await Promise.all([
-    fontBase64('node_modules/@fontsource-variable/ibm-plex-sans/files/ibm-plex-sans-latin-wght-normal.woff2'),
-    fontBase64('node_modules/@fontsource-variable/ibm-plex-sans/files/ibm-plex-sans-latin-ext-wght-normal.woff2'),
-    fontBase64('node_modules/@fontsource-variable/ibm-plex-sans/files/ibm-plex-sans-latin-wght-italic.woff2'),
-    fontBase64('node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2'),
-    fontBase64('node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2'),
-  ]);
-
-  const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Jason Nicolás Arias Gómez — Python Backend Engineer</title>
-  <style>
+function buildStyles({
+  plexSansLatin,
+  plexSansLatinExt,
+  plexSansItalicLatin,
+  plexMonoRegularLatin,
+  plexMonoMediumLatin,
+}) {
+  return `
     @font-face {
       font-family: 'IBM Plex Sans';
       src: url('data:font/woff2;base64,${plexSansLatinExt}') format('woff2');
@@ -132,12 +120,12 @@ async function build() {
 
     .contact-line {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 7.65pt;
+      font-size: 7.3pt;
       color: #525866;
-      line-height: 1.45;
+      line-height: 1.4;
       display: flex;
       flex-wrap: wrap;
-      column-gap: 5pt;
+      column-gap: 4pt;
       row-gap: 1pt;
     }
 
@@ -186,7 +174,7 @@ async function build() {
     /* Skills Table-like Grid */
     .skills-grid {
       display: grid;
-      grid-template-columns: 122pt 1fr;
+      grid-template-columns: 128pt 1fr;
       row-gap: 4pt;
       column-gap: 10pt;
       font-size: 9.15pt;
@@ -340,7 +328,16 @@ async function build() {
       font-weight: 600;
       color: #111317;
     }
-  </style>
+  `;
+}
+
+function buildEnglishHtml(css) {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Jason Nicolás Arias Gómez — Python Backend Engineer</title>
+  <style>${css}</style>
 </head>
 <body>
 
@@ -350,7 +347,7 @@ async function build() {
       <h1>Jason Nicolás Arias Gómez</h1>
       <div class="subtitle">Python Backend Engineer — FastAPI · PostgreSQL · Docker · Linux</div>
       <div class="contact-line">
-        <span class="contact-item">Bogotá, Colombia (open to remote)</span><span class="sep">·</span><span class="contact-item"><a href="mailto:jn.arias@uniandes.edu.co">jn.arias@uniandes.edu.co</a></span><span class="sep">·</span><span class="contact-item"><a href="https://jsncar.tech">jsncar.tech</a></span><span class="sep">·</span><span class="contact-item"><a href="https://github.com/JsNcAr">github.com/JsNcAr</a></span><span class="sep">·</span><span class="contact-item"><a href="https://www.linkedin.com/in/jason-nicolas-arias-gomez-50127b248">linkedin.com/in/jason-nicolas-arias-gomez-50127b248</a></span>
+        <span class="contact-item">Bogotá, Colombia (open to remote)</span><span class="sep">·</span><span class="contact-item"><a href="mailto:jn.arias@uniandes.edu.co">jn.arias@uniandes.edu.co</a></span><span class="sep">·</span><span class="contact-item"><a href="https://jsncar.tech">jsncar.tech</a></span><span class="sep">·</span><span class="contact-item"><a href="https://github.com/JsNcAr">github.com/JsNcAr</a></span><span class="sep">·</span><span class="contact-item"><a href="https://www.linkedin.com/in/jason-nicolas-arias-gomez">www.linkedin.com/in/jason-nicolas-arias-gomez</a></span>
       </div>
     </header>
 
@@ -516,18 +513,240 @@ async function build() {
 
 </body>
 </html>`;
+}
+
+function buildSpanishHtml(css) {
+  return `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Jason Nicolás Arias Gómez — Ingeniero de Backend Python</title>
+  <style>${css}</style>
+</head>
+<body>
+
+  <!-- PAGE 1 -->
+  <div class="page page-1">
+    <header>
+      <h1>Jason Nicolás Arias Gómez</h1>
+      <div class="subtitle">Ingeniero de Backend Python — FastAPI · PostgreSQL · Docker · Linux</div>
+      <div class="contact-line">
+        <span class="contact-item">Bogotá, Colombia (abierto a remoto)</span><span class="sep">·</span><span class="contact-item"><a href="mailto:jn.arias@uniandes.edu.co">jn.arias@uniandes.edu.co</a></span><span class="sep">·</span><span class="contact-item"><a href="https://jsncar.tech/es">jsncar.tech/es</a></span><span class="sep">·</span><span class="contact-item"><a href="https://github.com/JsNcAr">github.com/JsNcAr</a></span><span class="sep">·</span><span class="contact-item"><a href="https://www.linkedin.com/in/jason-nicolas-arias-gomez">www.linkedin.com/in/jason-nicolas-arias-gomez</a></span>
+      </div>
+    </header>
+
+    <section>
+      <h2>Perfil Profesional</h2>
+      <p class="summary-text">
+        Ingeniero de Backend Python con más de 2 años de experiencia en producción diseñando APIs REST asíncronas (FastAPI, SQLModel, SQLAlchemy, PostgreSQL), autenticación multicapa (OAuth2, JWT, llaves de API, bcrypt) y la infraestructura en Debian y Docker donde operan. Trayectoria comprobada a cargo de la arquitectura backend de principio a fin: desde migraciones de esquemas relacionales (Alembic) y suites de pruebas automatizadas (pytest, CI/CD) hasta proxies inversos (Caddy) y pipelines de datos de alto volumen. Sólida base analítica en Física (Universidad de los Andes) aplicada a fusión de sensores en tiempo real, filtros de Kalman extendidos y verificación algorítmica.
+      </p>
+    </section>
+
+    <section>
+      <h2>Habilidades Técnicas</h2>
+      <div class="skills-grid">
+        <div class="skill-cat">Lenguajes</div>
+        <div class="skill-items">Python (async/await, tipado estático), SQL, Bash, TypeScript</div>
+
+        <div class="skill-cat">Backend</div>
+        <div class="skill-items">FastAPI, SQLModel, SQLAlchemy, Alembic, Pydantic, asyncpg, pytest, diseño de APIs REST, OAuth2 / JWT / bcrypt</div>
+
+        <div class="skill-cat">Infraestructura y DevOps</div>
+        <div class="skill-items">Docker, Docker Compose, Linux (Debian), Caddy, Nginx, GitLab CI/CD, GitHub Actions, systemd, Hetzner Cloud, GCP</div>
+
+        <div class="skill-cat">Datos e IA</div>
+        <div class="skill-items">PostgreSQL, SQLite, Pandas, NumPy, SciPy, Selenium, OpenAI API, Filtros de Kalman Extendidos</div>
+
+        <div class="skill-cat">Idiomas</div>
+        <div class="skill-items">Español (nativo) · Inglés (competencia profesional completa, B2+)</div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 0;">
+      <h2>Experiencia Profesional</h2>
+
+      <div class="role">
+        <div class="role-header">
+          <div class="role-title">Ingeniero de Backend y DevOps <span class="role-company">— Apollyon S.A.S</span></div>
+          <div class="role-meta">Oct 2024 – Actualidad · Bogotá</div>
+        </div>
+        <div class="role-summary">
+          Único ingeniero de backend e infraestructura para Korvy, una plataforma offline-first de rastreo de proximidad y comunicación para eventos cofundada con dos colegas (dedicación completa entre contratos; mantenimiento en fines de semana durante roles de tiempo completo).
+        </div>
+        <ul class="bullets">
+          <li>Diseñé y construí desde cero la API REST asíncrona de Korvy con Python, FastAPI, SQLModel y PostgreSQL, preparada para ingerir ráfagas de telemetría acumulada por dispositivos en campo sin conexión mediante contratos de error explícitos para la lógica de reintentos del firmware.</li>
+          <li>Implementé autenticación multicapa en los endpoints de usuarios y dispositivos IoT utilizando OAuth2, JWT firmados y llaves de API de alcance restringido revocables por unidad, con contraseñas protegidas mediante bcrypt (12 rondas).</li>
+          <li>Aprovisioné y aseguré servidores Debian propios de la empresa ejecutando servicios en contenedores Docker bajo systemd, con Caddy en el borde gestionando el enrutamiento inverso y la renovación automática de certificados TLS.</li>
+          <li>Desplegué una instancia autoalojada de GitLab y configuré pipelines de CI/CD que ejecutan suites automatizadas de pytest antes de desplegar cambios a producción al hacer merge, junto con reglas de ramas y documentación técnica en GitLab Pages.</li>
+          <li>Implementé algoritmos de posicionamiento espacial sobre una malla Bluetooth Low Energy (BLE) mediante filtros de Kalman extendidos y suavizado de RSSI para transformar señales de radio ruidosas en trayectorias estables en campo.</li>
+        </ul>
+      </div>
+
+      <div class="role">
+        <div class="role-header">
+          <div class="role-title">Ingeniero de Backend y Datos <span class="role-company">— Personally AI</span></div>
+          <div class="role-meta">Jul 2025 – Feb 2026 · Bogotá</div>
+        </div>
+        <div class="role-summary">
+          Recontratado tras un primer contrato en 2024 para estandarizar la arquitectura backend, liderar la entrega de APIs para clientes y guiar el crecimiento del equipo de ingeniería de uno a cinco desarrolladores manteniendo un rol activo en el código.
+        </div>
+        <ul class="bullets">
+          <li>Diseñé y entregué APIs REST en producción con FastAPI, Pydantic, SQLAlchemy y migraciones de esquema en Alembic, estandarizando la autenticación mediante JWT y llaves de API en todos los servicios orientados a clientes.</li>
+          <li>Automaticé la extracción y el análisis de rendimiento de marketing para más de 60 cuentas de clientes con Selenium y Pandas, reemplazando la elaboración manual de reportes y reduciendo el esfuerzo operativo en ~80%.</li>
+          <li>Construí un backend de CRM y generación de leads de alto volumen que procesa miles de registros por ejecución vía la API de Apollo, utilizando gestión de estado en tareas asíncronas en segundo plano, políticas de reintento y consultas SQL indexadas.</li>
+          <li>Administré infraestructura híbrida entre Hetzner Cloud y servidores Debian on-premise con Docker y daemons de Linux, y revisé la arquitectura de un chatbot de calificación de leads con LLM integrado con HubSpot.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="page page-2">
+    <div class="running-header">
+      <span>Jason Nicolás Arias Gómez — Ingeniero de Backend Python</span>
+      <span>página 2</span>
+    </div>
+
+    <section>
+      <h2>Experiencia Profesional (Continuación)</h2>
+
+      <div class="role">
+        <div class="role-header">
+          <div class="role-title">Ingeniero de Backend <span class="role-company">— Atonga</span></div>
+          <div class="role-meta">Oct 2024 – Jun 2025 · Bogotá</div>
+        </div>
+        <div class="role-summary">
+          Codiseñé la arquitectura backend de una plataforma de comercio electrónico multicanal impulsada por IA para pequeños emprendedores, a cargo de la API principal, el esquema de base de datos y la infraestructura en la nube.
+        </div>
+        <ul class="bullets">
+          <li>Construí el backend central en Python y FastAPI sobre PostgreSQL, atendiendo peticiones en tiempo real desde clientes web y de chat sobre una única capa de dominio unificada para validaciones y permisos.</li>
+          <li>Integré asistentes conversacionales basados en LLMs acotados estrictamente al contrato de la API, garantizando que las operaciones de catálogo, carrito y pedidos en lenguaje natural cumplieran las mismas reglas de validación que la interfaz web.</li>
+          <li>Contenericé los servicios con Docker y los desplegué en Google Cloud Platform detrás de Nginx, configurando respaldos automatizados y aislamiento de entornos para asegurar la confiabilidad en producción.</li>
+        </ul>
+      </div>
+
+      <div class="role">
+        <div class="role-header">
+          <div class="role-title">Desarrollador Python <span class="role-company">— Personally AI</span></div>
+          <div class="role-meta">May 2024 – Oct 2024 · Bogotá</div>
+        </div>
+        <div class="role-summary">
+          Primer contrato en el estudio, enfocado en extracción automatizada de documentos y pipelines de datos de punta a punta para clientes corporativos.
+        </div>
+        <ul class="bullets">
+          <li>Desarrollé pipelines de OCR y extracción web en Python utilizando Selenium y Google Cloud Document AI para transformar PDFs no estructurados y portales web en conjuntos de datos relacionales validados.</li>
+          <li>Estuve a cargo de las etapas de limpieza, normalización y validación de datos con Pandas antes de entregar salidas estructuradas hacia las bases de datos y flujos analíticos de los clientes.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Código Público y Sistemas Desplegados</h2>
+
+      <div class="project">
+        <div class="project-header">
+          <div class="project-title">Champions MetaDesk Studio</div>
+          <div class="project-links"><a href="https://github.com/JsNcAr/champions-metadesk-studio">github.com/JsNcAr/champions-metadesk-studio</a></div>
+        </div>
+        <div class="project-stack">Python · Flet · SQLModel · SQLite · pytest · GitHub Actions · PyInstaller</div>
+        <p class="project-body">
+          Entorno de análisis competitivo para escritorio y web sobre un catálogo relacional local. Incluye un port en Python puro del motor de cálculo de daño de Smogon verificado contra ~1.000 escenarios de referencia en CI, con compilación multiplataforma automatizada (Linux AppImage, Windows EXE).
+        </p>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <div class="project-title">Bastardpedia — Pipeline de Datos y Búsqueda</div>
+          <div class="project-links"><a href="https://bastardpedia.ramsus.site">bastardpedia.ramsus.site</a> · <a href="https://github.com/JsNcAr/bastardpedia">github.com/JsNcAr/bastardpedia</a></div>
+        </div>
+        <div class="project-stack">Ingesta Python/IA · Validación de Taxonomía · TypeScript · MiniSearch · IndexedDB</div>
+        <p class="project-body">
+          Pipeline automatizado de extracción y normalización que procesa transcripciones no estructuradas de más de 600 episodios de pódcast, valida esquemas estrictos de taxonomía histórica y compila un índice de búsqueda de texto completo en el cliente almacenado en IndexedDB.
+        </p>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <div class="project-title">Plantilla de Autenticación en Producción con FastAPI (basic_api)</div>
+          <div class="project-links"><a href="https://github.com/JsNcAr/basic_api">github.com/JsNcAr/basic_api</a></div>
+        </div>
+        <div class="project-stack">Python · FastAPI · OAuth2 · JWT · SQLModel · asyncpg · PostgreSQL</div>
+        <p class="project-body">
+          Plantilla reutilizable de servicio asíncrono en FastAPI que implementa flujo de autenticación OAuth2, JWT firmados, inicio de sesión multi-identificador (usuario o correo) y persistencia no bloqueante en PostgreSQL mediante SQLModel y asyncpg.
+        </p>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 0;">
+      <h2>Educación y Certificaciones</h2>
+      <div class="edu-block">
+        <div class="role-header">
+          <div class="role-title">Pregrado en Física (80% Completado)</div>
+          <div class="role-meta">Horario Nocturno Flexible · Bogotá</div>
+        </div>
+        <div class="edu-inst">Universidad de los Andes y Universidad Nacional de Colombia</div>
+        <div class="edu-note">
+          8 de 10 semestres completados en la Universidad de los Andes (beca nacional de excelencia "Ser Pilo Paga"); culminando los créditos restantes en horario flexible en la Universidad Nacional de Colombia. Formación en métodos numéricos, ecuaciones diferenciales, álgebra lineal y mecánica estadística.
+        </div>
+      </div>
+      <div class="certs-line">
+        <strong>Certificaciones (Platzi):</strong> FastAPI: Bases de Datos, Modularización y Despliegue a Producción · Curso Profesional de Python y Análisis Exploratorio de Datos · Redes de Computadores e Infraestructura de Internet.
+      </div>
+    </section>
+  </div>
+
+</body>
+</html>`;
+}
+
+async function build() {
+  const [
+    plexSansLatin,
+    plexSansLatinExt,
+    plexSansItalicLatin,
+    plexMonoRegularLatin,
+    plexMonoMediumLatin,
+  ] = await Promise.all([
+    fontBase64('node_modules/@fontsource-variable/ibm-plex-sans/files/ibm-plex-sans-latin-wght-normal.woff2'),
+    fontBase64('node_modules/@fontsource-variable/ibm-plex-sans/files/ibm-plex-sans-latin-ext-wght-normal.woff2'),
+    fontBase64('node_modules/@fontsource-variable/ibm-plex-sans/files/ibm-plex-sans-latin-wght-italic.woff2'),
+    fontBase64('node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2'),
+    fontBase64('node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2'),
+  ]);
+
+  const css = buildStyles({
+    plexSansLatin,
+    plexSansLatinExt,
+    plexSansItalicLatin,
+    plexMonoRegularLatin,
+    plexMonoMediumLatin,
+  });
 
   const browser = await chromium.launch({ executablePath: '/usr/bin/chromium' });
-  const page = await browser.newPage();
-  await page.setContent(html, { waitUntil: 'networkidle' });
-  await page.pdf({
-    path: OUT_PDF,
+
+  // English PDF
+  const pageEn = await browser.newPage();
+  await pageEn.setContent(buildEnglishHtml(css), { waitUntil: 'networkidle' });
+  await pageEn.pdf({
+    path: OUT_PDF_EN,
     format: 'Letter',
     printBackground: true,
     margin: { top: '0', right: '0', bottom: '0', left: '0' },
   });
+  console.log('Generated English PDF at', OUT_PDF_EN);
+
+  // Spanish PDF
+  const pageEs = await browser.newPage();
+  await pageEs.setContent(buildSpanishHtml(css), { waitUntil: 'networkidle' });
+  await pageEs.pdf({
+    path: OUT_PDF_ES,
+    format: 'Letter',
+    printBackground: true,
+    margin: { top: '0', right: '0', bottom: '0', left: '0' },
+  });
+  console.log('Generated Spanish PDF at', OUT_PDF_ES);
+
   await browser.close();
-  console.log('Generated PDF at', OUT_PDF);
 }
 
 build().catch((err) => {
