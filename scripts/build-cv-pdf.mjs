@@ -387,7 +387,7 @@ function buildEnglishHtml(css) {
           <div class="role-meta">Oct 2024 – Present · Bogotá</div>
         </div>
         <div class="role-summary">
-          Sole backend and infrastructure engineer for Korvy, an offline-first proximity tracking and event communication platform co-founded with two colleagues (full-time focus between contracts; maintained on weekends during full-time engagements).
+          Main backend and infrastructure developer for Korvy, an offline-first proximity tracking and event communication platform co-founded with two colleagues (full-time focus between contracts; maintained on weekends during full-time engagements).
         </div>
         <ul class="bullets">
           <li>Architected and shipped Korvy's asynchronous REST API from scratch using Python, FastAPI, SQLModel, and PostgreSQL, engineered to ingest bursty buffered telemetry from offline field devices with explicit error contracts for firmware retry logic.</li>
@@ -571,7 +571,7 @@ function buildSpanishHtml(css) {
           <div class="role-meta">Oct 2024 – Actualidad · Bogotá</div>
         </div>
         <div class="role-summary">
-          Único ingeniero de backend e infraestructura para Korvy, una plataforma offline-first de rastreo de proximidad y comunicación para eventos cofundada con dos colegas (dedicación completa entre contratos; mantenimiento en fines de semana durante roles de tiempo completo).
+          Desarrollador principal de backend e infraestructura para Korvy, una plataforma offline-first de rastreo de proximidad y comunicación para eventos cofundada con dos colegas (dedicación completa entre contratos; mantenimiento en fines de semana durante roles de tiempo completo).
         </div>
         <ul class="bullets">
           <li>Diseñé y construí desde cero la API REST asíncrona de Korvy con Python, FastAPI, SQLModel y PostgreSQL, preparada para ingerir ráfagas de telemetría acumulada por dispositivos en campo sin conexión mediante contratos de error explícitos para la lógica de reintentos del firmware.</li>
