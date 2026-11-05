@@ -44,8 +44,8 @@ export const roles: Role[] = [
     end: null,
     location: 'Bogotá',
     summary: {
-      en: 'Co-founded engineering venture building Korvy, an offline-first event tracking platform. Sole backend and infrastructure owner (full-time focus between contracts; maintained on weekends during full-time roles).',
-      es: 'Emprendimiento de ingeniería cofundado para construir Korvy, una plataforma offline-first de rastreo para eventos. Único responsable de backend e infraestructura (dedicación completa entre contratos; mantenido en fines de semana durante roles de tiempo completo).',
+      en: 'Co-founded engineering venture building Korvy, an offline-first event tracking platform. Main backend and infrastructure developer (full-time focus between contracts; maintained on weekends during full-time roles).',
+      es: 'Emprendimiento de ingeniería cofundado para construir Korvy, una plataforma offline-first de rastreo para eventos. Desarrollador principal de backend e infraestructura (dedicación completa entre contratos; mantenido en fines de semana durante roles de tiempo completo).',
     },
     highlights: [
       {

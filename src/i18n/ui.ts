@@ -48,7 +48,7 @@ export const ui = {
     'home.also': 'Also available for project work and classes.',
     'home.also.link': 'Services',
     'home.now.body':
-      'Backend and DevOps Engineer at Apollyon S.A.S, where I am the sole owner of the backend and the infrastructure it runs on.',
+      'Backend and DevOps Engineer at Apollyon S.A.S, where I am the main developer for the backend and the infrastructure it runs on.',
 
     'stack.title': 'Working stack',
     'stack.languages': 'Languages',
@@ -313,7 +313,7 @@ export const ui = {
     'home.also': 'También disponible para trabajo por proyecto y clases.',
     'home.also.link': 'Servicios',
     'home.now.body':
-      'Backend and DevOps Engineer en Apollyon S.A.S, donde soy el único responsable del backend y de la infraestructura sobre la que corre.',
+      'Backend and DevOps Engineer en Apollyon S.A.S, donde soy el desarrollador principal del backend y de la infraestructura sobre la que corre.',
 
     'stack.title': 'Stack de trabajo',
     'stack.languages': 'Lenguajes',
